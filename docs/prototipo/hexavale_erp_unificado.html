@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HexaVale ERP Agrícola</title>
     
-    <!-- Tailwind CSS (config antes do CDN para gerar classes brand-*) -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <script>
-        window.tailwind = window.tailwind || {};
         tailwind.config = {
             theme: {
                 extend: {
@@ -22,21 +35,8 @@
                     }
                 }
             }
-        };
+        }
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Vue 3 -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
@@ -51,12 +51,12 @@
         .hex-logo {
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
-    @media print{#app > aside, #app header{display:none!important}}
+    @media print{aside,header{display:none!important}}
     </style>
 </head>
 <body class="text-gray-800 antialiased h-screen flex overflow-hidden">
 
-    <template id="ot-src"><!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Hexavale · Ordens de Trabalho</title>
+    <script type="text/plain" id="ot-src"><!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Hexavale · Ordens de Trabalho</title>
 <style>
 :root{--bg:#f4f6f3;--card:#fff;--tx:#1c2a1f;--mu:#667568;--bd:#dfe5dc;--ac:#1f6b3a;--ac2:#e6f2ea;--wa:#b26a00;--wab:#fff3dc;--er:#b3261e;--erb:#fdeceb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121813;--card:#1b231d;--tx:#e8efe9;--mu:#9bab9e;--bd:#2d392f;--ac:#5fbf82;--ac2:#1f3326;--wa:#f0b44c;--wab:#352a12;--er:#f2877f;--erb:#3a1a18;color-scheme:dark}}
@@ -128,7 +128,7 @@ function painel(){const l=O.filter(o=>(!S.st||o.status==S.st)&&(o.id+o.talhao+o.
 const pend=new Set();O.forEach(o=>o.items.forEach(i=>{if(!pr(i.pid).b)pend.add(i.pid)}));
 const low=P.filter(p=>p.saldo-p.res<p.saldo*.1).length;
 return`<h1>Painel de ordens de trabalho</h1><div class="kpis"><div class="kpi"><b>${O.filter(o=>['rascunho','liberada'].includes(o.status)).length}</b><span>Ordens abertas</span></div><div class="kpi"><b>${O.filter(o=>o.status=='executada').length}</b><span>Executadas</span></div><div class="kpi"><b>${pend.size}</b><span>Produtos com pendência documental</span></div><div class="kpi"><b>${low}</b><span>Alertas de estoque</span></div></div>
-<div class="card"><div class="bar noprint" style="margin:0 0 10px"><input placeholder="Pesquisar nº, talhão…" value="${S.q}" oninput="S.q=this.value;render(1)" id="q"><select onchange="S.st=this.value;render()"><option value="">Todos os status</option>${['rascunho','liberada','executada','cancelada'].map(s=>`<option value="${s}" ${S.st==s?'selected':''}>${s}</option>`)}</select><button onclick="newOrder()">+ Nova ordem</button></div>
+<div class="card"><div class="bar noprint" style="margin:0 0 10px"><input placeholder="Pesquisar nº, talhão…" value="${S.q}" oninput="S.q=this.value;render(1)" id="q"><select onchange="S.st=this.value;render()"><option value="">Todos os status</option>${['rascunho','liberada','executada','cancelada'].map(s=>`<option ${S.st==s?'selected':''}>${s}</option>`)}</select><button onclick="newOrder()">+ Nova ordem</button></div>
 <div class="tw"><table><tr><th>Nº</th><th>Tipo</th><th>Talhão</th><th>Cultura</th><th>Área (ha)</th><th>Data</th><th>Status</th></tr>${l.map(o=>`<tr class="cl" onclick="go('ordem','${o.id}')"><td>${o.id}</td><td>${tl(o)}</td><td>${o.talhao}</td><td>${o.cultura} ${o.cultivar}</td><td>${f(o.area)}</td><td>${o.data.split('-').reverse().join('/')}</td><td>${tag(o.status)}</td></tr>`).join('')}</table></div></div>`}
 function estoque(){return`<h1>Produtos e estoque</h1>${EX()}<div class="card tw"><table><tr><th>Produto</th><th>Ingrediente ativo</th><th>Lote</th><th>Físico</th><th>Reservado</th><th>Disponível</th><th>Documentação</th></tr>${P.map(p=>`<tr><td>${p.nome}</td><td>${p.ia}</td><td>${p.lote}${p.val?' · val. '+p.val.split('-').reverse().join('/'):''}</td><td>${un(p.saldo,p.u)}</td><td>${un(p.res,p.u)}</td><td>${un(p.saldo-p.res,p.u)}</td><td>${p.b?`<span class="tag">${p.b.doc} · ${p.b.ver}</span>`:'<span class="tag w">Pendente de validação documental</span>'}</td></tr>`).join('')}</table></div>`}
 function mov(){return`<h1>Movimentações</h1><div class="card tw"><table><tr><th>Data/hora</th><th>Ordem</th><th>Produto</th><th>Lote</th><th>Tipo</th><th>Quantidade</th></tr>${MOV.map(m=>`<tr><td>${m.t}</td><td>${m.o}</td><td>${m.p}</td><td>${m.l}</td><td>${m.k}</td><td>${m.q}</td></tr>`).join('')||'<tr><td colspan="6">Nenhuma movimentação. Confirme a execução de uma ordem para gerar a baixa.</td></tr>'}</table></div>`}
@@ -140,7 +140,7 @@ return`<h1>Nova ordem</h1><div class="card"><h2>Cadastro da ordem</h2><div class
 <div class="tw"><table><tr><th>Produto</th><th>Dose</th><th>Qtd. planejada</th><th>Saldo</th></tr>${D.items.map(i=>{const p=pr(i.pid),o=dOrder(),q=qty(o,i,o.area);return`<tr><td>${p.nome}</td><td>${f(i.dose)} ${i.du}/${per(o)}</td><td>${un(q,p.u)}</td><td>${q>p.saldo-p.res?'<span class="tag e">Estoque insuficiente</span>':un(p.saldo-p.res,p.u)}</td></tr>`}).join('')}</table></div></div>
 <div class="bar"><button class="s" onclick="saveOrder('rascunho')">Salvar rascunho</button><button onclick="saveOrder('liberada')">Salvar e liberar</button></div>`}
 const v=id=>$('#'+id)?.value;
-const nextId=()=>String(Math.max(0,...O.map(o=>+o.id||0))+1).padStart(6,'0');
+const nextId=()=>String(127+O.length-2).padStart(6,'0');
 const FIELDS=[['Identificação da área',[['talhao','Talhão','text','N 03'],['cultura','Cultura','text','Manga'],['cultivar','Variedade','text','Kent'],['area','Área total (ha)','number','8.3'],['plantas','Nº de plantas','number','2075'],['filas','Nº de filas','number','30'],['filasCob','Filas cobertas','text','1 a 30'],['fase','Estágio fenológico','text','Desenvolvimento de frutos'],['ciclo','Ciclo','text','2026']]],
 ['Programação e responsáveis',[['data','Data da execução','date','2026-10-17'],['hora','Horário previsto','time','18:00'],['colheita','Data prevista da colheita','date',''],['resp','Emitida por','text','Carlos Silva'],['rt','Responsável técnico','text','Carlos Silva'],['sup','Supervisor','text',''],['op','Operador / aplicador','text','João Ferreira Silva']]],
 ['Equipamento e operação',[['maq','Máquina (trator)','text','Trator MF 4275'],['equip','Implemento','text','Jacto Arbus 2.000'],['tanque','Capacidade do tanque (L)','number','2000','p'],['calda','Volume de calda (L/ha)','number','800','p'],['marcha','Marcha','text','1ª Reduzida','p'],['rpm','RPM','number','2000','p'],['pressao','Pressão','text','8','p'],['ponta','Ponta de pulverização','text','MGA 04 Vermelho','p']]],
@@ -179,9 +179,9 @@ snap();D.items.push({pid:p.id,dose,du,real:null});render();rest()}
 function saveOrder(st){const k={};FK().forEach(x=>k[x]=v(x)??'');
 if(!k.talhao||!k.cultura||!k.data||!(parseFloat(k.area)>0)||!D.items.length)return toast('Preencha talhão, cultura, data, área e ao menos um produto.');
 const o={...k,id:nextId(),tipo:D.tipo,area:parseFloat(k.area),areaReal:null,calda:parseFloat(k.calda)||0,status:st,baixa:false,ver:1,items:D.items,abast:[],hist:[]};
-O.push(o);log(o,st=='liberada'?'Ordem criada':'Ordem criada como rascunho');if(st=='liberada'){const bad=o.items.find(i=>qty(o,i,o.area)>pr(i.pid).saldo-pr(i.pid).res);if(bad){o.status='rascunho';toast('Estoque insuficiente em '+pr(bad.pid).nome+': salva como rascunho.')}else{reserve(o,1);log(o,'Ordem liberada (reserva de materiais)','rascunho','liberada')}}go('ordem',o.id)}
-function liberar(id){const o=O.find(x=>x.id==id);if(o.status!=='rascunho')return toast('Só é possível liberar ordens em rascunho.');const bad=o.items.find(i=>qty(o,i,o.area)>pr(i.pid).saldo-pr(i.pid).res);if(bad)return toast('Estoque disponível insuficiente: '+pr(bad.pid).nome);o.status='liberada';reserve(o,1);log(o,'Ordem liberada (reserva de materiais)','rascunho','liberada');render()}
-function cancelar(id){const o=O.find(x=>x.id==id);const w=prompt('Motivo do cancelamento:');if(!w)return;if(o.status=='liberada')reserve(o,-1);log(o,'Ordem cancelada',o.status,'cancelada',w);o.status='cancelada';render()}
+O.push(o);log(o,'Ordem criada como rascunho');if(st=='liberada'){const bad=o.items.find(i=>qty(o,i,o.area)>pr(i.pid).saldo-pr(i.pid).res);if(bad){o.status='rascunho';toast('Estoque insuficiente em '+pr(bad.pid).nome+': salva como rascunho.')}else{reserve(o,1);log(o,'Ordem liberada (reserva de materiais)','rascunho','liberada')}}go('ordem',o.id)}
+function liberar(id){const o=O.find(x=>x.id==id);const bad=o.items.find(i=>qty(o,i,o.area)>pr(i.pid).saldo-pr(i.pid).res);if(bad)return toast('Estoque disponível insuficiente: '+pr(bad.pid).nome);o.status='liberada';reserve(o,1);log(o,'Ordem liberada (reserva de materiais)','rascunho','liberada');render()}
+function cancelar(id){const o=O.find(x=>x.id==id);if(o.status=='liberada')reserve(o,-1);const w=prompt('Motivo do cancelamento:');if(!w)return;log(o,'Ordem cancelada',o.status,'cancelada',w);o.status='cancelada';render()}
 function confirmar(id){const o=O.find(x=>x.id==id);if(o.baixa)return toast('Baixa já realizada para esta execução.');
 const a=o.areaReal??o.area;for(const i of o.items){const p=pr(i.pid),r=i.real??qty(o,i,a);if(!(r>0))return toast('Quantidade real inválida.');if(r>p.saldo)return toast('Saldo físico insuficiente: '+p.nome)}
 if(!(a>0&&a<=o.area))return toast('Área tratada deve estar entre 0 e a área planejada.');
@@ -213,11 +213,11 @@ ${o.items.filter(i=>ref(o,i).c=='e').map(i=>`<div class="al e">Divergência em $
 <p style="font-size:12px">Fonte: cadastro técnico demonstrativo · consulta em ${new Date().toLocaleDateString('pt-BR')}. Valores de referência não substituem o registro real nem geram baixa de estoque.</p>${sigs(o)}</div>`}
 function tHist(o){return`<div class="card tw"><table><tr><th>Data/hora</th><th>Usuário</th><th>Evento</th><th>Anterior</th><th>Novo</th><th>Motivo</th></tr>${o.hist.map(h=>`<tr><td>${h.t}</td><td>${h.u}</td><td>${h.a}</td><td>${h.old}</td><td>${h.nw}</td><td>${h.why}</td></tr>`).join('')||'<tr><td colspan="6">Sem eventos.</td></tr>'}</table></div>`}
 const V={painel,estoque,mov,aud,nova,ordem};
-function render(keep){save();document.querySelectorAll('.side a[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v==S.v||(S.v=='ordem'&&a.dataset.v=='painel')));$('#m').innerHTML=V[S.v]();if(keep){const q=$('#q');if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}}
+function render(keep){save();document.querySelectorAll('.side a[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v==S.v||(S.v=='ordem'&&a.dataset.v=='painel')));$('#m').innerHTML=V[S.v]();if(keep){const q=$('#q');q.focus();q.setSelectionRange(q.value.length,q.value.length)}}
 try{const d=JSON.parse(localStorage.getItem('hx')||'null');if(d&&d.P){P.splice(0,P.length,...d.P);O.splice(0,O.length,...d.O);MOV.splice(0,MOV.length,...d.MOV)}}catch(e){}
 render();
-</script></body></html>
-</template>
+<\/script></body></html>
+</script>
     <div id="app" class="w-full h-full flex overflow-hidden">
         
         <!-- Sidebar -->
@@ -571,7 +571,7 @@ render();
                                     <div class="flex-1">
                                         <h3 class="font-bold text-gray-900 mb-3 border-b pb-2">Itens para Separação</h3>
                                         <ul class="space-y-2 text-sm text-gray-700">
-                                            <li v-for="(item, idx) in req.itens" :key="idx" class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                                            <li v-for="item in req.itens" class="flex justify-between items-center bg-gray-50 p-2 rounded">
                                                 <span>{{ item.nome }}</span><span class="font-bold">{{ item.qtd }}</span>
                                             </li>
                                         </ul>
@@ -603,14 +603,14 @@ render();
                             </div>
                         </div>
 
-                        <div v-else-if="currentTab === 'ordens_trabalho'" key="ordens_trabalho">
+                        <div v-else-if="currentTab === 'ordens_trabalho'"" key="ordens_trabalho">
                             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                                 <div class="p-3 border-b border-gray-200 bg-gray-50/50 text-sm text-gray-600"><i class="fa-solid fa-print mr-2 text-brand-600"></i>Pulverização foliar e adubação de solo: abra a ordem, aba <b>Documento A</b>, e use <b>Imprimir / salvar PDF</b>.</div>
                                 <iframe :srcdoc="otSrc" title="Ordens de Trabalho" class="w-full border-0 bg-white" style="height:calc(100vh - 12rem)"></iframe>
                             </div>
                         </div>
 
-                        <div v-else-if="currentTab === 'ordens_servico'" key="ordens_servico">
+                        <div v-else-if="currentTab === 'ordens_servico'"" key="ordens_servico">
                              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div v-for="os in data.ordensServico" :key="os.id" class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex space-x-4">
                                     <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-gray-500 text-xl"><i class="fa-solid fa-tractor"></i></div>
@@ -724,41 +724,39 @@ render();
         const app = createApp({
             setup() {
                 const sidebarOpen = ref(false);
-                // <template> serializa o fragmento (sem html/body); remontamos um documento válido p/ srcdoc
-                const otSrc = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>' +
-                    document.getElementById('ot-src').innerHTML + '</body></html>';
+                const otSrc = document.getElementById('ot-src').textContent;
                 const currentTab = ref('dashboard');
                 let chartInstances = [];
 
                 // Navigation Structure
                 const nav = {
                     suprimentos: [
-                        { id: 'dashboard', label: 'Dashboard', icon: 'fa-solid fa-chart-pie' },
-                        { id: 'pedcompra', label: 'Pedidos de Compra', icon: 'fa-solid fa-cart-shopping' }
+                        { id: 'dashboard', label: 'Dashboard', icon: 'fa-chart-pie' },
+                        { id: 'pedcompra', label: 'Pedidos de Compra', icon: 'fa-cart-shopping' }
                     ],
                     estoque: [
-                        { id: 'saldo', label: 'Saldo de Estoque', icon: 'fa-solid fa-boxes-stacked' },
-                        { id: 'entradas', label: 'Entrada de NF', icon: 'fa-solid fa-file-invoice' },
-                        { id: 'saidas', label: 'Saída de Estoque', icon: 'fa-solid fa-dolly' }
+                        { id: 'saldo', label: 'Saldo de Estoque', icon: 'fa-boxes-stacked' },
+                        { id: 'entradas', label: 'Entrada de NF', icon: 'fa-file-invoice' },
+                        { id: 'saidas', label: 'Saída de Estoque', icon: 'fa-dolly' }
                     ],
                     cadastros: [
-                        { id: 'fornecedores', label: 'Fornecedores', icon: 'fa-solid fa-handshake' },
-                        { id: 'produtos', label: 'Produtos / Insumos', icon: 'fa-solid fa-flask' },
-                        { id: 'talhoes', label: 'Talhões', icon: 'fa-solid fa-map' },
-                        { id: 'maquinas', label: 'Máquinas', icon: 'fa-solid fa-tractor' },
-                        { id: 'funcionarios', label: 'Funcionários', icon: 'fa-solid fa-users' }
+                        { id: 'fornecedores', label: 'Fornecedores', icon: 'fa-handshake' },
+                        { id: 'produtos', label: 'Produtos / Insumos', icon: 'fa-flask' },
+                        { id: 'talhoes', label: 'Talhões', icon: 'fa-map' },
+                        { id: 'maquinas', label: 'Máquinas', icon: 'fa-tractor' },
+                        { id: 'funcionarios', label: 'Funcionários', icon: 'fa-users' }
                     ],
                     lancamentos: [
-                        { id: 'ordens', label: 'Ordens Agrícolas', icon: 'fa-solid fa-seedling' },
-                        { id: 'abastecimentos', label: 'Abastecimentos', icon: 'fa-solid fa-gas-pump' },
-                        { id: 'manutencoes', label: 'Manutenções (OS)', icon: 'fa-solid fa-screwdriver-wrench' }
+                        { id: 'ordens', label: 'Ordens Agrícolas', icon: 'fa-seedling' },
+                        { id: 'abastecimentos', label: 'Abastecimentos', icon: 'fa-gas-pump' },
+                        { id: 'manutencoes', label: 'Manutenções (OS)', icon: 'fa-screwdriver-wrench' }
                     ],
                     relatorios: [
-                        { id: 'custostalhao', label: 'Custo por Talhão', icon: 'fa-solid fa-coins' },
-                        { id: 'audit', label: 'Auditoria', icon: 'fa-solid fa-shield-halved' }
+                        { id: 'custostalhao', label: 'Custo por Talhão', icon: 'fa-coins' },
+                        { id: 'audit', label: 'Auditoria', icon: 'fa-shield-halved' }
                     ],
                     operacoes: [
-                        { id: 'ordens_trabalho', label: 'Ordens de Trabalho (imprimir)', icon: 'fa-solid fa-print' }
+                        { id: 'ordens_trabalho', label: 'Ordens de Trabalho (imprimir)', icon: 'fa-print' }
                     ]
                 };
 
@@ -906,18 +904,7 @@ render();
                 };
                 const del = r => { const e = currentTab.value; for (const k in S) for (const f of S[k].f) if (f.t === 'ref' && f.e === e && db[k] && db[k].some(x => x[f.k] == r.id)) return alert('Registro em uso em "' + S[k].title + '". Não é possível excluir.'); if (confirm('Excluir ' + r.id + '?')) { db[e].splice(db[e].findIndex(x => x.id == r.id), 1); aud('EXCLUSAO', e + ' ' + r.id); } };
                 const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-                const ficha = r => {
-                    const s = sch.value, w = window.open('', '_blank');
-                    if (!w) return alert('Libere pop-ups para imprimir a ficha.');
-                    const rows = s.f.map(f => '<tr><td>' + f.l + '</td><td>' + esc(show(r, f)) + '</td></tr>').join('');
-                    const doc = w.document;
-                    doc.open();
-                    doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + s.title + '</title>');
-                    doc.write('<style>body{font:14px system-ui;padding:24px}table{border-collapse:collapse;width:100%}td{border:1px solid #999;padding:6px 8px}td:first-child{width:35%;background:#f2f2f2;font-weight:600}.s{display:flex;gap:30px;margin-top:70px}.s div{flex:1;border-top:1px solid #000;text-align:center;font-size:12px;padding-top:4px}</style>');
-                    doc.write('</'+'head><body><h2>HexaVale · ' + s.title + ' Nº ' + r.id + '</h2><table>' + rows + '</table>');
-                    doc.write('<div class="s"><div>Responsável técnico</div><div>Supervisor</div><div>Executor</div></div></'+'body></'+'html>');
-                    doc.close(); w.focus(); w.print();
-                };
+                const ficha = r => { const s = sch.value, w = window.open('', '_blank'); if (!w) return alert('Libere pop-ups para imprimir a ficha.'); w.document.write('<html><head><meta charset="utf-8"><title>' + s.title + '</title><style>body{font:14px system-ui;padding:24px}table{border-collapse:collapse;width:100%}td{border:1px solid #999;padding:6px 8px}td:first-child{width:35%;background:#f2f2f2;font-weight:600}.s{display:flex;gap:30px;margin-top:70px}.s div{flex:1;border-top:1px solid #000;text-align:center;font-size:12px;padding-top:4px}</style></head><body><h2>HexaVale · ' + s.title + ' Nº ' + r.id + '</h2><table>' + s.f.map(f => '<tr><td>' + f.l + '</td><td>' + esc(show(r, f)) + '</td></tr>').join('') + '</table><div class="s"><div>Responsável técnico</div><div>Supervisor</div><div>Executor</div></div></body></html>'); w.document.close(); w.focus(); w.print(); };
                 const csv = () => { const s = sch.value, L = [s.f.map(f => f.l), ...filtered.value.map(r => s.f.map(f => show(r, f)))], b = new Blob(['\ufeff' + L.map(l => l.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\n')], { type: 'text/csv' }), a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = currentTab.value + '.csv'; a.click(); };
                 const print = () => window.print();
 
@@ -977,12 +964,7 @@ render();
                     sidebarOpen, currentTab, currentTabTitle, nav, data, setTab, otSrc, db, S, sch, filtered, q, form, err, show, cls, openForm, save, del, ficha, csv, print, resetDb, kpi
                 };
             }
-        });
-        if (typeof Vue === 'undefined') {
-            document.body.insertAdjacentHTML('afterbegin', '<div style="padding:1rem;background:#fdeceb;color:#b3261e;font:14px system-ui"><b>Falha ao carregar Vue.</b> Este ERP precisa de internet para os CDNs (unpkg/jsdelivr).</div>');
-        } else {
-            app.mount('#app');
-        }
+        }).mount('#app');
     </script>
 </body>
 </html>

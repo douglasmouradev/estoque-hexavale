@@ -1,5 +1,6 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/larastan/larastan/extension.neon
 
 parameters:
     level: max
@@ -10,6 +11,17 @@ parameters:
         - tests/Unit
         - tests/Architecture
     excludePaths:
-        - tests/Feature
         - routes/console.php
+        - tests/Feature
     treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        # Eloquent/Auth usam APIs estáticas dinâmicas legítimas no Laravel
+        -
+            identifier: staticMethod.dynamicCall
+            path: app/*
+        -
+            identifier: staticMethod.dynamicCall
+            path: src/*/Infraestrutura/*
+        -
+            identifier: staticMethod.dynamicCall
+            path: tests/Unit/*

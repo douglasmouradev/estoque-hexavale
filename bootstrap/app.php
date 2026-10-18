@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\EnsureFazendaContext;
+use App\Http\Middleware\EnsurePermission;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +14,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'fazenda' => EnsureFazendaContext::class,
+            'perm' => EnsurePermission::class,
+        ]);
+        $middleware->redirectGuestsTo('/entrar');
+        $middleware->redirectUsersTo('/conta');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

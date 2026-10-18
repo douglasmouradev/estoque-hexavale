@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HexaVale ERP Agrícola</title>
+    
+    <!-- Tailwind CSS (config antes do CDN para gerar classes brand-*) -->
+    <script>
+        window.tailwind = window.tailwind || {};
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0',
+                            300: '#86efac', 400: '#4ade80', 500: '#22c55e',
+                            600: '#16a34a', 700: '#15803d', 800: '#166534',
+                            900: '#14532d', 950: '#052e16',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .fade-enter-active, .fade-leave-active { transition: opacity 0.2s ease; }
+        .fade-enter-from, .fade-leave-to { opacity: 0; }
+        
+        .hex-logo {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+    @media print{#app > aside, #app header{display:none!important}}
+    </style>
+</head>
+<body class="text-gray-800 antialiased h-screen flex overflow-hidden">
+
+    <template id="ot-src"><!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Hexavale · Ordens de Trabalho</title>
+<style>
+:root{--bg:#f4f6f3;--card:#fff;--tx:#1c2a1f;--mu:#667568;--bd:#dfe5dc;--ac:#1f6b3a;--ac2:#e6f2ea;--wa:#b26a00;--wab:#fff3dc;--er:#b3261e;--erb:#fdeceb;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121813;--card:#1b231d;--tx:#e8efe9;--mu:#9bab9e;--bd:#2d392f;--ac:#5fbf82;--ac2:#1f3326;--wa:#f0b44c;--wab:#352a12;--er:#f2877f;--erb:#3a1a18;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121813;--card:#1b231d;--tx:#e8efe9;--mu:#9bab9e;--bd:#2d392f;--ac:#5fbf82;--ac2:#1f3326;--wa:#f0b44c;--wab:#352a12;--er:#f2877f;--erb:#3a1a18;color-scheme:dark}
+html,body{height:100%;margin:0}*{box-sizing:border-box}
+body{font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+.app{display:flex;min-height:100%}.side{width:210px;background:var(--card);border-right:1px solid var(--bd);padding:16px 10px;flex:none}
+.logo{font-size:20px;font-weight:300;padding:0 8px 14px}.logo b{font-style:italic;color:var(--ac)}
+.side a{display:block;padding:9px 10px;border-radius:8px;color:var(--tx);cursor:pointer;margin-bottom:2px}.side a.on{background:var(--ac2);color:var(--ac);font-weight:600}
+.demo{margin:14px 6px 0;font-size:11px;color:var(--wa);background:var(--wab);padding:8px;border-radius:8px}
+main{flex:1;padding:20px;min-width:0;max-width:1100px}
+h1{font-size:20px;margin:0 0 14px}h2{font-size:15px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}.kpi{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}.kpi b{font-size:24px;display:block}.kpi span{color:var(--mu);font-size:12px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}th{font-size:12px;color:var(--mu);font-weight:600}
+tr.cl{cursor:pointer}tr.cl:hover{background:var(--ac2)}
+input,select,textarea{font:inherit;padding:7px 8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);max-width:100%}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.g label{font-size:12px;color:var(--mu);display:flex;flex-direction:column;gap:3px}
+button{font:inherit;padding:8px 14px;border-radius:8px;border:1px solid var(--ac);background:var(--ac);color:#fff;cursor:pointer}button.s{background:transparent;color:var(--ac)}button.d{background:transparent;border-color:var(--er);color:var(--er)}button:disabled{opacity:.4;cursor:not-allowed}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;background:var(--ac2);color:var(--ac)}.tag.w{background:var(--wab);color:var(--wa)}.tag.e{background:var(--erb);color:var(--er)}
+.al{padding:9px 12px;border-radius:8px;margin:8px 0;background:var(--wab);color:var(--wa)}.al.e{background:var(--erb);color:var(--er)}.al.o{background:var(--ac2);color:var(--ac)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bd);margin-bottom:14px;overflow-x:auto}.tabs a{padding:8px 12px;cursor:pointer;color:var(--mu);white-space:nowrap}.tabs a.on{color:var(--ac);border-bottom:2px solid var(--ac);font-weight:600}
+.doc{background:#fff;color:#111;border:1px solid var(--bd);border-radius:6px;padding:18px}.doc th,.doc td{border-bottom:1px solid #ddd;color:#111}.doc .h{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #1f6b3a;padding-bottom:8px;margin-bottom:10px}.doc .h b{font-size:18px}
+.sig{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;text-align:center;font-size:12px}.sig div{border-top:1px solid #111;padding-top:4px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:8px;display:none;z-index:9}
+@media(max-width:760px){.app{flex-direction:column}.side{width:auto;display:flex;flex-wrap:wrap;gap:4px;padding:8px}.logo{width:100%;padding:0 6px}.demo{display:none}main{padding:12px}}
+@media print{@page{size:A4;margin:12mm}.side,.tabs,.noprint,#toast{display:none!important}body{background:#fff}main{padding:0;max-width:none}.doc{border:0;padding:0}}
+</style></head><body><div class="app"><nav class="side noprint"><div class="logo">Hexa<b>vale</b></div>
+<a data-v="painel" onclick="go('painel')">Painel de ordens</a><a data-v="nova" onclick="newOrder()">Nova ordem</a><a data-v="estoque" onclick="go('estoque')">Produtos e estoque</a><a data-v="mov" onclick="go('mov')">Movimentações</a><a data-v="aud" onclick="go('aud')">Auditoria</a>
+<div class="demo">Dados demonstrativos. Sem integração com o estoque real: pontos de integração marcados no código (INTEGRAÇÃO).</div></nav><main id="m"></main></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),cv={kg:1,g:.001,L:1,mL:.001},cat=u=>u=='kg'||u=='g'?'m':'v';
+const f=(n,d=3)=>Number(n).toLocaleString('pt-BR',{maximumFractionDigits:d});
+const BASE='Bula demonstrativa';
+// INTEGRAÇÃO: substituir P, O e MOV por chamadas à API/estoque oficial da fazenda.
+const P=[
+{id:1,nome:'Amistar WG',ia:'Azoxistrobina 500 g/kg',cls:'Fungicida',lote:'AM-DEMO-01',u:'kg',saldo:18.5,res:0,b:{doc:'Bula Amistar WG',ver:'v. demo 2024-03',cult:['Manga'],fin:'Antracnose',dose:15,du:'g'}},
+{id:2,nome:'Curygen EC',ia:'Difenoconazol 250 g/L',cls:'Fungicida',lote:'CG-DEMO-07',u:'L',saldo:42,res:0,b:{doc:'Bula Curygen EC',ver:'v. demo 2023-11',cult:['Manga'],fin:'Antracnose',dose:50,du:'mL'}},
+{id:3,nome:'Fungicida X (sem bula)',ia:'—',cls:'Fungicida',lote:'FX-DEMO-02',u:'L',saldo:10,res:0,b:null},
+{id:4,nome:'Nitrato de Cálcio',ia:'Fertilizante 15,5% N',cls:'Fertilizante',lote:'NC-DEMO-05',u:'kg',saldo:800,res:0,b:null}];
+const pr=id=>P.find(p=>p.id==id);
+const O=[
+{id:'000125',tipo:'Pulverização',talhao:'N 03',cultura:'Manga',cultivar:'Kent',area:8.3,areaReal:null,calda:800,data:'2026-09-22',resp:'Carlos Silva',op:'João Ferreira Silva',equip:'Trator MF 4275 + Jacto Arbus 2.000',status:'liberada',baixa:false,ver:1,
+items:[{pid:1,dose:15,du:'g',real:null},{pid:2,dose:50,du:'mL',real:null}],
+abast:[['18:15','19:30',2000,2.5],['19:30','20:45',2000,2.5],['20:45','22:00',2000,2.5],['22:00','22:45',640,.8]],hist:[]},
+{id:'000126',tipo:'Adubação',talhao:'N 04',cultura:'Manga',cultivar:'Kent',area:6.2,areaReal:null,calda:0,data:'2026-09-25',resp:'Carlos Silva',op:'Equipe 2',equip:'Adubadora (demo)',status:'rascunho',baixa:false,ver:1,items:[{pid:4,dose:40,du:'kg',real:null}],abast:[],hist:[]}];
+Object.assign(O[0],{hora:'18:15',rt:'Carlos Silva',sup:'Raimundo Neto Rocha',fase:'Desenvolvimento de frutos',ciclo:'2026',plantas:2075,filas:30,filasCob:'1 a 30',colheita:'2026-11-11',tanque:2000,marcha:'1ª Reduzida',rpm:2000,pressao:'8',ponta:'MGA 04 Vermelho',reent:24,temp:35,umid:27,vento:13,chuva:4,maq:'Trator MF 4275'});
+let MOV=[];const S={v:'painel',oid:null,tab:'real',q:'',st:''};let D=null;
+const tl=o=>o.tipo=='Pulverização'?'Pulverização foliar':'Adubação de solo';
+const per=o=>o.tipo=='Pulverização'?'100 L':'ha';
+const qty=(o,it,a)=>{const p=pr(it.pid),k=it.dose*cv[it.du]/cv[p.u];return k*(o.tipo=='Pulverização'?a*o.calda/100:a)};
+const un=(n,u)=>f(n)+' '+u;
+function log(o,a,old,nw,why){o.hist.unshift({t:new Date().toLocaleString('pt-BR'),u:'Usuário demo',a,old:old??'—',nw:nw??'—',why:why||'—'})}
+function reserve(o,sg){o.items.forEach(i=>pr(i.pid).res+=sg*qty(o,i,o.area))}
+O.filter(o=>o.status=='liberada').forEach(o=>{reserve(o,1);log(o,'Ordem liberada (reserva de materiais)')});
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2600)}
+function go(v,id){S.v=v;if(id){S.oid=id;S.tab='real'}render()}
+function tag(s){const c={rascunho:'w',liberada:'',executada:'',cancelada:'e'}[s]||'';return`<span class="tag ${c}">${s}</span>`}
+// ---- documento técnico
+function ref(o,it){const p=pr(it.pid),b=p.b;if(!b)return{s:'Pendente de validação documental',c:'w',m:'Sem bula/ficha técnica anexada.'};
+if(!b.cult.includes(o.cultura))return{s:'Pendente de validação documental',c:'w',m:'Bula não cobre a cultura.'};
+if(cat(b.du)!=cat(p.u))return{s:'Pendente de validação documental',c:'w',m:'Unidades incompatíveis.'};
+const a=o.areaReal??o.area,rq=qty(o,{pid:it.pid,dose:b.dose,du:b.du},a);
+if(it.real==null||!o.baixa)return{s:'Aguardando confirmação',c:'w',rq,m:'Sem consumo real confirmado.'};
+const d=it.real-rq,pc=d/rq*100;return{s:Math.abs(pc)>5?'Divergente':'Sem divergência documental',c:Math.abs(pc)>5?'e':'',rq,d,pc,m:Math.abs(pc)>5?'Registrar justificativa técnica.':'Conferência documental apenas.'}}
+// ---- views
+function painel(){const l=O.filter(o=>(!S.st||o.status==S.st)&&(o.id+o.talhao+o.tipo).toLowerCase().includes(S.q.toLowerCase()));
+const pend=new Set();O.forEach(o=>o.items.forEach(i=>{if(!pr(i.pid).b)pend.add(i.pid)}));
+const low=P.filter(p=>p.saldo-p.res<p.saldo*.1).length;
+return`<h1>Painel de ordens de trabalho</h1><div class="kpis"><div class="kpi"><b>${O.filter(o=>['rascunho','liberada'].includes(o.status)).length}</b><span>Ordens abertas</span></div><div class="kpi"><b>${O.filter(o=>o.status=='executada').length}</b><span>Executadas</span></div><div class="kpi"><b>${pend.size}</b><span>Produtos com pendência documental</span></div><div class="kpi"><b>${low}</b><span>Alertas de estoque</span></div></div>
+<div class="card"><div class="bar noprint" style="margin:0 0 10px"><input placeholder="Pesquisar nº, talhão…" value="${S.q}" oninput="S.q=this.value;render(1)" id="q"><select onchange="S.st=this.value;render()"><option value="">Todos os status</option>${['rascunho','liberada','executada','cancelada'].map(s=>`<option value="${s}" ${S.st==s?'selected':''}>${s}</option>`)}</select><button onclick="newOrder()">+ Nova ordem</button></div>
+<div class="tw"><table><tr><th>Nº</th><th>Tipo</th><th>Talhão</th><th>Cultura</th><th>Área (ha)</th><th>Data</th><th>Status</th></tr>${l.map(o=>`<tr class="cl" onclick="go('ordem','${o.id}')"><td>${o.id}</td><td>${tl(o)}</td><td>${o.talhao}</td><td>${o.cultura} ${o.cultivar}</td><td>${f(o.area)}</td><td>${o.data.split('-').reverse().join('/')}</td><td>${tag(o.status)}</td></tr>`).join('')}</table></div></div>`}
+function estoque(){return`<h1>Produtos e estoque</h1>${EX()}<div class="card tw"><table><tr><th>Produto</th><th>Ingrediente ativo</th><th>Lote</th><th>Físico</th><th>Reservado</th><th>Disponível</th><th>Documentação</th></tr>${P.map(p=>`<tr><td>${p.nome}</td><td>${p.ia}</td><td>${p.lote}${p.val?' · val. '+p.val.split('-').reverse().join('/'):''}</td><td>${un(p.saldo,p.u)}</td><td>${un(p.res,p.u)}</td><td>${un(p.saldo-p.res,p.u)}</td><td>${p.b?`<span class="tag">${p.b.doc} · ${p.b.ver}</span>`:'<span class="tag w">Pendente de validação documental</span>'}</td></tr>`).join('')}</table></div>`}
+function mov(){return`<h1>Movimentações</h1><div class="card tw"><table><tr><th>Data/hora</th><th>Ordem</th><th>Produto</th><th>Lote</th><th>Tipo</th><th>Quantidade</th></tr>${MOV.map(m=>`<tr><td>${m.t}</td><td>${m.o}</td><td>${m.p}</td><td>${m.l}</td><td>${m.k}</td><td>${m.q}</td></tr>`).join('')||'<tr><td colspan="6">Nenhuma movimentação. Confirme a execução de uma ordem para gerar a baixa.</td></tr>'}</table></div>`}
+function aud(){return`<h1>Auditoria</h1>${O.map(o=>`<div class="card"><b>Ordem ${o.id}</b> ${tag(o.status)} <button class="s" style="float:right" onclick="go('ordem','${o.id}');S.tab='docB';render()">Relatório técnico</button><div style="margin-top:8px;color:var(--mu)">${o.items.map(i=>{const r=ref(o,i);return`${pr(i.pid).nome}: <span class="tag ${r.c}">${r.s}</span>`}).join(' &nbsp; ')}</div></div>`).join('')}`}
+function newOrder(){D={tipo:'Pulverização',items:[]};S.v='nova';render()}
+function nova(){const pu=D.tipo=='Pulverização',ps=P.filter(p=>pu?p.cls!='Fertilizante':p.cls=='Fertilizante');
+return`<h1>Nova ordem</h1><div class="card"><h2>Cadastro da ordem</h2><div class="g"><label>Tipo de ordem<select id="tipo" onchange="chT(this.value)"><option value="Pulverização" ${pu?'selected':''}>Pulverização foliar</option><option value="Adubação" ${pu?'':'selected'}>Adubação de solo</option></select></label><label>Nº da ordem<input disabled value="${nextId()}"></label><label>Status<input disabled value="rascunho"></label><label>Fazenda<input disabled value="Hexavale Tech Agro"></label></div></div>${FIELDS.map(s=>`<div class="card"><h2>${s[0]}</h2><div class="g">${s[1].filter(x=>pu||!x[4]).map(x=>`<label>${x[1]}<input id="${x[0]}" type="${x[2]}" ${x[2]=='number'?'step="any"':''} value="${x[3]}"></label>`).join('')}</div></div>`).join('')}
+<div class="card"><h2>Produtos</h2><div class="bar" style="margin:0 0 10px"><select id="pid">${ps.map(p=>`<option value="${p.id}">${p.nome} · ${p.lote} (${un(p.saldo-p.res,p.u)})</option>`)}</select><input id="dose" type="number" step="any" placeholder="Dose" style="width:90px"><select id="du">${['kg','g','L','mL'].map(u=>`<option>${u}</option>`)}</select><span style="align-self:center;color:var(--mu)">por ${pu?'100 L':'ha'}</span><button class="s" onclick="addItem()">Adicionar</button></div>
+<div class="tw"><table><tr><th>Produto</th><th>Dose</th><th>Qtd. planejada</th><th>Saldo</th></tr>${D.items.map(i=>{const p=pr(i.pid),o=dOrder(),q=qty(o,i,o.area);return`<tr><td>${p.nome}</td><td>${f(i.dose)} ${i.du}/${per(o)}</td><td>${un(q,p.u)}</td><td>${q>p.saldo-p.res?'<span class="tag e">Estoque insuficiente</span>':un(p.saldo-p.res,p.u)}</td></tr>`}).join('')}</table></div></div>
+<div class="bar"><button class="s" onclick="saveOrder('rascunho')">Salvar rascunho</button><button onclick="saveOrder('liberada')">Salvar e liberar</button></div>`}
+const v=id=>$('#'+id)?.value;
+const nextId=()=>String(Math.max(0,...O.map(o=>+o.id||0))+1).padStart(6,'0');
+const FIELDS=[['Identificação da área',[['talhao','Talhão','text','N 03'],['cultura','Cultura','text','Manga'],['cultivar','Variedade','text','Kent'],['area','Área total (ha)','number','8.3'],['plantas','Nº de plantas','number','2075'],['filas','Nº de filas','number','30'],['filasCob','Filas cobertas','text','1 a 30'],['fase','Estágio fenológico','text','Desenvolvimento de frutos'],['ciclo','Ciclo','text','2026']]],
+['Programação e responsáveis',[['data','Data da execução','date','2026-10-17'],['hora','Horário previsto','time','18:00'],['colheita','Data prevista da colheita','date',''],['resp','Emitida por','text','Carlos Silva'],['rt','Responsável técnico','text','Carlos Silva'],['sup','Supervisor','text',''],['op','Operador / aplicador','text','João Ferreira Silva']]],
+['Equipamento e operação',[['maq','Máquina (trator)','text','Trator MF 4275'],['equip','Implemento','text','Jacto Arbus 2.000'],['tanque','Capacidade do tanque (L)','number','2000','p'],['calda','Volume de calda (L/ha)','number','800','p'],['marcha','Marcha','text','1ª Reduzida','p'],['rpm','RPM','number','2000','p'],['pressao','Pressão','text','8','p'],['ponta','Ponta de pulverização','text','MGA 04 Vermelho','p']]],
+['Reentrada e condições climáticas',[['reent','Intervalo de reentrada (h)','number','24','p'],['temp','Temperatura (°C)','number','','p'],['umid','Umidade relativa (%)','number','','p'],['vento','Vento (km/h)','number','','p'],['chuva','Chuva prevista (%)','number','','p']]],
+['Observações',[['obs','Observações','text','']]]];
+const FK=()=>FIELDS.flatMap(s=>s[1].map(x=>x[0]));
+function snap(){D.keep={};FK().forEach(k=>{if($('#'+k))D.keep[k]=v(k)})}
+function rest(){Object.entries(D.keep||{}).forEach(([k,x])=>{if($('#'+k))$('#'+k).value=x})}
+function chT(x){snap();D.tipo=x;D.items=[];render();rest()}
+const API_BASE='';// INTEGRAÇÃO: URL da API do estoque oficial (recebe POST /movimentacoes com chave de idempotência em m.key)
+const nowS=()=>new Date().toLocaleString('pt-BR');
+function save(){try{localStorage.setItem('hx',JSON.stringify({P,O,MOV}))}catch(e){}}
+async function postMov(m){if(!API_BASE)return;try{const r=await fetch(API_BASE+'/movimentacoes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(m)});if(!r.ok)throw 0}catch(e){toast('Falha ao enviar ao estoque oficial')}}
+MOV.unshift=function(m){m.key=m.key||[m.o,m.p,m.l,m.k].join('|');postMov(m);return Array.prototype.unshift.call(this,m)};
+function resetDemo(){try{localStorage.removeItem('hx')}catch(e){}location.reload()}
+function EX(){const ok=!!API_BASE,opt=P.map(p=>`<option value="${p.id}">${p.nome} · ${p.lote}</option>`).join('');
+return`<div class="al ${ok?'o':''}">${ok?'Integrado a '+API_BASE:'Modo demonstração: nenhuma API de estoque configurada (API_BASE). Saldos e movimentações ficam salvos só neste navegador.'}</div>
+<details class="card"><summary><b>Entrada de produto / lote</b></summary><div class="g" style="margin-top:10px"><label>Produto base<select id="eb">${opt}</select></label><label>Lote<input id="el"></label><label>Validade<input id="ev" type="date"></label><label>Quantidade<input id="eq" type="number" step="any"></label><label>NF / documento<input id="en"></label></div><div class="bar"><button onclick="entrada()">Registrar entrada</button></div></details>
+<details class="card"><summary><b>Cadastrar novo produto</b></summary><div class="g" style="margin-top:10px"><label>Nome comercial<input id="np"></label><label>Ingrediente ativo<input id="ni"></label><label>Classe<select id="nc"><option>Fungicida</option><option>Inseticida</option><option>Herbicida</option><option>Acaricida</option><option>Fertilizante</option></select></label><label>Unidade de estoque<select id="nu"><option>kg</option><option>L</option></select></label><label>Lote<input id="nl"></label><label>Validade<input id="nv" type="date"></label><label>Saldo inicial<input id="ns" type="number" step="any"></label></div><div class="bar"><button onclick="novoProd()">Cadastrar</button></div></details>
+<details class="card"><summary><b>Ajuste de inventário</b></summary><div class="g" style="margin-top:10px"><label>Produto / lote<select id="ap">${opt}</select></label><label>Contagem física<input id="ac" type="number" step="any"></label><label>Motivo (obrigatório)<input id="am"></label></div><div class="bar"><button onclick="ajustar()">Registrar ajuste</button><button class="s" onclick="resetDemo()">Restaurar dados demonstrativos</button></div></details>`}
+function entrada(){const b=pr(v('eb')),l=v('el').trim(),q=parseFloat(v('eq'));if(!l||!(q>0))return toast('Informe lote e quantidade.');
+let p=P.find(x=>x.nome==b.nome&&x.lote==l);if(p)p.saldo+=q;else{p={...b,id:Math.max(...P.map(x=>x.id))+1,lote:l,val:v('ev'),saldo:q,res:0};P.push(p)}
+MOV.unshift({t:nowS(),o:v('en')||'—',p:p.nome,l,k:'Entrada',q:'+ '+un(q,p.u)});render();toast('Entrada registrada.')}
+function novoProd(){const n=v('np').trim(),l=v('nl').trim(),q=parseFloat(v('ns'))||0;if(!n||!l)return toast('Informe nome e lote.');
+const p={id:Math.max(...P.map(x=>x.id))+1,nome:n,ia:v('ni')||'—',cls:v('nc'),lote:l,val:v('nv'),u:v('nu'),saldo:q,res:0,b:null};P.push(p);
+if(q>0)MOV.unshift({t:nowS(),o:'Saldo inicial',p:n,l,k:'Entrada',q:'+ '+un(q,p.u)});render();toast('Produto cadastrado: pendente de validação documental.')}
+function ajustar(){const p=pr(v('ap')),c=parseFloat(v('ac')),w=v('am').trim();if(!(c>=0)||!w)return toast('Informe a contagem e o motivo.');if(c<p.res)return toast('Contagem menor que o saldo reservado.');
+const d=c-p.saldo;if(!d)return toast('Sem diferença.');p.saldo=c;MOV.unshift({t:nowS(),o:'Inventário',p:p.nome,l:p.lote,k:'Ajuste de inventário',q:(d>0?'+ ':'− ')+un(Math.abs(d),p.u)+' · '+w});render();toast('Ajuste registrado.')}
+function corrigir(id,n){const o=O.find(x=>x.id==id),i=o.items[n],p=pr(i.pid),nq=parseFloat(prompt('Nova quantidade real de '+p.nome+' ('+p.u+'):'));if(!(nq>0))return;const w=(prompt('Motivo da correção:')||'').trim();if(!w)return toast('Motivo obrigatório.');
+const d=nq-i.real;if(d>p.saldo)return toast('Saldo físico insuficiente para a correção.');p.saldo-=d;
+MOV.unshift({t:nowS(),o:o.id,p:p.nome,l:p.lote,k:'Ajuste de correção',q:(d>0?'− ':'+ ')+un(Math.abs(d),p.u)+' · '+w});log(o,'Correção da quantidade real: '+p.nome,un(i.real,p.u),un(nq,p.u),w);i.real=nq;o.ver++;render();toast('Correção registrada com movimentação de ajuste.')}
+function dOrder(){return{tipo:D.tipo,area:parseFloat(v('area'))||0,calda:parseFloat(v('calda'))||0}}
+function addItem(){const p=pr(v('pid')),dose=parseFloat(v('dose')),du=v('du');
+if(!(dose>0))return toast('Informe a dose.');if(p.val&&p.val<new Date().toISOString().slice(0,10))return toast('Lote vencido: uso bloqueado.');if(cat(du)!=cat(p.u))return toast('Unidade incompatível com o produto ('+p.u+'): só massa↔massa ou volume↔volume.');
+snap();D.items.push({pid:p.id,dose,du,real:null});render();rest()}
+function saveOrder(st){const k={};FK().forEach(x=>k[x]=v(x)??'');
+if(!k.talhao||!k.cultura||!k.data||!(parseFloat(k.area)>0)||!D.items.length)return toast('Preencha talhão, cultura, data, área e ao menos um produto.');
+const o={...k,id:nextId(),tipo:D.tipo,area:parseFloat(k.area),areaReal:null,calda:parseFloat(k.calda)||0,status:st,baixa:false,ver:1,items:D.items,abast:[],hist:[]};
+O.push(o);log(o,st=='liberada'?'Ordem criada':'Ordem criada como rascunho');if(st=='liberada'){const bad=o.items.find(i=>qty(o,i,o.area)>pr(i.pid).saldo-pr(i.pid).res);if(bad){o.status='rascunho';toast('Estoque insuficiente em '+pr(bad.pid).nome+': salva como rascunho.')}else{reserve(o,1);log(o,'Ordem liberada (reserva de materiais)','rascunho','liberada')}}go('ordem',o.id)}
+function liberar(id){const o=O.find(x=>x.id==id);if(o.status!=='rascunho')return toast('Só é possível liberar ordens em rascunho.');const bad=o.items.find(i=>qty(o,i,o.area)>pr(i.pid).saldo-pr(i.pid).res);if(bad)return toast('Estoque disponível insuficiente: '+pr(bad.pid).nome);o.status='liberada';reserve(o,1);log(o,'Ordem liberada (reserva de materiais)','rascunho','liberada');render()}
+function cancelar(id){const o=O.find(x=>x.id==id);const w=prompt('Motivo do cancelamento:');if(!w)return;if(o.status=='liberada')reserve(o,-1);log(o,'Ordem cancelada',o.status,'cancelada',w);o.status='cancelada';render()}
+function confirmar(id){const o=O.find(x=>x.id==id);if(o.baixa)return toast('Baixa já realizada para esta execução.');
+const a=o.areaReal??o.area;for(const i of o.items){const p=pr(i.pid),r=i.real??qty(o,i,a);if(!(r>0))return toast('Quantidade real inválida.');if(r>p.saldo)return toast('Saldo físico insuficiente: '+p.nome)}
+if(!(a>0&&a<=o.area))return toast('Área tratada deve estar entre 0 e a área planejada.');
+o.baixa=true;reserve(o,-1);o.areaReal=a; // INTEGRAÇÃO: uma única baixa na fonte oficial, com chave de idempotência
+o.items.forEach(i=>{const p=pr(i.pid);i.real=i.real??qty(o,i,a);p.saldo-=i.real;MOV.unshift({t:new Date().toLocaleString('pt-BR'),o:o.id,p:p.nome,l:p.lote,k:'Baixa por consumo real',q:'− '+un(i.real,p.u)});log(o,'Consumo real confirmado e baixa efetuada: '+p.nome,'—',un(i.real,p.u))});
+o.status='executada';render();toast('Execução confirmada. Baixa única registrada.')}
+function setReal(id,k,x){const o=O.find(z=>z.id==id);x=parseFloat(x);if(k=='a'){log(o,'Área tratada alterada',o.areaReal??o.area,x,'Registro de campo');o.areaReal=x}else{const i=o.items[k];log(o,'Quantidade real alterada: '+pr(i.pid).nome,i.real??'—',x,'Registro de campo');i.real=x}render()}
+function ordem(){const o=O.find(x=>x.id==S.oid),T=[['real','Operação real'],['tec','Informações técnicas'],['docA','Documento A'],['docB','Documento B'],['hist','Histórico']];
+return`<div class="noprint"><a onclick="go('painel')" style="cursor:pointer;color:var(--ac)">← Painel</a></div><h1>Ordem ${o.id} · ${tl(o)} ${tag(o.status)}</h1><div class="tabs">${T.map(t=>`<a class="${S.tab==t[0]?'on':''}" onclick="S.tab='${t[0]}';render()">${t[1]}</a>`).join('')}</div>${({real:tReal,tec:tTec,docA:dA,docB:dB,hist:tHist})[S.tab](o)}`}
+function head(o){return`<div class="g" style="margin-bottom:12px"><div><small>Talhão</small><br><b>${o.talhao}</b></div><div><small>Cultura</small><br><b>${o.cultura} ${o.cultivar}</b></div><div><small>Área planejada</small><br><b>${f(o.area)} ha</b></div><div><small>Data</small><br><b>${o.data.split('-').reverse().join('/')}</b></div><div><small>Equipamento</small><br><b>${o.equip}</b></div><div><small>Responsável</small><br><b>${o.resp}</b></div>${[['Resp. técnico',o.rt],['Supervisor',o.sup],['Aplicador',o.op],['Horário',o.hora],['Estágio',o.fase],['Ciclo',o.ciclo],['Plantas',o.plantas],['Filas',o.filas?o.filas+(o.filasCob?' ('+o.filasCob+')':''):''],['Colheita prevista',o.colheita?o.colheita.split('-').reverse().join('/'):''],['Tanque',o.tanque?o.tanque+' L':''],['Marcha / RPM / pressão',[o.marcha,o.rpm,o.pressao].filter(Boolean).join(' / ')],['Ponta',o.ponta],['Reentrada',o.reent?o.reent+' h':''],['Clima',o.temp?o.temp+'°C · UR '+o.umid+'% · vento '+o.vento+' km/h · chuva '+o.chuva+'%':''],['Observações',o.obs]].filter(x=>x[1]).map(x=>`<div><small>${x[0]}</small><br><b>${x[1]}</b></div>`).join('')}</div>`}
+function tReal(o){const a=o.areaReal??o.area,ed=o.status=='liberada',vol=o.tipo=='Pulverização';
+return`<div class="card">${head(o)}${vol?`<p>Volume planejado: <b>${f(o.area*o.calda,0)} L</b> (${f(o.calda,0)} L/ha)</p>`:''}
+<label style="font-size:12px;color:var(--mu)">Área efetivamente tratada (ha)<br><input type="number" step="0.1" value="${a}" ${ed?'':'disabled'} onchange="setReal('${o.id}','a',this.value)"></label>
+<div class="tw" style="margin-top:10px"><table><tr><th>Produto</th><th>Lote</th><th>Dose ref. (bula)</th><th>Dose planejada</th><th>Qtd. planejada</th><th>Qtd. real</th><th>Dif.</th><th>Saldo</th></tr>${o.items.map((i,n)=>{const p=pr(i.pid),pl=qty(o,i,o.area),rl=i.real??qty(o,i,a),d=rl-pl,r=ref(o,i);
+return`<tr><td>${p.nome}</td><td>${p.lote}</td><td>${p.b?f(p.b.dose)+' '+p.b.du:'<span class="tag w">pendente</span>'}</td><td>${f(i.dose)} ${i.du}/${per(o)}</td><td>${un(pl,p.u)}</td><td><input type="number" step="any" style="width:90px" value="${+rl.toFixed(4)}" ${ed?'':'disabled'} onchange="setReal('${o.id}',${n},this.value)"> ${p.u}</td><td>${Math.abs(d)<1e-9?'—':(d>0?'+':'')+f(d)}</td><td>${pl>p.saldo-p.res+(o.baixa?0:pl)?'<span class="tag e">insuficiente</span>':un(p.saldo-p.res,p.u)}</td></tr>`}).join('')}</table></div>
+${o.items.some(i=>!pr(i.pid).b)?'<div class="al">Há produto sem documentação técnica: ele aparecerá como “Pendente de validação documental” no Documento B.</div>':''}
+${o.baixa?'<div class="al o">Baixa real já efetuada. Documentos A e B não geram nova baixa.</div>':'<div class="al">A emissão da ordem não movimenta o estoque: a baixa ocorre só na confirmação da execução.</div>'}
+<div class="bar noprint"><button class="s" onclick="S.tab='docA';render();setTimeout(print,150)">Imprimir ordem</button>${o.status=='rascunho'?`<button onclick="liberar('${o.id}')">Liberar</button>`:''}${ed?`<button id="cf" onclick="this.disabled=true;confirmar('${o.id}')">Confirmar execução e baixar estoque</button>`:''}${['rascunho','liberada'].includes(o.status)?`<button class="d" onclick="cancelar('${o.id}')">Cancelar</button>`:''}${o.baixa?o.items.map((i,n)=>`<button class="s" onclick="corrigir('${o.id}',${n})">Corrigir ${pr(i.pid).nome}</button>`).join(''):''}<button class="s" onclick="S.tab='docA';render()">Documento A</button></div></div>`}
+function tTec(o){return`<div class="card tw"><table><tr><th>Produto</th><th>Ingrediente ativo</th><th>Documento</th><th>Versão</th><th>Culturas</th><th>Finalidade</th><th>Situação</th></tr>${o.items.map(i=>{const p=pr(i.pid),b=p.b;return`<tr><td>${p.nome}</td><td>${p.ia}</td><td>${b?b.doc:'—'}</td><td>${b?b.ver:'—'}</td><td>${b?b.cult.join(', '):'—'}</td><td>${b?b.fin:'—'}</td><td>${b?'<span class="tag">Documento anexado</span>':'<span class="tag w">Pendente de validação documental</span>'}</td></tr>`}).join('')}</table><p style="color:var(--mu)">Doses de referência nunca substituem a dose real nem geram baixa.</p></div>`}
+function dHead(o,t,sub){return`<div class="h"><div><b>Hexa<i>vale</i></b><br><small>Hexavale Tech Agro Desenvolvimento Ltda · CNPJ 65.852.328/0001-81</small></div><div style="text-align:center"><b>${t}</b><br><small>${sub}</small></div><div style="text-align:right"><b>Nº ${o.id}</b><br><small>Versão ${o.ver} · emitido em ${new Date().toLocaleString('pt-BR')}</small></div></div><p style="font-size:13px">Talhão <b>${o.talhao}</b> · ${o.cultura} ${o.cultivar} · Área planejada ${f(o.area)} ha · Área tratada ${o.areaReal!=null?f(o.areaReal)+' ha':'— (não confirmada)'} · Data ${o.data.split('-').reverse().join('/')}</p>`}
+function sigs(o){return`<div class="sig"><div>${o.resp}<br>Responsável técnico</div><div>Raimundo Neto Rocha<br>Supervisor</div><div>${o.op}<br>Aplicador</div></div>`}
+function dA(o){const a=o.areaReal??o.area;return`<div class="noprint bar" style="margin:0 0 10px"><button onclick="print()">Imprimir / salvar PDF</button></div><div class="doc">${dHead(o,'Ordem de '+tl(o),o.baixa?'Dados efetivamente executados':'Ordem de campo · valores planejados')}
+${o.baixa?'':'<div class="al">Execução ainda não confirmada: valores abaixo são os planejados.</div>'}
+<table><tr><th>Produto</th><th>Lote</th><th>Dose real (${per(o)})</th><th>Qtd. real</th><th>Mov. estoque</th></tr>${o.items.map(i=>{const p=pr(i.pid),r=i.real??qty(o,i,a);return`<tr><td>${p.nome}</td><td>${p.lote}</td><td>${f(r/ (o.tipo=='Pulverização'?a*o.calda/100:a)/cv[i.du]*cv[p.u]/1,3)} ${i.du}</td><td>${un(r,p.u)}</td><td>${o.baixa?'Baixa efetuada':'Sem baixa'}</td></tr>`}).join('')}</table>
+${o.abast.length?`<h2 style="margin-top:14px">Controle de abastecimentos</h2><table><tr><th>#</th><th>Início</th><th>Fim</th><th>Volume (L)</th><th>Área (ha)</th></tr>${o.abast.map((b,n)=>`<tr><td>${n+1}</td><td>${b[0]}</td><td>${b[1]}</td><td>${f(b[2],0)}</td><td>${f(b[3])}</td></tr>`).join('')}<tr><td colspan="3"><b>Total</b></td><td><b>${f(o.abast.reduce((s,b)=>s+b[2],0),0)}</b></td><td><b>${f(o.abast.reduce((s,b)=>s+b[3],0))}</b></td></tr></table>`:''}${sigs(o)}</div>`}
+function dB(o){return`<div class="noprint bar" style="margin:0 0 10px"><button onclick="print()">Imprimir / salvar PDF</button></div><div class="doc">${dHead(o,'Relatório Técnico de Referência','Conferência documental · não é prova de conformidade')}
+<table><tr><th>Produto</th><th>Documento / versão</th><th>Dose ref.</th><th>Qtd. ref.</th><th>Qtd. real</th><th>Diferença</th><th>Situação</th></tr>${o.items.map(i=>{const p=pr(i.pid),b=p.b,r=ref(o,i);return`<tr><td>${p.nome}</td><td>${b?b.doc+' · '+b.ver:'—'}</td><td>${b?f(b.dose)+' '+b.du+'/'+per(o):'—'}</td><td>${r.rq!=null?un(r.rq,p.u):'—'}</td><td>${o.baixa&&i.real!=null?un(i.real,p.u):'—'}</td><td>${r.d!=null?(r.d>0?'+':'')+f(r.d)+' '+p.u+' ('+f(r.pc,1)+'%)':'—'}</td><td>${r.s}${r.c=='e'?' ⚠':''}</td></tr>`}).join('')}</table>
+${o.items.filter(i=>ref(o,i).c=='e').map(i=>`<div class="al e">Divergência em ${pr(i.pid).nome}: registrar ocorrência e justificativa técnica.</div>`).join('')}
+<p style="font-size:12px">Fonte: cadastro técnico demonstrativo · consulta em ${new Date().toLocaleDateString('pt-BR')}. Valores de referência não substituem o registro real nem geram baixa de estoque.</p>${sigs(o)}</div>`}
+function tHist(o){return`<div class="card tw"><table><tr><th>Data/hora</th><th>Usuário</th><th>Evento</th><th>Anterior</th><th>Novo</th><th>Motivo</th></tr>${o.hist.map(h=>`<tr><td>${h.t}</td><td>${h.u}</td><td>${h.a}</td><td>${h.old}</td><td>${h.nw}</td><td>${h.why}</td></tr>`).join('')||'<tr><td colspan="6">Sem eventos.</td></tr>'}</table></div>`}
+const V={painel,estoque,mov,aud,nova,ordem};
+function render(keep){save();document.querySelectorAll('.side a[data-v]').forEach(a=>a.classList.toggle('on',a.dataset.v==S.v||(S.v=='ordem'&&a.dataset.v=='painel')));$('#m').innerHTML=V[S.v]();if(keep){const q=$('#q');if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length)}}}
+try{const d=JSON.parse(localStorage.getItem('hx')||'null');if(d&&d.P){P.splice(0,P.length,...d.P);O.splice(0,O.length,...d.O);MOV.splice(0,MOV.length,...d.MOV)}}catch(e){}
+render();
+</script></body></html>
+</template>
+    <div id="app" class="w-full h-full flex overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside :class="['bg-brand-950 text-gray-300 w-64 flex-shrink-0 absolute md:relative z-30 h-full transition-transform duration-300 flex flex-col shadow-xl md:shadow-none', sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0']">
+            <!-- Brand Logo -->
+            <div class="h-16 flex items-center px-6 border-b border-brand-900 bg-brand-900/50">
+                <div class="w-8 h-8 bg-brand-500 hex-logo flex items-center justify-center mr-3 shadow-lg shadow-brand-500/30">
+                    <i class="fa-solid fa-leaf text-white text-xs"></i>
+                </div>
+                <span class="text-xl font-bold tracking-wider text-white">HexaVale</span>
+                <button @click="sidebarOpen = false" class="md:hidden ml-auto text-gray-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex-1 overflow-y-auto py-6 px-4 space-y-6">
+                <!-- Group 1 -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Suprimentos</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.suprimentos" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group 2 -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Estoque</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.estoque" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group cadastros -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Cadastros</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.cadastros" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group lancamentos -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Lançamentos</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.lancamentos" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group relatorios -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Relatórios</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.relatorios" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Group 3 -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Operações & Gestão</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.operacoes" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- User -->
+            <div class="border-t border-brand-900 p-4 bg-brand-900/20">
+                <div class="flex items-center">
+                    <div class="w-9 h-9 rounded-full bg-brand-700 flex justify-center items-center text-white font-bold border border-brand-500 text-sm">JS</div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-white">João Silva</p>
+                        <p class="text-[11px] text-brand-400">Gestor de Operações</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Overlay -->
+        <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-brand-950/60 z-20 md:hidden backdrop-blur-sm"></div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50">
+            
+            <!-- Header -->
+            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 z-10 shadow-sm flex-shrink-0">
+                <div class="flex items-center">
+                    <button @click="sidebarOpen = true" class="md:hidden text-gray-500 hover:text-brand-600 mr-4 transition focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <h2 class="text-lg font-semibold text-gray-800">{{ currentTabTitle }}</h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative hidden sm:block">
+                        <input type="text" placeholder="Buscar..." class="pl-9 pr-4 py-1.5 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 w-64 bg-gray-50 transition">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400 text-xs"></i>
+                    </div>
+                    <button class="relative text-gray-500 hover:text-brand-600 transition p-2 rounded-full hover:bg-gray-100">
+                        <i class="fa-regular fa-bell text-lg"></i>
+                        <span class="absolute top-1.5 right-1.5 bg-red-500 text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center border border-white">4</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable View Area -->
+            <main class="flex-1 overflow-y-auto p-4 lg:p-8">
+                <div class="max-w-7xl mx-auto">
+                    <transition name="fade" mode="out-in">
+                        
+                        <div v-if="S[currentTab]" :key="currentTab" class="space-y-4">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="p-4 border-b border-gray-200 flex flex-wrap gap-2 justify-between items-center bg-gray-50/50">
+                                    <h2 class="font-semibold text-gray-800">{{ sch.title }} <span class="text-xs text-gray-400">({{ filtered.length }})</span></h2>
+                                    <div class="flex flex-wrap gap-2">
+                                        <input v-model="q" placeholder="Filtrar..." class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm">
+                                        <button @click="csv()" class="border border-gray-300 text-gray-600 px-3 py-1.5 rounded-lg text-sm"><i class="fa-solid fa-file-csv mr-1"></i>CSV</button>
+                                        <button @click="print()" class="border border-gray-300 text-gray-600 px-3 py-1.5 rounded-lg text-sm"><i class="fa-solid fa-print mr-1"></i>Lista</button>
+                                        <button v-if="!sch.ro" @click="openForm()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium"><i class="fa-solid fa-plus mr-1"></i>Novo</button>
+                                    </div>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-sm">
+                                        <thead class="bg-gray-50 text-gray-500 text-xs uppercase"><tr><th class="p-3">Cód.</th><th v-for="x in sch.f" :key="x.k" class="p-3 whitespace-nowrap">{{ x.l }}</th><th v-if="!sch.ro" class="p-3"></th></tr></thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            <tr v-for="r in filtered" :key="r.id" class="hover:bg-gray-50">
+                                                <td class="p-3 font-mono text-xs text-gray-500">{{ r.id }}</td>
+                                                <td v-for="x in sch.f" :key="x.k" class="p-3 whitespace-nowrap"><span v-if="x.b" :class="['px-2 py-0.5 rounded-full text-xs', cls(r[x.k])]">{{ show(r,x) }}</span><span v-else>{{ show(r,x) }}</span></td>
+                                                <td v-if="!sch.ro" class="p-3 whitespace-nowrap text-right">
+                                                    <button v-for="a in (sch.acts || []).filter(a => a.show(r))" :key="a.l" @click="a.fn(r)" class="text-xs bg-brand-600 text-white px-2 py-1 rounded mr-2">{{ a.l }}</button>
+                                                    <button @click="ficha(r)" title="Imprimir ficha" class="text-gray-400 hover:text-brand-600 mr-2"><i class="fa-solid fa-print"></i></button>
+                                                    <button @click="openForm(r)" title="Editar" class="text-gray-400 hover:text-blue-600 mr-2"><i class="fa-solid fa-pen"></i></button>
+                                                    <button @click="del(r)" title="Excluir" class="text-gray-400 hover:text-red-600"><i class="fa-solid fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr v-if="!filtered.length"><td :colspan="sch.f.length+2" class="p-6 text-center text-gray-400">Nenhum registro.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="p-3 text-right"><button @click="resetDb()" class="text-xs text-gray-400 hover:text-red-500">Restaurar dados de exemplo</button></div>
+                            </div>
+                            <div v-if="form" class="fixed inset-0 z-40 bg-black/50 flex items-center justify-center p-4">
+                                <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-full overflow-y-auto p-6">
+                                    <h3 class="font-semibold text-lg mb-4">{{ form.id ? 'Editar ' + form.id : 'Novo registro' }} · {{ sch.title }}</h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <template v-for="x in sch.f" :key="x.k">
+                                            <label v-if="x.t !== 'calc'" :class="['text-xs text-gray-500 flex flex-col gap-1', x.t === 'area' ? 'sm:col-span-2' : '']">{{ x.l }}<span v-if="x.req" class="text-red-500 inline">*</span>
+                                                <select v-if="x.t === 'ref'" v-model="form[x.k]" class="border border-gray-300 rounded-lg px-2 py-2 text-sm text-gray-800"><option value=""></option><option v-for="o in db[x.e]" :key="o.id" :value="o.id">{{ o.nome }}</option></select>
+                                                <select v-else-if="x.t === 'sel'" v-model="form[x.k]" class="border border-gray-300 rounded-lg px-2 py-2 text-sm text-gray-800"><option v-for="o in x.o" :key="o" :value="o">{{ o }}</option></select>
+                                                <textarea v-else-if="x.t === 'area'" v-model="form[x.k]" rows="3" class="border border-gray-300 rounded-lg px-2 py-2 text-sm text-gray-800"></textarea>
+                                                <input v-else :type="{num:'number',money:'number',date:'date'}[x.t] || 'text'" step="any" v-model="form[x.k]" class="border border-gray-300 rounded-lg px-2 py-2 text-sm text-gray-800">
+                                            </label>
+                                        </template>
+                                    </div>
+                                    <p v-if="err" class="mt-3 text-sm text-red-600">{{ err }}</p>
+                                    <div class="flex justify-end gap-2 mt-5"><button @click="form = null; err = ''" class="px-4 py-2 rounded-lg border border-gray-300 text-sm">Cancelar</button><button @click="save()" class="px-4 py-2 rounded-lg bg-brand-600 text-white text-sm font-medium">Salvar</button></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'dashboard'" key="dashboard" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+                                    <p class="text-sm font-medium text-gray-500">Estoque Total</p>
+                                    <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ kpi.valor }}</h3>
+                                    <p class="text-xs text-brand-600 mt-2 flex items-center"><i class="fa-solid fa-arrow-trend-up mr-1"></i> valor do estoque calculado</p>
+                                </div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+                                    <p class="text-sm font-medium text-gray-500">Pedidos p/ aprovar</p>
+                                    <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ kpi.ped }}</h3>
+                                    <p class="text-xs text-amber-600 mt-2 flex items-center"><i class="fa-solid fa-clock mr-1"></i> aguardando aprovação</p>
+                                </div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+                                    <p class="text-sm font-medium text-gray-500">Ordens agrícolas abertas</p>
+                                    <h3 class="text-2xl font-bold text-gray-900 mt-1">{{ kpi.oa }}</h3>
+                                    <p class="text-xs text-blue-600 mt-2 flex items-center"><i class="fa-solid fa-wrench mr-1"></i> liberadas ou em execução</p>
+                                </div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm border-l-4 border-l-red-500">
+                                    <p class="text-sm font-medium text-gray-500">Alertas de Estoque</p>
+                                    <h3 class="text-2xl font-bold text-red-600 mt-1">{{ kpi.alert }}</h3>
+                                    <p class="text-xs text-red-500 mt-2 flex items-center"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Abaixo do mínimo</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm lg:col-span-2">
+                                    <h2 class="text-base font-semibold text-gray-800 mb-4">Movimentação Financeira (Insumos)</h2>
+                                    <div class="relative h-72 w-full"><canvas id="barChart"></canvas></div>
+                                </div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+                                    <h2 class="text-base font-semibold text-gray-800 mb-4">Custo por Talhão</h2>
+                                    <div class="relative h-56 w-full flex justify-center items-center"><canvas id="doughnutChart"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'cotacoes'" key="cotacoes">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="p-5 border-b border-gray-200 flex justify-between items-center bg-gray-50/50">
+                                    <h2 class="font-semibold text-gray-800">Cotações em Andamento</h2>
+                                    <button class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm"><i class="fa-solid fa-plus mr-2"></i>Nova Cotação</button>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left">
+                                        <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                                            <tr><th class="p-4">Nº</th><th class="p-4">Descrição</th><th class="p-4">Data Limite</th><th class="p-4">Melhor Fornecedor</th><th class="p-4">Valor (R$)</th><th class="p-4">Status</th></tr>
+                                        </thead>
+                                        <tbody class="text-sm divide-y divide-gray-100">
+                                            <tr v-for="item in data.cotacoes" :key="item.id" class="hover:bg-gray-50">
+                                                <td class="p-4 font-mono font-medium text-brand-600">{{ item.id }}</td>
+                                                <td class="p-4">{{ item.desc }}</td>
+                                                <td class="p-4">{{ item.data }}</td>
+                                                <td class="p-4">{{ item.fornecedor }}</td>
+                                                <td class="p-4 font-medium">{{ item.valor }}</td>
+                                                <td class="p-4"><span :class="['px-2.5 py-1 rounded-md text-xs font-semibold border', item.statusClass]">{{ item.status }}</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'aprovacoes'" key="aprovacoes" class="space-y-4">
+                            <h2 class="text-lg font-semibold text-gray-800 mb-2">Aguardando sua Aprovação</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <div v-for="req in data.aprovacoes" :key="req.id" class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition">
+                                    <div class="flex justify-between items-start mb-3">
+                                        <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded">{{ req.id }}</span>
+                                        <span class="text-sm font-bold text-gray-900">{{ req.valor }}</span>
+                                    </div>
+                                    <h3 class="font-medium text-gray-800 mb-1">{{ req.desc }}</h3>
+                                    <p class="text-xs text-gray-500 mb-4"><i class="fa-regular fa-user mr-1"></i> Solicitante: {{ req.solicitante }}</p>
+                                    <div class="flex space-x-2 border-t pt-4">
+                                        <button class="flex-1 bg-green-50 text-green-700 hover:bg-green-600 hover:text-white py-2 rounded-lg text-sm font-medium transition border border-green-200 hover:border-green-600"><i class="fa-solid fa-check mr-1"></i> Aprovar</button>
+                                        <button class="flex-1 bg-red-50 text-red-700 hover:bg-red-600 hover:text-white py-2 rounded-lg text-sm font-medium transition border border-red-200 hover:border-red-600"><i class="fa-solid fa-xmark mr-1"></i> Reprovar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'pedidos'" key="pedidos">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left">
+                                        <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                                            <tr><th class="p-4">Pedido</th><th class="p-4">Fornecedor</th><th class="p-4">Emissão</th><th class="p-4">Previsão</th><th class="p-4">Total</th><th class="p-4">Status</th></tr>
+                                        </thead>
+                                        <tbody class="text-sm divide-y divide-gray-100">
+                                            <tr v-for="ped in data.pedidos" :key="ped.id" class="hover:bg-gray-50">
+                                                <td class="p-4 font-mono font-medium text-gray-900">{{ ped.id }}</td>
+                                                <td class="p-4 font-medium text-brand-700">{{ ped.fornecedor }}</td>
+                                                <td class="p-4 text-gray-500">{{ ped.emissao }}</td>
+                                                <td class="p-4 text-gray-500">{{ ped.previsao }}</td>
+                                                <td class="p-4 font-medium">{{ ped.total }}</td>
+                                                <td class="p-4"><span :class="['px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider', ped.statusClass]">{{ ped.status }}</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'recebimentos'" key="recebimentos">
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                    <div class="p-4 border-b border-gray-200 bg-gray-50 font-semibold text-gray-700">Notas Fiscais Pendentes</div>
+                                    <ul class="divide-y divide-gray-100">
+                                        <li v-for="nf in data.recebimentos" :key="nf.nf" class="p-4 flex items-center justify-between hover:bg-gray-50 transition cursor-pointer">
+                                            <div>
+                                                <div class="flex items-center space-x-2"><span class="font-bold text-gray-800">NF-e {{ nf.nf }}</span> <span class="text-xs text-gray-500">Pedido: {{ nf.pedido }}</span></div>
+                                                <div class="text-sm text-gray-600 mt-1">{{ nf.fornecedor }}</div>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="font-medium text-gray-900">{{ nf.valor }}</div>
+                                                <div class="text-xs text-brand-600 font-semibold mt-1">Conferir <i class="fa-solid fa-chevron-right ml-1"></i></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="bg-brand-50 rounded-xl border border-brand-200 p-5 shadow-sm h-max">
+                                    <h3 class="font-bold text-brand-900 mb-3"><i class="fa-solid fa-qrcode mr-2"></i>Entrada Rápida</h3>
+                                    <p class="text-sm text-brand-700 mb-4">Leia o código de barras da NF-e para iniciar a conferência de entrada no estoque.</p>
+                                    <input type="text" placeholder="Chave de Acesso (44 dígitos)" class="w-full px-3 py-2 border border-brand-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 mb-3">
+                                    <button class="w-full bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg font-medium transition shadow-sm">Iniciar Conferência</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'estoque'" key="estoque">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="p-4 border-b border-gray-200 flex flex-wrap gap-3 items-center justify-between bg-gray-50">
+                                    <input type="text" placeholder="Buscar insumo (ex: Nitrato, Glifosato)..." class="px-4 py-2 border border-gray-300 rounded-lg text-sm w-full md:w-1/3">
+                                    <div class="flex space-x-2">
+                                        <select class="px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white"><option>Todas Categorias</option><option>Fertilizantes</option><option>Defensivos</option></select>
+                                    </div>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-sm">
+                                        <thead class="bg-gray-100 text-gray-500 text-xs uppercase tracking-wider">
+                                            <tr><th class="p-3">Código</th><th class="p-3">Produto</th><th class="p-3">Categoria</th><th class="p-3 text-right">Qtd Atual</th><th class="p-3 text-right">Qtd Mínima</th><th class="p-3">Validade Base</th><th class="p-3">Status</th></tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            <tr v-for="est in data.estoque" :key="est.cod" :class="est.critico ? 'bg-red-50/50' : 'hover:bg-gray-50'">
+                                                <td class="p-3 font-mono text-gray-500">{{ est.cod }}</td>
+                                                <td class="p-3 font-medium text-gray-900">{{ est.nome }}</td>
+                                                <td class="p-3 text-gray-500">{{ est.cat }}</td>
+                                                <td :class="['p-3 text-right font-bold', est.critico ? 'text-red-600' : 'text-gray-900']">{{ est.qtd }} {{ est.un }}</td>
+                                                <td class="p-3 text-right text-gray-400">{{ est.min }} {{ est.un }}</td>
+                                                <td class="p-3 text-gray-600">{{ est.validade }}</td>
+                                                <td class="p-3">
+                                                    <span v-if="est.critico" class="text-red-600 text-xs font-bold flex items-center"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Crítico</span>
+                                                    <span v-else class="text-brand-600 text-xs font-bold flex items-center"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Normal</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'almoxarifado'" key="almoxarifado">
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div v-for="req in data.almoxarifado" :key="req.id" class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 flex flex-col">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="bg-gray-100 text-gray-800 text-xs font-bold px-2 py-1 rounded font-mono">{{ req.id }}</span>
+                                        <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded">{{ req.destino }}</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h3 class="font-bold text-gray-900 mb-3 border-b pb-2">Itens para Separação</h3>
+                                        <ul class="space-y-2 text-sm text-gray-700">
+                                            <li v-for="(item, idx) in req.itens" :key="idx" class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                                                <span>{{ item.nome }}</span><span class="font-bold">{{ item.qtd }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button class="w-full mt-4 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded-lg font-medium transition text-sm"><i class="fa-solid fa-box-open mr-2"></i>Confirmar Retirada</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'ordens_agricolas'" key="ordens_agricolas">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left">
+                                        <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                                            <tr><th class="p-4">OS Agrícola</th><th class="p-4">Operação</th><th class="p-4">Local (Talhão)</th><th class="p-4">Cultura</th><th class="p-4">Insumo Principal</th><th class="p-4">Status</th></tr>
+                                        </thead>
+                                        <tbody class="text-sm divide-y divide-gray-100">
+                                            <tr v-for="ordem in data.ordensAgricolas" :key="ordem.id" class="hover:bg-gray-50">
+                                                <td class="p-4 font-mono font-medium text-gray-900">{{ ordem.id }}</td>
+                                                <td class="p-4 font-semibold text-brand-700">{{ ordem.op }}</td>
+                                                <td class="p-4 text-gray-700"><i class="fa-solid fa-map-location-dot text-gray-400 mr-1"></i> {{ ordem.local }}</td>
+                                                <td class="p-4"><span :class="ordem.cultura === 'Manga' ? 'text-amber-600 bg-amber-50' : 'text-purple-600 bg-purple-50'" class="px-2 py-1 rounded text-xs font-bold">{{ ordem.cultura }}</span></td>
+                                                <td class="p-4 text-gray-600 text-xs">{{ ordem.insumo }}</td>
+                                                <td class="p-4"><span :class="['px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider', ordem.statusClass]">{{ ordem.status }}</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'ordens_trabalho'" key="ordens_trabalho">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="p-3 border-b border-gray-200 bg-gray-50/50 text-sm text-gray-600"><i class="fa-solid fa-print mr-2 text-brand-600"></i>Pulverização foliar e adubação de solo: abra a ordem, aba <b>Documento A</b>, e use <b>Imprimir / salvar PDF</b>.</div>
+                                <iframe :srcdoc="otSrc" title="Ordens de Trabalho" class="w-full border-0 bg-white" style="height:calc(100vh - 12rem)"></iframe>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'ordens_servico'" key="ordens_servico">
+                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div v-for="os in data.ordensServico" :key="os.id" class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex space-x-4">
+                                    <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-gray-500 text-xl"><i class="fa-solid fa-tractor"></i></div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <h3 class="font-bold text-gray-900">{{ os.equipamento }}</h3>
+                                            <span class="font-mono text-xs text-gray-500">{{ os.id }}</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mt-1 mb-3">{{ os.desc }}</p>
+                                        <div class="flex items-center justify-between text-xs font-medium">
+                                            <span class="text-gray-500"><i class="fa-regular fa-calendar mr-1"></i> {{ os.data }}</span>
+                                            <span :class="os.statusClass" class="px-2 py-1 rounded">{{ os.status }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'combustivel'" key="combustivel">
+                             <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-6">
+                                <div class="p-5 flex justify-between items-center bg-gray-800 text-white">
+                                    <div>
+                                        <h2 class="font-semibold">Diário de Abastecimento</h2>
+                                        <p class="text-xs text-gray-400 mt-1">Controle de Diesel e Lubrificantes</p>
+                                    </div>
+                                    <button class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition"><i class="fa-solid fa-gas-pump mr-2"></i>Registrar Abastecimento</button>
+                                </div>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full text-left text-sm">
+                                        <thead class="bg-gray-100 text-gray-600 text-xs uppercase tracking-wider border-b">
+                                            <tr><th class="p-3">Data/Hora</th><th class="p-3">Máquina</th><th class="p-3">Operador</th><th class="p-3">Horímetro</th><th class="p-3 text-right">Litros</th><th class="p-3">Operação Alocada</th></tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            <tr v-for="log in data.combustivel" :key="log.id" class="hover:bg-gray-50">
+                                                <td class="p-3 text-gray-500">{{ log.data }}</td>
+                                                <td class="p-3 font-bold text-gray-800">{{ log.maquina }}</td>
+                                                <td class="p-3 text-gray-600">{{ log.operador }}</td>
+                                                <td class="p-3 font-mono text-gray-500">{{ log.horimetro }}</td>
+                                                <td class="p-3 text-right font-bold text-red-600">{{ log.litros }} L</td>
+                                                <td class="p-3 text-xs text-gray-500">{{ log.op }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'custos'" key="custos">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm text-center">
+                                    <p class="text-sm text-gray-500 uppercase tracking-wider mb-1">Custo Total Safra</p>
+                                    <h3 class="text-3xl font-bold text-gray-900">R$ 1.85M</h3>
+                                </div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm text-center border-b-4 border-amber-500">
+                                    <p class="text-sm text-gray-500 uppercase tracking-wider mb-1">Custo / Ha (Manga)</p>
+                                    <h3 class="text-3xl font-bold text-amber-600">R$ 12.450</h3>
+                                </div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm text-center border-b-4 border-purple-500">
+                                    <p class="text-sm text-gray-500 uppercase tracking-wider mb-1">Custo / Ha (Uva)</p>
+                                    <h3 class="text-3xl font-bold text-purple-600">R$ 18.200</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-gray-50 text-gray-500 text-xs uppercase tracking-wider">
+                                        <tr><th class="p-4">Categoria de Custo</th><th class="p-4 text-right">Manga (Total)</th><th class="p-4 text-right">Uva (Total)</th><th class="p-4 text-right">Consolidado</th></tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <tr v-for="custo in data.custos" :key="custo.cat" class="hover:bg-gray-50">
+                                            <td class="p-4 font-medium text-gray-800">{{ custo.cat }}</td>
+                                            <td class="p-4 text-right text-gray-600">{{ custo.manga }}</td>
+                                            <td class="p-4 text-right text-gray-600">{{ custo.uva }}</td>
+                                            <td class="p-4 text-right font-bold text-gray-900">{{ custo.total }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div v-else-if="currentTab === 'auditoria'" key="auditoria">
+                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                                <div class="p-4 border-b border-gray-200 flex space-x-2 bg-gray-50">
+                                    <input type="date" class="px-3 py-1.5 border border-gray-300 rounded text-sm bg-white">
+                                    <select class="px-3 py-1.5 border border-gray-300 rounded text-sm bg-white"><option>Todos Usuários</option></select>
+                                </div>
+                                <table class="w-full text-left text-sm">
+                                    <thead class="bg-gray-100 text-gray-500 text-xs uppercase tracking-wider">
+                                        <tr><th class="p-3">Data/Hora</th><th class="p-3">Usuário</th><th class="p-3">Ação</th><th class="p-3">Detalhes (Registro)</th></tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <tr v-for="log in data.auditoria" :key="log.id" class="hover:bg-gray-50">
+                                            <td class="p-3 text-gray-500 text-xs">{{ log.data }}</td>
+                                            <td class="p-3 font-medium text-gray-800">{{ log.user }}</td>
+                                            <td class="p-3"><span :class="['px-2 py-0.5 rounded text-[10px] font-bold uppercase', log.actionClass]">{{ log.action }}</span></td>
+                                            <td class="p-3 text-gray-600 font-mono text-xs">{{ log.detalhe }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </transition>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, reactive, computed, nextTick, onMounted, watch } = Vue;
+
+        const app = createApp({
+            setup() {
+                const sidebarOpen = ref(false);
+                // <template> serializa o fragmento (sem html/body); remontamos um documento válido p/ srcdoc
+                const otSrc = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>' +
+                    document.getElementById('ot-src').innerHTML + '</body></html>';
+                const currentTab = ref('dashboard');
+                let chartInstances = [];
+
+                // Navigation Structure
+                const nav = {
+                    suprimentos: [
+                        { id: 'dashboard', label: 'Dashboard', icon: 'fa-solid fa-chart-pie' },
+                        { id: 'pedcompra', label: 'Pedidos de Compra', icon: 'fa-solid fa-cart-shopping' }
+                    ],
+                    estoque: [
+                        { id: 'saldo', label: 'Saldo de Estoque', icon: 'fa-solid fa-boxes-stacked' },
+                        { id: 'entradas', label: 'Entrada de NF', icon: 'fa-solid fa-file-invoice' },
+                        { id: 'saidas', label: 'Saída de Estoque', icon: 'fa-solid fa-dolly' }
+                    ],
+                    cadastros: [
+                        { id: 'fornecedores', label: 'Fornecedores', icon: 'fa-solid fa-handshake' },
+                        { id: 'produtos', label: 'Produtos / Insumos', icon: 'fa-solid fa-flask' },
+                        { id: 'talhoes', label: 'Talhões', icon: 'fa-solid fa-map' },
+                        { id: 'maquinas', label: 'Máquinas', icon: 'fa-solid fa-tractor' },
+                        { id: 'funcionarios', label: 'Funcionários', icon: 'fa-solid fa-users' }
+                    ],
+                    lancamentos: [
+                        { id: 'ordens', label: 'Ordens Agrícolas', icon: 'fa-solid fa-seedling' },
+                        { id: 'abastecimentos', label: 'Abastecimentos', icon: 'fa-solid fa-gas-pump' },
+                        { id: 'manutencoes', label: 'Manutenções (OS)', icon: 'fa-solid fa-screwdriver-wrench' }
+                    ],
+                    relatorios: [
+                        { id: 'custostalhao', label: 'Custo por Talhão', icon: 'fa-solid fa-coins' },
+                        { id: 'audit', label: 'Auditoria', icon: 'fa-solid fa-shield-halved' }
+                    ],
+                    operacoes: [
+                        { id: 'ordens_trabalho', label: 'Ordens de Trabalho (imprimir)', icon: 'fa-solid fa-print' }
+                    ]
+                };
+
+                const currentTabTitle = computed(() => {
+                    for (const group in nav) {
+                        const found = nav[group].find(t => t.id === currentTab.value);
+                        if (found) return found.label;
+                    }
+                    return 'HexaVale ERP';
+                });
+
+                // --- MOCK DATA ---
+                const data = {
+                    cotacoes: [
+                        { id: 'COT-2026-089', desc: 'Fertilizantes NPK (Adubação Base)', data: '20/09/2026', fornecedor: 'AgroSul Insumos', valor: 'R$ 45.300,00', status: 'Em Análise', statusClass: 'bg-amber-100 text-amber-700 border-amber-200' },
+                        { id: 'COT-2026-090', desc: 'Fungicida p/ Míldio (Uva)', data: '22/09/2026', fornecedor: 'Defensivos Vale', valor: 'R$ 12.800,00', status: 'Aprovada', statusClass: 'bg-green-100 text-green-700 border-green-200' },
+                        { id: 'COT-2026-091', desc: 'Caixas Plásticas Colheita Manga', data: '25/09/2026', fornecedor: 'Embalagens São Paulo', valor: 'R$ 8.500,00', status: 'Rascunho', statusClass: 'bg-gray-100 text-gray-700 border-gray-200' }
+                    ],
+                    aprovacoes: [
+                        { id: 'REQ-1402', valor: 'R$ 15.420,00', desc: 'Compra Urgente: Peças Trator JD 5075E', solicitante: 'Carlos Mecânico' },
+                        { id: 'REQ-1405', valor: 'R$ 3.200,00', desc: 'EPIs: Luvas e Máscaras Aplicação', solicitante: 'Ana TST' },
+                        { id: 'REQ-1406', valor: 'R$ 45.300,00', desc: 'Fertilizantes NPK 10-10-10', solicitante: 'Eng. Agrônomo Marcos' }
+                    ],
+                    pedidos: [
+                        { id: 'PED-1092', fornecedor: 'AgroSul Insumos', emissao: '10/09/2026', previsao: '20/09/2026', total: 'R$ 22.100,00', status: 'Aberto', statusClass: 'bg-blue-100 text-blue-700' },
+                        { id: 'PED-1088', fornecedor: 'PetroVale Combustíveis', emissao: '05/09/2026', previsao: '06/09/2026', total: 'R$ 18.500,00', status: 'Recebido', statusClass: 'bg-green-100 text-green-700' },
+                        { id: 'PED-1090', fornecedor: 'IrrigaTudo Materiais', emissao: '08/09/2026', previsao: '15/09/2026', total: 'R$ 5.400,00', status: 'Parcial', statusClass: 'bg-amber-100 text-amber-700' }
+                    ],
+                    recebimentos: [
+                        { nf: '000.145.882', pedido: 'PED-1092', fornecedor: 'AgroSul Insumos', valor: 'R$ 22.100,00' },
+                        { nf: '000.002.334', pedido: 'PED-1090', fornecedor: 'IrrigaTudo Materiais', valor: 'R$ 2.700,00 (Parcial)' }
+                    ],
+                    estoque: [
+                        { cod: 'INS-001', nome: 'Nitrato de Cálcio Yara', cat: 'Fertilizantes', qtd: 2500, min: 1000, un: 'kg', validade: '12/2027', critico: false },
+                        { cod: 'INS-045', nome: 'Fungicida Ridomil Gold (Míldio)', cat: 'Defensivos', qtd: 15, min: 50, un: 'L', validade: '05/2027', critico: true },
+                        { cod: 'INS-088', nome: 'Inseticida Engeo Pleno (Mosca)', cat: 'Defensivos', qtd: 120, min: 30, un: 'L', validade: '08/2026', critico: false },
+                        { cod: 'MAT-102', nome: 'Óleo Diesel S10', cat: 'Combustível', qtd: 800, min: 2000, un: 'L', validade: 'N/A', critico: true },
+                        { cod: 'EPI-015', nome: 'Macacão Impermeável', cat: 'EPIs', qtd: 45, min: 20, un: 'un', validade: 'N/A', critico: false }
+                    ],
+                    almoxarifado: [
+                        { id: 'SEP-204', destino: 'Talhão Uva Vitória 01', itens: [{nome: 'Fungicida Ridomil', qtd: '5 L'}, {nome: 'Adjuvante', qtd: '1 L'}] },
+                        { id: 'SEP-205', destino: 'Oficina Central', itens: [{nome: 'Filtro Óleo JD', qtd: '2 un'}, {nome: 'Óleo Motor 15W40', qtd: '20 L'}] },
+                        { id: 'SEP-206', destino: 'Talhão Manga Palmer 05', itens: [{nome: 'Nitrato de Cálcio', qtd: '200 kg'}] }
+                    ],
+                    ordensAgricolas: [
+                        { id: 'OA-8092', op: 'Pulverização Preventiva', local: 'Talhão Uva Vitória 01', cultura: 'Uva', insumo: 'Fungicida + Adjuvante (6L)', status: 'Aguard. Insumo', statusClass: 'bg-amber-100 text-amber-700' },
+                        { id: 'OA-8093', op: 'Adubação de Cobertura', local: 'Talhão Manga Palmer 05', cultura: 'Manga', insumo: 'Nitrato de Cálcio (200kg)', status: 'Em Execução', statusClass: 'bg-blue-100 text-blue-700' },
+                        { id: 'OA-8088', op: 'Roçada Ecológica', local: 'Talhão Manga Tommy 02', cultura: 'Manga', insumo: 'Diesel (Trator)', status: 'Concluído', statusClass: 'bg-green-100 text-green-700' }
+                    ],
+                    ordensServico: [
+                        { id: 'OS-MNT-554', equipamento: 'Trator John Deere 5075E (Frota 01)', desc: 'Troca de óleo, filtros e revisão sistema hidráulico.', data: '18/09/2026', status: 'Em Andamento', statusClass: 'bg-blue-100 text-blue-700' },
+                        { id: 'OS-MNT-555', equipamento: 'Pulverizador Jacto Arbus 2000', desc: 'Desobstrução de bicos e calibração de pressão.', data: '19/09/2026', status: 'Pendente', statusClass: 'bg-amber-100 text-amber-700' }
+                    ],
+                    combustivel: [
+                        { id: 1, data: '18/09/2026 06:30', maquina: 'Trator JD 5075E (01)', operador: 'José Almeida', horimetro: '4502.5', litros: 85, op: 'Roçada Manga Palmer 02' },
+                        { id: 2, data: '18/09/2026 07:15', maquina: 'Trator MF 4292 (04)', operador: 'Carlos Silva', horimetro: '8210.0', litros: 120, op: 'Pulverização Uva Vitória 01' },
+                        { id: 3, data: '17/09/2026 17:45', maquina: 'Caminhonete Hilux (Apoio)', operador: 'Eng. Marcos', horimetro: '125400km', litros: 60, op: 'Ronda Agronômica' }
+                    ],
+                    custos: [
+                        { cat: 'Fertilizantes (Base e Cobertura)', manga: 'R$ 250.000,00', uva: 'R$ 180.000,00', total: 'R$ 430.000,00' },
+                        { cat: 'Defensivos Agrícolas', manga: 'R$ 180.000,00', uva: 'R$ 320.000,00', total: 'R$ 500.000,00' },
+                        { cat: 'Combustíveis e Lubrificantes', manga: 'R$ 85.000,00', uva: 'R$ 65.000,00', total: 'R$ 150.000,00' },
+                        { cat: 'Manutenção Máquinas', manga: 'R$ 45.000,00', uva: 'R$ 35.000,00', total: 'R$ 80.000,00' }
+                    ],
+                    auditoria: [
+                        { id: 1, data: '18/09/2026 14:32:05', user: 'joao.silva', action: 'APROVACAO', actionClass: 'bg-green-100 text-green-700', detalhe: 'REQ-1406 aprovada via painel.' },
+                        { id: 2, data: '18/09/2026 11:15:22', user: 'almox.carlos', action: 'BAIXA_ESTOQUE', actionClass: 'bg-blue-100 text-blue-700', detalhe: 'Baixa de 5L INS-045 ref. SEP-204.' },
+                        { id: 3, data: '18/09/2026 09:45:10', user: 'sistema_auto', action: 'ALERTA_ESTOQUE', actionClass: 'bg-red-100 text-red-700', detalhe: 'Produto MAT-102 atingiu estoque crítico (800L).' },
+                        { id: 4, data: '17/09/2026 16:20:00', user: 'maria.compras', action: 'CRIACAO_COT', actionClass: 'bg-gray-200 text-gray-700', detalhe: 'Cotação COT-2026-091 criada (Rascunho).' }
+                    ]
+                };
+
+                
+                // --- CADASTROS E LANÇAMENTOS (persistidos no navegador) ---
+                const seed = () => ({
+                    fornecedores: [{id:'FOR-0001',nome:'AgroSul Insumos',cat:'Insumos',cidade:'Petrolina/PE'},{id:'FOR-0002',nome:'Defensivos Vale',cat:'Insumos',cidade:'Juazeiro/BA'},{id:'FOR-0003',nome:'PetroVale Combustíveis',cat:'Combustível',cidade:'Petrolina/PE'}],
+                    produtos: [{id:'INS-0001',nome:'Nitrato de Cálcio Yara',cat:'Fertilizante',un:'kg',estoqueInicial:2500,estmin:1000,custo:4.2},{id:'INS-0002',nome:'Fungicida Ridomil Gold',cat:'Defensivo',un:'L',ia:'Metalaxil-M + Mancozebe',estoqueInicial:15,estmin:50,custo:180},{id:'INS-0003',nome:'Inseticida Engeo Pleno',cat:'Defensivo',un:'L',estoqueInicial:120,estmin:30,custo:210},{id:'INS-0004',nome:'Fertilizante foliar Ca + B',cat:'Fertilizante',un:'L',estoqueInicial:60,estmin:20,custo:35},{id:'MAT-0001',nome:'Óleo Diesel S10',cat:'Combustível',un:'L',estoqueInicial:800,estmin:2000,custo:6.1}],
+                    talhoes: [{id:'TAL-0001',nome:'Manga Palmer 05',cultura:'Manga',variedade:'Palmer',area:8.3,plantas:2075,filas:30},{id:'TAL-0002',nome:'Uva Vitória 01',cultura:'Uva',variedade:'Vitória',area:6.2},{id:'TAL-0003',nome:'Manga Tommy 02',cultura:'Manga',variedade:'Tommy Atkins',area:7.5}],
+                    maquinas: [{id:'MAQ-0001',nome:'Trator JD 5075E (01)',tipo:'Trator',horimetro:4502.5},{id:'MAQ-0002',nome:'Trator MF 4292 (04)',tipo:'Trator',horimetro:8210},{id:'MAQ-0003',nome:'Pulverizador Jacto Arbus 2000',tipo:'Pulverizador'},{id:'MAQ-0004',nome:'Adubadora de solo',tipo:'Adubadora'}],
+                    funcionarios: [{id:'FUN-0001',nome:'José Almeida',funcao:'Tratorista'},{id:'FUN-0002',nome:'Carlos Silva',funcao:'Responsável técnico'},{id:'FUN-0003',nome:'João Ferreira Silva',funcao:'Aplicador'}],
+                    entradas: [], saidas: [], abastecimentos: [], manutencoes: [], audit: [],
+                    ordens: [{id:'OA-0001',data:'2026-10-20',tipo:'Pulverização foliar',talhao:'TAL-0001',produto:'INS-0004',dose:2,area:8.3,operador:'FUN-0003',maquina:'MAQ-0003',status:'Liberada'}],
+                    pedcompra: [{id:'PC-0001',data:'2026-10-15',fornecedor:'FOR-0001',produto:'INS-0001',qtd:5000,vunit:4.2,total:21000,status:'Aguardando aprovação',solic:'FUN-0002'}]
+                });
+                const load = () => { try { const d = JSON.parse(localStorage.getItem('hxdb')); if (d) return { ...seed(), ...d }; } catch (e) {} return seed(); };
+                const db = reactive(load());
+                watch(db, () => { try { localStorage.setItem('hxdb', JSON.stringify(db)); } catch (e) {} }, { deep: true });
+                const resetDb = () => { if (confirm('Apagar todos os cadastros e lançamentos e voltar aos dados de exemplo?')) Object.assign(db, seed()); };
+
+                const n = x => +x || 0, sum = (a, k) => a.reduce((s, r) => s + n(r[k]), 0);
+                const brl = v => n(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                const lab = (e, id) => (db[e].find(x => x.id == id) || {}).nome || '(removido)';
+                const saldoDe = id => { const p = db.produtos.find(x => x.id == id); return p ? n(p.estoqueInicial) + sum(db.entradas.filter(e => e.produto == id), 'qtd') - sum(db.saidas.filter(e => e.produto == id), 'qtd') : 0; };
+                const custoMed = id => { const es = db.entradas.filter(e => e.produto == id), q = sum(es, 'qtd'), p = db.produtos.find(x => x.id == id); return q ? sum(es, 'total') / q : n(p && p.custo); };
+                const F = (l, k, t, x = {}) => ({ l, k, t, ...x });
+                const TIPOS = ['Pulverização foliar', 'Adubação de solo', 'Fertirrigação', 'Roçada', 'Poda', 'Irrigação', 'Colheita', 'Outra'];
+                const S = {
+                    fornecedores: { title: 'Fornecedores', p: 'FOR', f: [F('Nome / Razão social','nome','text',{req:1}), F('CNPJ / CPF','doc','text'), F('Categoria','cat','sel',{o:['Insumos','Combustível','Peças','Embalagens','Serviços']}), F('Contato','contato','text'), F('Telefone','tel','text'), F('Cidade/UF','cidade','text')] },
+                    produtos: { title: 'Produtos / Insumos', p: 'INS', f: [F('Nome','nome','text',{req:1}), F('Categoria','cat','sel',{o:['Fertilizante','Defensivo','Adjuvante','Combustível','Peças','EPI','Outros']}), F('Unidade','un','sel',{o:['kg','g','L','mL','un','sc','t']}), F('Ingrediente ativo','ia','text'), F('Estoque inicial','estoqueInicial','num'), F('Estoque mínimo','estmin','num'), F('Custo ref. (R$/un)','custo','money')] },
+                    talhoes: { title: 'Talhões', p: 'TAL', f: [F('Nome','nome','text',{req:1}), F('Cultura','cultura','sel',{o:['Manga','Uva','Outra']}), F('Variedade','variedade','text'), F('Área (ha)','area','num',{req:1}), F('Nº de plantas','plantas','num'), F('Nº de filas','filas','num')] },
+                    maquinas: { title: 'Máquinas e Equipamentos', p: 'MAQ', f: [F('Nome / Frota','nome','text',{req:1}), F('Tipo','tipo','sel',{o:['Trator','Pulverizador','Adubadora','Veículo','Implemento','Outro']}), F('Placa / Série','placa','text'), F('Horímetro atual','horimetro','num')] },
+                    funcionarios: { title: 'Funcionários', p: 'FUN', f: [F('Nome','nome','text',{req:1}), F('Função','funcao','sel',{o:['Tratorista','Aplicador','Responsável técnico','Supervisor','Almoxarife','Operador','Outra']}), F('Telefone','tel','text'), F('Admissão','adm','date')] },
+                    entradas: { title: 'Entrada de NF (Recebimento)', p: 'ENT', calc: f => { f.total = +(n(f.qtd) * n(f.vunit)).toFixed(2); },
+                        f: [F('Data','data','date',{req:1}), F('Nº da NF','nf','text',{req:1}), F('Fornecedor','fornecedor','ref',{e:'fornecedores',req:1}), F('Produto','produto','ref',{e:'produtos',req:1}), F('Quantidade','qtd','num',{req:1}), F('Valor unit.','vunit','money',{req:1}), F('Total','total','calc',{t2:'money'})] },
+                    saidas: { title: 'Saída de Estoque / Requisição', p: 'SAI',
+                        chk: f => { const o = db.saidas.find(x => x.id == f.id), d = saldoDe(f.produto) + (o && o.produto == f.produto ? n(o.qtd) : 0); if (n(f.qtd) <= 0) return 'Informe a quantidade.'; if (n(f.qtd) > d) return 'Saldo insuficiente. Disponível: ' + d; },
+                        f: [F('Data','data','date',{req:1}), F('Produto','produto','ref',{e:'produtos',req:1}), F('Quantidade','qtd','num',{req:1}), F('Talhão destino','talhao','ref',{e:'talhoes'}), F('Retirado por','resp','ref',{e:'funcionarios'}), F('Ordem agrícola (cód.)','ordem','text'), F('Obs.','obs','text')] },
+                    ordens: { title: 'Ordens Agrícolas', p: 'OA', f: [F('Data','data','date',{req:1}), F('Tipo','tipo','sel',{o:TIPOS}), F('Talhão','talhao','ref',{e:'talhoes',req:1}), F('Produto','produto','ref',{e:'produtos'}), F('Dose (por ha)','dose','num'), F('Área tratada (ha)','area','num'), F('Operador','operador','ref',{e:'funcionarios'}), F('Máquina','maquina','ref',{e:'maquinas'}), F('Status','status','sel',{o:['Rascunho','Liberada','Em execução','Concluída','Cancelada'],b:1}), F('Observações','obs','area')] },
+                    abastecimentos: { title: 'Abastecimentos de Combustível', p: 'ABS', calc: f => { f.total = +(n(f.litros) * n(f.vlitro)).toFixed(2); },
+                        f: [F('Data','data','date',{req:1}), F('Máquina','maquina','ref',{e:'maquinas',req:1}), F('Operador','operador','ref',{e:'funcionarios'}), F('Horímetro','horimetro','num'), F('Litros','litros','num',{req:1}), F('R$/litro','vlitro','money'), F('Total','total','calc',{t2:'money'}), F('Talhão / operação','talhao','ref',{e:'talhoes'})] },
+                    manutencoes: { title: 'Manutenções (Ordens de Serviço)', p: 'OS', f: [F('Data','data','date',{req:1}), F('Máquina','maquina','ref',{e:'maquinas',req:1}), F('Tipo','tipo','sel',{o:['Preventiva','Corretiva','Revisão']}), F('Custo (R$)','custo','money'), F('Status','status','sel',{o:['Pendente','Em andamento','Concluída'],b:1}), F('Descrição','desc','area')] },
+                    saldo: { title: 'Saldo de Estoque (calculado)', ro: 1, src: () => db.produtos.map(p => { const s = saldoDe(p.id), c = custoMed(p.id); return { id: p.id, nome: p.nome, cat: p.cat, un: p.un, saldo: +s.toFixed(3), estmin: n(p.estmin), custo: c, valor: s * c, sit: s <= 0 ? 'Zerado' : s < n(p.estmin) ? 'Abaixo do mínimo' : 'OK' }; }),
+                        f: [F('Produto','nome','text'), F('Categoria','cat','text'), F('Un.','un','text'), F('Saldo','saldo','text'), F('Mínimo','estmin','text'), F('Custo médio','custo','money'), F('Valor em estoque','valor','money'), F('Situação','sit','text',{b:1})] },
+                    custostalhao: { title: 'Custo por Talhão (insumos + combustível)', ro: 1, src: () => db.talhoes.map(t => { const ins = db.saidas.filter(s => s.talhao == t.id).reduce((a, s) => a + n(s.qtd) * custoMed(s.produto), 0), com = sum(db.abastecimentos.filter(a => a.talhao == t.id), 'total'); return { id: t.id, nome: t.nome, area: n(t.area), ins, com, tot: ins + com, ha: n(t.area) ? (ins + com) / n(t.area) : 0 }; }),
+                        f: [F('Talhão','nome','text'), F('Área (ha)','area','text'), F('Insumos','ins','money'), F('Combustível','com','money'), F('Total','tot','money'), F('R$ / ha','ha','money')] }
+                };
+                
+                const aud = (a, d) => db.audit.unshift({ id: 'AUD-' + String(Math.max(0, ...db.audit.map(x => parseInt(String(x.id).split('-').pop()) || 0)) + 1).padStart(4, '0'), data: new Date().toLocaleString('pt-BR'), usuario: 'joao.silva', acao: a, detalhe: d });
+                S.pedcompra = { title: 'Pedidos de Compra', p: 'PC', calc: f => { f.total = +(n(f.qtd) * n(f.vunit)).toFixed(2); },
+                    f: [F('Data','data','date',{req:1}), F('Fornecedor','fornecedor','ref',{e:'fornecedores',req:1}), F('Produto','produto','ref',{e:'produtos',req:1}), F('Quantidade','qtd','num',{req:1}), F('Valor unit.','vunit','money',{req:1}), F('Total','total','calc',{t2:'money'}), F('Solicitante','solic','ref',{e:'funcionarios'}), F('Status','status','sel',{o:['Aguardando aprovação','Aprovado','Recebido','Cancelado'],b:1})],
+                    acts: [{ l: 'Aprovar', show: r => r.status === 'Aguardando aprovação', fn: r => { r.status = 'Aprovado'; aud('APROVACAO', 'Pedido ' + r.id + ' aprovado'); } },
+                           { l: 'Receber', show: r => r.status === 'Aprovado', fn: r => { db.entradas.push({ id: nextId('ENT', db.entradas), data: new Date().toISOString().slice(0, 10), nf: 'Ped. ' + r.id, fornecedor: r.fornecedor, produto: r.produto, qtd: r.qtd, vunit: r.vunit, total: r.total }); r.status = 'Recebido'; aud('RECEBIMENTO', 'Pedido ' + r.id + ' recebido: entrada no estoque'); } }] };
+                S.audit = { title: 'Auditoria de Sistema', ro: 1, src: () => db.audit, f: [F('Data/hora','data','text'), F('Usuário','usuario','text'), F('Ação','acao','text'), F('Detalhe','detalhe','text')] };
+                const qOrd = f => n(f.dose) * n(f.area);
+                S.ordens.chk = f => { if (f.status === 'Concluída' && !f.baixa && f.produto && qOrd(f) > saldoDe(f.produto)) return 'Saldo insuficiente para concluir: necessário ' + qOrd(f) + ', disponível ' + saldoDe(f.produto); };
+                S.ordens.after = f => { if (f.status === 'Concluída' && !f.baixa && f.produto && qOrd(f) > 0) { db.saidas.push({ id: nextId('SAI', db.saidas), data: f.data, produto: f.produto, qtd: qOrd(f), talhao: f.talhao, resp: f.operador, ordem: f.id, obs: 'Baixa automática da ordem' }); f.baixa = true; aud('BAIXA_ESTOQUE', 'Ordem ' + f.id + ' concluída: baixa de ' + qOrd(f) + ' em ' + lab('produtos', f.produto)); } };
+                const kpi = computed(() => { const s = db.produtos.map(p => ({ s: saldoDe(p.id), c: custoMed(p.id), m: n(p.estmin) })); return { valor: brl(s.reduce((a, x) => a + x.s * x.c, 0)), ped: db.pedcompra.filter(x => x.status === 'Aguardando aprovação').length, oa: db.ordens.filter(x => !['Concluída', 'Cancelada'].includes(x.status)).length, alert: s.filter(x => x.s < x.m).length }; });
+                const q = ref(''), form = ref(null), err = ref('');
+                const sch = computed(() => S[currentTab.value]);
+                const rows = computed(() => !sch.value ? [] : sch.value.src ? sch.value.src() : db[currentTab.value]);
+                const filtered = computed(() => rows.value.filter(r => JSON.stringify(Object.values(r)).toLowerCase().includes(q.value.toLowerCase())));
+                watch(currentTab, () => { q.value = ''; form.value = null; err.value = ''; });
+                const show = (r, f) => { const v = r[f.k]; if (v == null || v === '') return '—'; if (f.t === 'ref') return lab(f.e, v); if (f.t === 'money' || f.t2 === 'money') return brl(v); if (f.t === 'date') return String(v).split('-').reverse().join('/'); return v; };
+                const cls = v => ({ 'OK': 'bg-green-100 text-green-700', 'Concluída': 'bg-green-100 text-green-700', 'Liberada': 'bg-blue-100 text-blue-700', 'Em execução': 'bg-blue-100 text-blue-700', 'Em andamento': 'bg-blue-100 text-blue-700', 'Zerado': 'bg-red-100 text-red-700', 'Abaixo do mínimo': 'bg-red-100 text-red-700', 'Cancelada': 'bg-red-100 text-red-700' }[v] || 'bg-amber-100 text-amber-700');
+                const nextId = (p, l) => p + '-' + String(Math.max(0, ...l.map(x => parseInt(String(x.id).split('-').pop()) || 0)) + 1).padStart(4, '0');
+                const openForm = r => { const f = r ? { ...r } : {}; if (!r) sch.value.f.forEach(x => { if (x.t === 'date') f[x.k] = new Date().toISOString().slice(0, 10); if (x.t === 'sel') f[x.k] = x.o[0]; }); form.value = f; err.value = ''; };
+                const save = () => {
+                    const f = form.value, s = sch.value;
+                    for (const x of s.f) if (x.req && (f[x.k] == null || f[x.k] === '')) return err.value = 'Preencha: ' + x.l;
+                    if (s.calc) s.calc(f);
+                    if (s.chk) { const m = s.chk(f); if (m) return err.value = m; }
+                    const list = db[currentTab.value];
+                    const novo = !f.id; if (novo) f.id = nextId(s.p, list); if (s.after) s.after(f); if (novo) list.push(f); else Object.assign(list.find(x => x.id == f.id), f); aud(novo ? 'CRIACAO' : 'EDICAO', s.title + ' ' + f.id);
+                    form.value = null; err.value = '';
+                };
+                const del = r => { const e = currentTab.value; for (const k in S) for (const f of S[k].f) if (f.t === 'ref' && f.e === e && db[k] && db[k].some(x => x[f.k] == r.id)) return alert('Registro em uso em "' + S[k].title + '". Não é possível excluir.'); if (confirm('Excluir ' + r.id + '?')) { db[e].splice(db[e].findIndex(x => x.id == r.id), 1); aud('EXCLUSAO', e + ' ' + r.id); } };
+                const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+                const ficha = r => {
+                    const s = sch.value, w = window.open('', '_blank');
+                    if (!w) return alert('Libere pop-ups para imprimir a ficha.');
+                    const rows = s.f.map(f => '<tr><td>' + f.l + '</td><td>' + esc(show(r, f)) + '</td></tr>').join('');
+                    const doc = w.document;
+                    doc.open();
+                    doc.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + s.title + '</title>');
+                    doc.write('<style>body{font:14px system-ui;padding:24px}table{border-collapse:collapse;width:100%}td{border:1px solid #999;padding:6px 8px}td:first-child{width:35%;background:#f2f2f2;font-weight:600}.s{display:flex;gap:30px;margin-top:70px}.s div{flex:1;border-top:1px solid #000;text-align:center;font-size:12px;padding-top:4px}</style>');
+                    doc.write('</'+'head><body><h2>HexaVale · ' + s.title + ' Nº ' + r.id + '</h2><table>' + rows + '</table>');
+                    doc.write('<div class="s"><div>Responsável técnico</div><div>Supervisor</div><div>Executor</div></div></'+'body></'+'html>');
+                    doc.close(); w.focus(); w.print();
+                };
+                const csv = () => { const s = sch.value, L = [s.f.map(f => f.l), ...filtered.value.map(r => s.f.map(f => show(r, f)))], b = new Blob(['\ufeff' + L.map(l => l.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\n')], { type: 'text/csv' }), a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = currentTab.value + '.csv'; a.click(); };
+                const print = () => window.print();
+
+                const setTab = (tabId) => {
+                    currentTab.value = tabId;
+                    if (window.innerWidth < 768) sidebarOpen.value = false;
+                    
+                    if (tabId === 'dashboard') {
+                        nextTick(() => renderCharts());
+                    }
+                };
+
+                const renderCharts = () => {
+                    // Destroy old instances
+                    chartInstances.forEach(c => c.destroy());
+                    chartInstances = [];
+
+                    Chart.defaults.font.family = "'Inter', sans-serif";
+                    
+                    const ctxBar = document.getElementById('barChart');
+                    if (ctxBar) {
+                        chartInstances.push(new Chart(ctxBar, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set'],
+                                datasets: [
+                                    { label: 'Entradas (R$)', data: [120, 190, 80, 220, 150, 60], backgroundColor: '#22c55e', borderRadius: 4 },
+                                    { label: 'Consumo (R$)', data: [90, 140, 110, 180, 210, 170], backgroundColor: '#94a3b8', borderRadius: 4 }
+                                ]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false }
+                        }));
+                    }
+
+                    const ctxDoughnut = document.getElementById('doughnutChart');
+                    if (ctxDoughnut) {
+                        chartInstances.push(new Chart(ctxDoughnut, {
+                            type: 'doughnut',
+                            data: {
+                                labels: S.custostalhao.src().map(r => r.nome),
+                                datasets: [{
+                                    data: S.custostalhao.src().map(r => +r.tot.toFixed(2)),
+                                    backgroundColor: ['#f59e0b', '#fbbf24', '#7c3aed', '#a78bfa'],
+                                    borderWidth: 0
+                                }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+                        }));
+                    }
+                };
+
+                onMounted(() => {
+                    renderCharts();
+                });
+
+                return {
+                    sidebarOpen, currentTab, currentTabTitle, nav, data, setTab, otSrc, db, S, sch, filtered, q, form, err, show, cls, openForm, save, del, ficha, csv, print, resetDb, kpi
+                };
+            }
+        });
+        if (typeof Vue === 'undefined') {
+            document.body.insertAdjacentHTML('afterbegin', '<div style="padding:1rem;background:#fdeceb;color:#b3261e;font:14px system-ui"><b>Falha ao carregar Vue.</b> Este ERP precisa de internet para os CDNs (unpkg/jsdelivr).</div>');
+        } else {
+            app.mount('#app');
+        }
+    </script>
+</body>
+</html>

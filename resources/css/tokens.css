@@ -1,84 +1,212 @@
 /**
- * HexaVale — design tokens
- * Conceito: caderno de campo + etiqueta de almoxarifado
- * Fontes OFL self-hosted entram na Fase 1 (ADR-0005).
+ * HexaVale — tokens (fonte: protótipo OT / HTML enviado)
+ * Paleta inegociável: --bg --card --tx --mu --bd --ac --ac2 --wa --wab --er --erb + --info
  */
 
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/barlow-condensed-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/source-sans-3-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/source-sans-3-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2");
+}
+
 :root {
-  /* Superfície */
-  --hx-papel: #f3efe6;
-  --hx-papel-elevado: #faf7f0;
-  --hx-tinta: #1d1b16;
-  --hx-tinta-suave: #4a463c;
-  --hx-linha: #cfc7b4;
-  --hx-linha-forte: #a89f8a;
+  /* —— Paleta oficial (claro) —— */
+  --bg: #f4f6f3;
+  --card: #ffffff;
+  --tx: #1c2a1f;
+  --mu: #667568;
+  --bd: #dfe5dc;
+  --ac: #1f6b3a;
+  --ac2: #e6f2ea;
+  --wa: #b26a00;
+  --wab: #fff3dc;
+  --er: #b3261e;
+  --erb: #fdeceb;
+  --info: #1d4ed8;
+  --info-bg: #dbeafe;
 
-  /* Cultura */
-  --hx-manga: #c47a12;
-  --hx-manga-fundo: #f5e6c8;
-  --hx-uva: #6b1e3a;
-  --hx-uva-fundo: #f0dde4;
+  /* Texto AA: só luminosidade ajustada (matiz preservado). Fundos/bordas = tokens originais. */
+  --mu-ink: #5b695d; /* --mu sobre --bg: 5,33:1 */
+  --wa-ink: #975a00; /* --wa sobre --wab: 5,06:1 */
 
-  /* Ação / alerta */
-  --hx-terra: #8b5a2b;
-  --hx-terra-hover: #6f4620;
-  --hx-alerta: #d35400;
-  --hx-alerta-fundo: #fde8d8;
-  --hx-folha: #3d5c3a;
+  /* Reserva brand profunda (ênfase / login escuro) — NÃO 400–600 */
+  --brand-800: #166534;
+  --brand-900: #14532d;
+  --brand-950: #052e16;
 
-  /* Estados (sempre cor + texto + forma na UI) */
-  --hx-ok: #2f5d3a;
-  --hx-ok-fundo: #e4efe6;
-  --hx-abaixo: #a15c00;
-  --hx-abaixo-fundo: #fff0d6;
-  --hx-zerado: #8a1f1f;
-  --hx-zerado-fundo: #fde8e8;
-  --hx-vencido: #8a1f1f;
-  --hx-pendente: #6b5a00;
+  /* Tipografia */
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", monospace;
 
-  /* Tipografia — placeholders até WOFF2 self-hosted (Fase 1) */
-  --hx-font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
-  --hx-font-body: "Source Sans 3", "Segoe UI", sans-serif;
-  --hx-font-mono: "IBM Plex Mono", "Consolas", monospace;
+  --fs-1: 0.6875rem; /* 11 */
+  --fs-2: 0.75rem; /* 12 */
+  --fs-3: 0.875rem; /* 14 */
+  --fs-4: 1rem; /* 16 */
+  --fs-5: 1.125rem; /* 18 */
+  --fs-6: 1.375rem; /* 22 */
+  --fs-7: 1.75rem; /* 28 */
 
-  --hx-fs-xs: 0.75rem;
-  --hx-fs-sm: 0.875rem;
-  --hx-fs-md: 1rem;
-  --hx-fs-lg: 1.25rem;
-  --hx-fs-xl: 1.75rem;
+  --lh-tight: 1.2;
+  --lh-body: 1.45;
+  --lh-dense: 1.3;
 
-  --hx-lh-tight: 1.2;
-  --hx-lh-body: 1.45;
+  /* Grade 8 px */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
 
-  /* Grade 8px */
-  --hx-space-1: 0.25rem;
-  --hx-space-2: 0.5rem;
-  --hx-space-3: 0.75rem;
-  --hx-space-4: 1rem;
-  --hx-space-6: 1.5rem;
-  --hx-space-8: 2rem;
+  --radius: 2px;
+  --radius-md: 4px;
+  --border: 1px solid var(--bd);
+  --focus-ring: 2px solid var(--ac);
+  --focus-offset: 2px;
+  --touch-min: 48px;
+  --motion: 120ms;
+  --shadow-float: 0 2px 8px color-mix(in srgb, var(--tx) 12%, transparent);
 
-  --hx-radius: 2px;
-  --hx-radius-max: 4px;
-  --hx-border: 1px solid var(--hx-linha);
-
-  --hx-touch-min: 48px;
-  --hx-motion: 120ms;
+  /* Aliases legados (Fase 1) */
+  --hx-bg: var(--bg);
+  --hx-card: var(--card);
+  --hx-tx: var(--tx);
+  --hx-mu: var(--mu-ink);
+  --hx-bd: var(--bd);
+  --hx-ac: var(--ac);
+  --hx-ac2: var(--ac2);
+  --hx-wa: var(--wa);
+  --hx-wab: var(--wab);
+  --hx-er: var(--er);
+  --hx-erb: var(--erb);
+  --hx-papel: var(--bg);
+  --hx-papel-elevado: var(--card);
+  --hx-tinta: var(--tx);
+  --hx-tinta-suave: var(--mu-ink);
+  --hx-linha: var(--bd);
+  --hx-linha-forte: #b8c4b6;
+  --hx-manga: var(--wa);
+  --hx-manga-fundo: var(--wab);
+  --hx-uva: var(--ac);
+  --hx-uva-fundo: var(--ac2);
+  --hx-terra: var(--ac);
+  --hx-terra-hover: #175530;
+  --hx-alerta: var(--wa-ink);
+  --hx-alerta-fundo: var(--wab);
+  --hx-folha: var(--ac);
+  --hx-ok: var(--ac);
+  --hx-ok-fundo: var(--ac2);
+  --hx-abaixo: var(--wa-ink);
+  --hx-abaixo-fundo: var(--wab);
+  --hx-zerado: var(--er);
+  --hx-zerado-fundo: var(--erb);
+  --hx-vencido: var(--er);
+  --hx-pendente: var(--wa-ink);
+  --hx-font-display: var(--font-display);
+  --hx-font-body: var(--font-body);
+  --hx-font-mono: var(--font-mono);
+  --hx-fs-xs: var(--fs-2);
+  --hx-fs-sm: var(--fs-3);
+  --hx-fs-md: var(--fs-4);
+  --hx-fs-lg: var(--fs-5);
+  --hx-fs-xl: var(--fs-7);
+  --hx-lh-tight: var(--lh-tight);
+  --hx-lh-body: var(--lh-body);
+  --hx-space-1: var(--space-1);
+  --hx-space-2: var(--space-2);
+  --hx-space-3: var(--space-3);
+  --hx-space-4: var(--space-4);
+  --hx-space-6: var(--space-6);
+  --hx-space-8: var(--space-8);
+  --hx-radius: var(--radius);
+  --hx-radius-max: var(--radius-md);
+  --hx-border: var(--border);
+  --hx-touch-min: var(--touch-min);
+  --hx-motion: var(--motion);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --hx-papel: #1a1814;
-    --hx-papel-elevado: #242018;
-    --hx-tinta: #f0ebe0;
-    --hx-tinta-suave: #c8c0b0;
-    --hx-linha: #3d382c;
-    --hx-linha-forte: #5a5344;
+  :root:not([data-theme="light"]) {
+    --bg: #121813;
+    --card: #1b231d;
+    --tx: #e8efe9;
+    --mu: #9bab9e;
+    --bd: #2d392f;
+    --ac: #5fbf82;
+    --ac2: #1f3326;
+    --wa: #f0b44c;
+    --wab: #352a12;
+    --er: #f2877f;
+    --erb: #3a1a18;
+    --info: #93c5fd;
+    --info-bg: #1e3a5f;
+    --mu-ink: #9bab9e;
+    --wa-ink: #f0b44c;
+    --hx-linha-forte: #3d4a3f;
+    --hx-terra-hover: #4aa86c;
+    --hx-uva: var(--ac);
+    --hx-uva-fundo: var(--ac2);
+    color-scheme: dark;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #121813;
+  --card: #1b231d;
+  --tx: #e8efe9;
+  --mu: #9bab9e;
+  --bd: #2d392f;
+  --ac: #5fbf82;
+  --ac2: #1f3326;
+  --wa: #f0b44c;
+  --wab: #352a12;
+  --er: #f2877f;
+  --erb: #3a1a18;
+  --info: #93c5fd;
+  --info-bg: #1e3a5f;
+  --mu-ink: #9bab9e;
+  --wa-ink: #f0b44c;
+  --hx-linha-forte: #3d4a3f;
+  --hx-terra-hover: #4aa86c;
+  --hx-uva: var(--ac);
+  --hx-uva-fundo: var(--ac2);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --hx-motion: 0ms;
+    --motion: 0ms;
   }
 }

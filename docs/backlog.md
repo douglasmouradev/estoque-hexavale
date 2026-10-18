@@ -2,8 +2,11 @@
 
 | ID | Item | Fase | Notas |
 |---|---|---|---|
-| BK-SEC-01 | gitleaks + Trivy + npm audit no CI | 1 | Makefile `sec` parcial na Fase 0 |
-| BK-E2E-01 | Playwright E2E + Lighthouse CI | 7 | Alvo `make e2e` skip na Fase 0 |
-| BK-FONT-01 | Baixar WOFF2 OFL (Barlow Condensed, Source Sans 3, IBM Plex Mono) | 1 | ADR-0005 |
-| BK-LIT-01 | Introduzir Lit para ilhas interativas | 1 | ADR-0003 |
-| BK-PROTO-01 | Importador seed sintético a partir do protótipo | 2 | `docs/prototipo/` |
+| BK-SEC-01 | gitleaks + Trivy + npm audit no CI | 1–2 | `composer audit` OK; restante parcial |
+| BK-E2E-01 | Playwright E2E + Lighthouse CI | 7 | Alvo `make e2e` skip |
+| BK-FONT-01 | ~~Baixar WOFF2 OFL~~ | 1 | **Fechado** — `public/fonts/*.woff2` + `@font-face` |
+| BK-LIT-01 | Introduzir Lit para ilhas interativas | 2+ | ADR-0003; Fase 1 usou Blade nos 4 componentes |
+| BK-PASSKEY-01 | Cerimônia WebAuthn completa (1 dispositivo) | 1–2 | Porta + tabela + lib; UI/fluxo pendente |
+| BK-PII-01 | Job de rotação `FIELD_ENCRYPTION_KEY` / re-cifrar | 2+ | ADR-0008 |
+| BK-PROTO-01 | ~~Importador seed sintético~~ | 2 | **Fechado** — `Fase2Seeder` (produtos/lotes/talhões + entradas) |
+| BK-UI-APP-01 | Substituir `/app` CDN pelo shell Blade + Lit | 2–3 | Protótipo ainda em runtime autenticado |

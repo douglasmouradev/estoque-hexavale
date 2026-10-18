@@ -31,14 +31,14 @@ arch:
 	./vendor/bin/deptrac analyse --config-file=deptrac.yaml
 
 test:
-	php artisan test --testsuite=Unit
+	php artisan test
 
 sec:
 	COMPOSER_ALLOW_SUPERUSER=1 composer audit
-	@echo "npm audit / Trivy / gitleaks: alvos completos a partir da Fase 1 (BK-SEC-01)"
+	@echo "npm audit / Trivy / gitleaks: BK-SEC-01 ainda parcial"
 
 e2e:
-	@echo "E2E Playwright: adiado até haver UI de negócio (BK-E2E-01). Skip Fase 0."
+	@echo "E2E Playwright: adiado até haver UI de negócio (BK-E2E-01). Skip."
 
 quality: lint types arch test sec
 

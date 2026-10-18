@@ -10,12 +10,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.5",
+        "bacon/bacon-qr-code": "^3.1",
+        "brick/math": "^1.0",
         "laravel/framework": "^13.17",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "spomky-labs/otphp": "^11.5",
+        "symfony/uid": "^8.1",
+        "web-auth/webauthn-lib": "^5.3"
     },
     "require-dev": {
         "deptrac/deptrac": "^4.7",
         "fakerphp/faker": "^1.23",
+        "larastan/larastan": "^3.13",
         "laravel/pail": "^1.2.5",
         "laravel/pao": "^1.0.6",
         "laravel/pint": "^1.27",

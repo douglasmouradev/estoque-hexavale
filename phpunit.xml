@@ -34,5 +34,8 @@
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="HASH_DRIVER" value="argon2id"/>
+        <env name="FIELD_ENCRYPTION_KEY" value="QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUE="/>
+        <env name="FIELD_BLIND_INDEX_KEY" value="QkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkI="/>
     </php>
 </phpunit>

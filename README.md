@@ -23,16 +23,14 @@ php artisan key:generate
 npm install
 npm run build
 
-# Opcional com Docker
-make up          # php, caddy :8080, mysql :3307, mailpit :8025
-```
-
-Sem Docker (SQLite local já vem no skeleton Laravel):
-
-```bash
+# SQLite local (sem Docker)
 touch database/database.sqlite
-php artisan migrate
-php artisan serve
+php artisan migrate   # obrigatório: cria sessions, users, cache, jobs
+
+php artisan serve     # http://127.0.0.1:8000
+
+# Ou stack completa
+# make up             # Caddy :8080, MySQL :3307, Mailpit :8025
 ```
 
 ## Qualidade
@@ -57,7 +55,7 @@ make quality # tudo acima + composer audit
 - [ADRs](docs/adr/)
 - [Design](docs/design/DESIGN.md)
 - [Perguntas abertas](docs/perguntas-abertas.md)
-- [Protótipo HTML](docs/prototipo/hexavale_erp_unificado.html)
+- [Protótipo HTML (referência)](docs/prototipo/hexavale_erp_unificado.html) — ver `docs/prototipo/README.md`
 
 ## Repositório
 
