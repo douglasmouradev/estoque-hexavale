@@ -1,0 +1,12 @@
+---
+description: LGPD por design — requisitos bloqueantes
+alwaysApply: true
+---
+
+# LGPD
+
+- Minimização; base legal por tratamento; ROPA atualizado.
+- PII cifrada em campo + mascaramento; revelação auditada (`acessos_pii`).
+- Sem cookies/analytics/pixels de terceiros.
+- Não inventar dose/carência/prazo legal — registrar em `docs/perguntas-abertas.md`.
+- Pontos jurídicos: validar com DPO/advogado antes do go-live (não é parecer jurídico).

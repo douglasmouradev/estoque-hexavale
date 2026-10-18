@@ -1,0 +1,13 @@
+---
+description: Arquitetura hexagonal HexaVale — contextos e dependências
+alwaysApply: true
+---
+
+# Arquitetura
+
+- Domínio em PT-BR (`Talhao`, `Lote`, `Movimentacao`…); infra em inglês.
+- Código de negócio em `src/{Contexto}/{Dominio|Aplicacao|Infraestrutura|Interface}`.
+- `Dominio` não importa Illuminate/Laravel/HTTP/DB. `Aplicacao` só conhece `Dominio`.
+- Laravel em `app/` é adaptador fino. Multi-fazenda: `fazenda_id` obrigatório.
+- Estoque = ledger append-only; sem float em quantidade/valor; DECIMAL + brick/math.
+- Sem CDN em runtime. Pendências → `docs/backlog.md` com ID. Decisões → ADR.

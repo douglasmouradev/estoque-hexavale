@@ -1,0 +1,13 @@
+---
+description: Guardrails do módulo Conhecimento (RAG)
+globs: "src/Conhecimento/**/*"
+alwaysApply: false
+---
+
+# RAG
+
+- Fundamentado ou nada; citação obrigatória (doc, versão, trecho).
+- Somente leitura; não altera estoque/ordens.
+- Aviso: não substitui receituário do RT.
+- Sem PII no prompt; ACL antes do retrieval; OWASP LLM.
+- Humano no circuito para `bula_dosagens`.

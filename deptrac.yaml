@@ -1,0 +1,40 @@
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+  layers:
+    - name: Dominio
+      collectors:
+        - type: classLike
+          value: HexaVale\\.*\\Dominio\\.*
+    - name: Aplicacao
+      collectors:
+        - type: classLike
+          value: HexaVale\\.*\\Aplicacao\\.*
+    - name: Infraestrutura
+      collectors:
+        - type: classLike
+          value: HexaVale\\.*\\Infraestrutura\\.*
+    - name: Interface
+      collectors:
+        - type: classLike
+          value: HexaVale\\.*\\Interface\\.*
+    - name: Framework
+      collectors:
+        - type: classLike
+          value: Illuminate\\.*
+        - type: classLike
+          value: Laravel\\.*
+  ruleset:
+    Dominio: []
+    Aplicacao:
+      - Dominio
+    Infraestrutura:
+      - Dominio
+      - Aplicacao
+      - Framework
+    Interface:
+      - Dominio
+      - Aplicacao
+      - Framework

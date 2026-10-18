@@ -1,0 +1,84 @@
+/**
+ * HexaVale — design tokens
+ * Conceito: caderno de campo + etiqueta de almoxarifado
+ * Fontes OFL self-hosted entram na Fase 1 (ADR-0005).
+ */
+
+:root {
+  /* Superfície */
+  --hx-papel: #f3efe6;
+  --hx-papel-elevado: #faf7f0;
+  --hx-tinta: #1d1b16;
+  --hx-tinta-suave: #4a463c;
+  --hx-linha: #cfc7b4;
+  --hx-linha-forte: #a89f8a;
+
+  /* Cultura */
+  --hx-manga: #c47a12;
+  --hx-manga-fundo: #f5e6c8;
+  --hx-uva: #6b1e3a;
+  --hx-uva-fundo: #f0dde4;
+
+  /* Ação / alerta */
+  --hx-terra: #8b5a2b;
+  --hx-terra-hover: #6f4620;
+  --hx-alerta: #d35400;
+  --hx-alerta-fundo: #fde8d8;
+  --hx-folha: #3d5c3a;
+
+  /* Estados (sempre cor + texto + forma na UI) */
+  --hx-ok: #2f5d3a;
+  --hx-ok-fundo: #e4efe6;
+  --hx-abaixo: #a15c00;
+  --hx-abaixo-fundo: #fff0d6;
+  --hx-zerado: #8a1f1f;
+  --hx-zerado-fundo: #fde8e8;
+  --hx-vencido: #8a1f1f;
+  --hx-pendente: #6b5a00;
+
+  /* Tipografia — placeholders até WOFF2 self-hosted (Fase 1) */
+  --hx-font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --hx-font-body: "Source Sans 3", "Segoe UI", sans-serif;
+  --hx-font-mono: "IBM Plex Mono", "Consolas", monospace;
+
+  --hx-fs-xs: 0.75rem;
+  --hx-fs-sm: 0.875rem;
+  --hx-fs-md: 1rem;
+  --hx-fs-lg: 1.25rem;
+  --hx-fs-xl: 1.75rem;
+
+  --hx-lh-tight: 1.2;
+  --hx-lh-body: 1.45;
+
+  /* Grade 8px */
+  --hx-space-1: 0.25rem;
+  --hx-space-2: 0.5rem;
+  --hx-space-3: 0.75rem;
+  --hx-space-4: 1rem;
+  --hx-space-6: 1.5rem;
+  --hx-space-8: 2rem;
+
+  --hx-radius: 2px;
+  --hx-radius-max: 4px;
+  --hx-border: 1px solid var(--hx-linha);
+
+  --hx-touch-min: 48px;
+  --hx-motion: 120ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hx-papel: #1a1814;
+    --hx-papel-elevado: #242018;
+    --hx-tinta: #f0ebe0;
+    --hx-tinta-suave: #c8c0b0;
+    --hx-linha: #3d382c;
+    --hx-linha-forte: #5a5344;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --hx-motion: 0ms;
+  }
+}

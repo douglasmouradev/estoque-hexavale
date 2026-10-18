@@ -1,0 +1,90 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: hexavale
+      DB_USERNAME: hexavale_app
+      DB_PASSWORD: hexavale_app_secret
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - hexavale
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    command: php artisan queue:work --sleep=1 --tries=3 --timeout=90
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: local
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: hexavale
+      DB_USERNAME: hexavale_app
+      DB_PASSWORD: hexavale_app_secret
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - hexavale
+
+  caddy:
+    image: caddy:2.10-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - .:/var/www/html:ro
+    depends_on:
+      - php
+    networks:
+      - hexavale
+
+  mysql:
+    image: mysql:9.7.2
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secret_change_me
+      MYSQL_DATABASE: hexavale
+      MYSQL_USER: hexavale_app
+      MYSQL_PASSWORD: hexavale_app_secret
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/hexavale.cnf:ro
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot_secret_change_me"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks:
+      - hexavale
+
+  mailpit:
+    image: axllent/mailpit:v1.27
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - hexavale
+
+volumes:
+  mysql_data:
+
+networks:
+  hexavale:
+    driver: bridge

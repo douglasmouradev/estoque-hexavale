@@ -1,0 +1,15 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - app
+        - routes/web.php
+        - tests/Unit
+        - tests/Architecture
+    excludePaths:
+        - tests/Feature
+        - routes/console.php
+    treatPhpDocTypesAsCertain: false

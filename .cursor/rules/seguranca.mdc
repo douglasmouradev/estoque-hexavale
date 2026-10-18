@@ -1,0 +1,12 @@
+---
+description: Segurança ASVS L2 e higiene de segredos
+alwaysApply: true
+---
+
+# Segurança
+
+- Argon2id, MFA/passkeys (Fase 1); cookies HttpOnly/Secure/SameSite.
+- Negar por padrão; policies por caso de uso; testes IDOR por fazenda/perfil.
+- Prepared statements; CSP com nonce; CSRF; rate limit; sem `eval`.
+- Nunca versionar segredos, PII real ou bulas protegidas. Seeds sintéticos.
+- Idempotency-Key em operações mutáveis.

@@ -1,0 +1,13 @@
+---
+description: Estilo PHP 8.5 estrito
+globs: "**/*.php"
+alwaysApply: false
+---
+
+# PHP
+
+- `declare(strict_types=1);` em todo arquivo.
+- Preferir `readonly class`, enums, property hooks quando simplificarem.
+- PHPStan level max deve passar. Pint para formatação.
+- VOs imutáveis com validação no construtor (`Quantidade`, `Dinheiro`, `Dose`…).
+- Proibido `float` para dinheiro/quantidade.

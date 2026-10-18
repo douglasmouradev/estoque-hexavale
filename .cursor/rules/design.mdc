@@ -1,0 +1,13 @@
+---
+description: Design caderno de campo — anti-template IA
+globs: "resources/**/*.{css,ts,js,blade.php}"
+alwaysApply: false
+---
+
+# Design
+
+- Conceito: caderno de campo + etiqueta de almoxarifado.
+- Proibido: gradientes roxo/azul, Inter/Roboto, verde Tailwind, FontAwesome genérico, cards iguais, emojis, CDN.
+- Tokens em `resources/css/tokens.css`. Estados = cor + texto + forma.
+- Componentes: EtiquetaLote, ReguaNivel, MapaHexTalhao, FichaCarimbo.
+- Modo campo (≥48px) e modo noite. Microcopy técnica em PT-BR.

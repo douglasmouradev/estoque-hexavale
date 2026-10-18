@@ -1,0 +1,12 @@
+---
+description: Política de testes e TDD nas RN-xx
+globs: "tests/**"
+alwaysApply: false
+---
+
+# Testes
+
+- Regras RN-01…RN-20: teste de domínio primeiro (TDD), ID rastreável em `docs/requisitos.md`.
+- Cobertura alvo domínio ≥ 90%; mutation MSI ≥ 70% (Fases seguintes).
+- Integração com MySQL 9.7 real em container; testes de concorrência/idempotência no ledger.
+- Arquitetura: Deptrac + `tests/Architecture`.
