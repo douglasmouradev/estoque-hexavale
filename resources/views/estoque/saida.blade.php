@@ -11,6 +11,7 @@
 <section class="hx-card hx-card--narrow">
     <form method="post" action="{{ route('estoque.saida.store') }}" class="hx-form">
         @csrf
+        <input type="hidden" name="_idempotency_key" value="{{ $idempotencyKey }}">
         <label class="hx-field">
             Lote
             <select name="lote_id" required>
@@ -22,6 +23,10 @@
         <label class="hx-field">
             Quantidade
             <input type="text" name="quantidade" class="tabular" required inputmode="decimal" placeholder="0.000">
+        </label>
+        <label class="hx-field">
+            Unidade (opcional)
+            <input type="text" name="unidade" placeholder="kg, g, L, mL" maxlength="8">
         </label>
         <label class="hx-field">
             Motivo

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HexaVale\Estoque\Aplicacao;
 
 use HexaVale\Auditoria\Aplicacao\PortaRegistrarAuditoria;
+use HexaVale\Compartilhado\Dominio\ConversorUnidade;
 use HexaVale\Compartilhado\Dominio\Quantidade;
 use HexaVale\Estoque\Aplicacao\Portas\PortaLedgerEstoque;
 use HexaVale\Estoque\Dominio\TipoMovimentacao;
@@ -24,13 +25,18 @@ final readonly class RegistrarEntrada
         string $fazendaId,
         string $loteId,
         string $quantidade,
-        string $unidade,
+        string $unidadeInformada,
+        string $unidadeBase,
         ?string $motivo,
         ?string $atorId,
         ?string $idempotencyKey,
     ): array {
         try {
-            $q = Quantidade::de($quantidade);
+            $q = ConversorUnidade::converter(
+                Quantidade::de($quantidade),
+                $unidadeInformada,
+                $unidadeBase,
+            );
             if (! $q->maiorQue(Quantidade::zero())) {
                 return ['ok' => false, 'mensagem' => 'Quantidade de entrada deve ser positiva.'];
             }
@@ -39,7 +45,7 @@ final readonly class RegistrarEntrada
                 $loteId,
                 TipoMovimentacao::Entrada,
                 $q,
-                $unidade,
+                $unidadeBase,
                 $motivo,
                 $atorId,
                 $idempotencyKey,
@@ -51,7 +57,7 @@ final readonly class RegistrarEntrada
                 'lote',
                 $loteId,
                 null,
-                ['quantidade' => $q->paraString(), 'unidade' => $unidade],
+                ['quantidade' => $q->paraString(), 'unidade' => $unidadeBase],
                 $motivo,
                 null,
                 null,

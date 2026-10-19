@@ -10,11 +10,11 @@ use App\Models\SaldoLote as SaldoLoteModel;
 use HexaVale\Compartilhado\Dominio\Quantidade;
 use HexaVale\Compartilhado\Dominio\UuidV7;
 use HexaVale\Estoque\Aplicacao\Portas\PortaLedgerEstoque;
+use HexaVale\Estoque\Dominio\PoliticaLote;
 use HexaVale\Estoque\Dominio\SaldoLote;
 use HexaVale\Estoque\Dominio\TipoMovimentacao;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
-use RuntimeException;
 
 final class EloquentLedgerEstoque implements PortaLedgerEstoque
 {
@@ -55,6 +55,7 @@ final class EloquentLedgerEstoque implements PortaLedgerEstoque
             $saldo = new SaldoLote($fisico, $reservado);
             $minimo = Quantidade::de((string) $produto->minimo);
             $situacao = $saldo->situacao($minimo);
+            $validade = $lote->validade !== null ? (string) $lote->validade : null;
             $out[] = [
                 'lote_id' => (string) $lote->id,
                 'produto_id' => (string) $produto->id,
@@ -66,7 +67,8 @@ final class EloquentLedgerEstoque implements PortaLedgerEstoque
                 'reservado' => $reservado->paraString(),
                 'disponivel' => $saldo->disponivel()->paraString(),
                 'situacao' => $situacao->value,
-                'validade' => $lote->validade !== null ? (string) $lote->validade : null,
+                'validade' => $validade,
+                'vencido' => PoliticaLote::estaVencido($validade),
             ];
         }
 
@@ -108,9 +110,8 @@ final class EloquentLedgerEstoque implements PortaLedgerEstoque
             $novo = match ($tipo) {
                 TipoMovimentacao::Entrada, TipoMovimentacao::AjustePos => $atual->aplicarEntrada($quantidade),
                 TipoMovimentacao::Saida, TipoMovimentacao::AjusteNeg => $atual->aplicarSaida($quantidade),
-                TipoMovimentacao::Reserva, TipoMovimentacao::BaixaReserva => throw new RuntimeException(
-                    'Reserva/baixa de reserva será implementada com ordens (Fase 5).',
-                ),
+                TipoMovimentacao::Reserva => $atual->aplicarReserva($quantidade),
+                TipoMovimentacao::BaixaReserva => $atual->liberarReserva($quantidade),
             };
 
             $id = UuidV7::gerar()->valor;

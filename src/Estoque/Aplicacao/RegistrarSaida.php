@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace HexaVale\Estoque\Aplicacao;
 
 use HexaVale\Auditoria\Aplicacao\PortaRegistrarAuditoria;
+use HexaVale\Compartilhado\Dominio\ConversorUnidade;
 use HexaVale\Compartilhado\Dominio\Quantidade;
 use HexaVale\Estoque\Aplicacao\Portas\PortaLedgerEstoque;
+use HexaVale\Estoque\Dominio\PoliticaLote;
 use HexaVale\Estoque\Dominio\TipoMovimentacao;
 use InvalidArgumentException;
 
@@ -24,13 +26,20 @@ final readonly class RegistrarSaida
         string $fazendaId,
         string $loteId,
         string $quantidade,
-        string $unidade,
+        string $unidadeInformada,
+        string $unidadeBase,
+        ?string $validadeYmd,
         ?string $motivo,
         ?string $atorId,
         ?string $idempotencyKey,
     ): array {
         try {
-            $q = Quantidade::de($quantidade);
+            PoliticaLote::garantirUsoPermitido($validadeYmd);
+            $q = ConversorUnidade::converter(
+                Quantidade::de($quantidade),
+                $unidadeInformada,
+                $unidadeBase,
+            );
             if (! $q->maiorQue(Quantidade::zero())) {
                 return ['ok' => false, 'mensagem' => 'Quantidade de saída deve ser positiva.'];
             }
@@ -39,7 +48,7 @@ final readonly class RegistrarSaida
                 $loteId,
                 TipoMovimentacao::Saida,
                 $q,
-                $unidade,
+                $unidadeBase,
                 $motivo,
                 $atorId,
                 $idempotencyKey,
@@ -51,7 +60,7 @@ final readonly class RegistrarSaida
                 'lote',
                 $loteId,
                 null,
-                ['quantidade' => $q->paraString(), 'unidade' => $unidade],
+                ['quantidade' => $q->paraString(), 'unidade' => $unidadeBase],
                 $motivo,
                 null,
                 null,

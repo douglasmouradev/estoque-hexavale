@@ -39,6 +39,8 @@ final class AuthLoginTest extends TestCase
         $response->assertOk();
         $response->assertSee('HexaVale ERP Agrícola', false);
         $response->assertSee('Dashboard', false);
+        $response->assertSee('Gestão Financeira', false);
+        $response->assertSee('id="fin-src"', false);
     }
 
     public function test_login_invalido_falha(): void

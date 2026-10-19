@@ -51,6 +51,10 @@
         .hex-logo {
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
         }
+        /* Densidade: módulos Vue usam toda a largura útil */
+        main table th, main table td { padding: 0.45rem 0.65rem !important; }
+        main .space-y-4 > *, main .space-y-6 > * { margin-top: 0.75rem; }
+        .fin-shell, .ot-shell { width: 100%; }
     @media print{aside,header{display:none!important}}
     </style>
 </head>
@@ -67,7 +71,7 @@ body{font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;backgro
 .logo{font-size:20px;font-weight:300;padding:0 8px 14px}.logo b{font-style:italic;color:var(--ac)}
 .side a{display:block;padding:9px 10px;border-radius:8px;color:var(--tx);cursor:pointer;margin-bottom:2px}.side a.on{background:var(--ac2);color:var(--ac);font-weight:600}
 .demo{margin:14px 6px 0;font-size:11px;color:var(--wa);background:var(--wab);padding:8px;border-radius:8px}
-main{flex:1;padding:20px;min-width:0;max-width:1100px}
+main{flex:1;padding:14px 16px;min-width:0;max-width:none;width:100%}
 h1{font-size:20px;margin:0 0 14px}h2{font-size:15px;margin:0 0 10px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}.kpi{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}.kpi b{font-size:24px;display:block}.kpi span{color:var(--mu);font-size:12px}
@@ -218,18 +222,345 @@ try{const d=JSON.parse(localStorage.getItem('hx')||'null');if(d&&d.P){P.splice(0
 render();
 <\/script></body></html>
 </script>
+<script type="text/plain" id="fin-src"><!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HexaVale | Gestão Financeira Rural</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --sf: #ffffff;
+  --tx: #1f2937;
+  --mu: #6b7280;
+  --br: #e5e7eb;
+  --g1: #052e16;
+  --g2: #16a34a;
+  --g3: #22c55e;
+  --g4: #dcfce7;
+  --rd: #dc2626;
+  --am: #d97706;
+  --amb: #fffbeb;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+  display: flex;
+  min-height: 100%;
+}
+nav {
+  width: 240px;
+  background: var(--g1);
+  color: #e5e7eb;
+  padding: 0 0 12px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+nav .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid #14532d;
+  margin-bottom: 10px;
+}
+nav .brand .hex {
+  width: 32px; height: 32px;
+  background: var(--g3);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: grid; place-items: center;
+  font-size: 12px;
+  box-shadow: 0 4px 12px rgba(34,197,94,.35);
+}
+nav .brand strong { display: block; color: #fff; font-size: 16px; font-weight: 700; letter-spacing: .02em; }
+nav .brand small { display: block; color: #86efac; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+nav button {
+  display: block; width: calc(100% - 16px); margin: 2px 8px;
+  text-align: left; background: none; border: 0; color: inherit;
+  padding: 9px 12px; border-radius: 8px; cursor: pointer; font: inherit; font-weight: 500;
+}
+nav button:hover { background: rgba(255,255,255,.08); color: #fff; }
+nav button.on { background: var(--g2); color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,.2); }
+main { flex: 1; min-width: 0; padding: 12px 16px 16px; overflow: auto; width: 100%; max-width: none; }
+header.top {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 10px;
+  width: 100%;
+}
+header.top h2 { margin: 0; font-size: 18px; font-weight: 600; color: #111827; }
+#meta { color: var(--mu); font-size: 12px; font-weight: 500; }
+.dm {
+  font-size: 11px; font-weight: 500;
+  background: var(--amb); color: #92400e;
+  padding: 4px 10px; border-radius: 999px; border: 1px solid #fde68a;
+  white-space: nowrap;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin: 0 0 10px;
+  width: 100%;
+}
+.card, .box {
+  background: var(--sf);
+  border: 1px solid var(--br);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+  width: 100%;
+}
+.card span { color: var(--mu); font-size: 11px; font-weight: 500; display: block; }
+.card b { display: block; font-size: 18px; font-weight: 700; margin-top: 4px; color: #111827; letter-spacing: -.01em; }
+.neg { color: var(--rd) !important; }
+.warn { color: var(--am); }
+.note { color: var(--mu); font-size: 12px; margin: 0 0 10px; }
+.sec { font-size: 13px; font-weight: 600; color: #111827; margin: 12px 0 8px; }
+h3 { font-size: 13px; font-weight: 600; color: #111827; margin: 12px 0 8px; }
+.toolbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 0 0 10px; width: 100%;
+}
+.toolbar b { margin-left: auto; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; background: var(--sf); font-size: 12.5px; table-layout: auto; }
+th, td { padding: 7px 10px; border-bottom: 1px solid var(--br); text-align: left; vertical-align: middle; }
+th { font-size: 10px; color: var(--mu); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; background: #f9fafb; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+td:not(.n):not(.acts), th:not(.n):not(.acts) { white-space: normal; }
+td.acts, th.acts { white-space: nowrap; width: 1%; }
+td.acts button.b + button.b { margin-left: 4px; }
+.w { overflow-x: auto; border: 1px solid var(--br); border-radius: 10px; margin: 0 0 8px; background: var(--sf); width: 100%; }
+button.b, select, input {
+  font: inherit; padding: 6px 10px; border: 1px solid var(--br);
+  border-radius: 7px; background: var(--sf); color: var(--tx);
+}
+button.b { cursor: pointer; font-weight: 500; font-size: 12px; }
+button.b:hover { background: #f9fafb; }
+button.p { background: var(--g2); color: #fff; border-color: var(--g2); }
+button.p:hover { background: #15803d; }
+td.acts button.b { padding: 4px 8px; font-size: 11px; line-height: 1.2; }
+.al {
+  padding: 10px 12px; border-left: 3px solid var(--am);
+  background: var(--sf); margin: 0 0 8px; border-radius: 8px;
+  border: 1px solid var(--br); border-left-width: 3px; border-left-color: var(--am);
+  font-size: 13px;
+}
+.al.r { border-left-color: var(--rd); }
+.al a { color: var(--g2); font-weight: 600; text-decoration: none; }
+.al a:hover { text-decoration: underline; }
+dialog {
+  border: 1px solid var(--br); border-radius: 12px; background: var(--sf);
+  color: var(--tx); max-width: 440px; width: 92%; padding: 20px;
+  font-family: inherit; box-shadow: 0 20px 40px rgba(15,23,42,.15);
+}
+dialog h3 { margin-top: 0; }
+dialog label { display: block; margin: 8px 0; font-size: 12px; color: var(--mu); font-weight: 500; }
+dialog input, dialog select { width: 100%; margin-top: 4px; }
+.bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; min-width: 90px; }
+.bar i { display: block; height: 100%; background: var(--g2); }
+.box b { display: block; margin-bottom: 10px; font-size: 13px; color: #111827; }
+@media (max-width: 760px) {
+  body { flex-direction: column; }
+  nav { width: 100%; max-height: none; flex-direction: row; flex-wrap: wrap; padding: 8px; }
+  nav .brand { width: 100%; border: 0; margin: 0 0 6px; padding: 8px; }
+  nav button { width: auto; margin: 2px; white-space: nowrap; }
+  main { padding: 14px; }
+  .cards { grid-template-columns: 1fr; }
+  .dm { white-space: normal; }
+}
+
+body.embedded {
+  display: block;
+  min-height: 100%;
+  height: 100%;
+  overflow: auto;
+  background: var(--bg);
+}
+body.embedded nav { display: none !important; }
+body.embedded main {
+  padding: 10px 14px 14px;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+body.embedded header.top {
+  margin-bottom: 8px;
+  align-items: center;
+  gap: 10px;
+}
+body.embedded header.top h2 { display: none; }
+body.embedded #meta { flex: 1; min-width: 0; }
+body.embedded .cards {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+body.embedded .box,
+body.embedded .w,
+body.embedded .card {
+  max-width: none;
+}
+body.embedded #v { width: 100%; }
+@media (max-width: 640px) {
+  body.embedded main { padding: 8px 10px 12px; }
+  body.embedded .cards { grid-template-columns: 1fr 1fr; }
+}
+
+</style>
+</head>
+<body>
+<nav id="nav" aria-label="Financeiro"></nav>
+<main>
+  <header class="top">
+    <div>
+      <h2 id="ttl"></h2>
+      <div id="meta" style="margin-top:4px"></div>
+    </div>
+    <span class="dm">Dados demonstrativos — substitua pelos dados reais da fazenda</span>
+  </header>
+  <div id="v"></div>
+</main>
+<dialog id="m"></dialog>
+<script>
+
+const $=s=>document.querySelector(s);
+const fm=c=>(c/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const fd=i=>i?i.split('-').reverse().join('/'):'';
+const iso=d=>d.toLocaleDateString('sv',{timeZone:'America/Sao_Paulo'});
+const TODAY=iso(new Date()),addD=(n,b)=>iso(new Date(new Date((b||TODAY)+'T12:00:00').getTime()+n*864e5));
+const cents=v=>Math.round(parseFloat(String(v).replace(',','.'))*100);
+const CATS=[['Fertilizantes',1],['Defensivos agrícolas',1],['Mão de obra',1],['Energia elétrica',1],['Combustível',1],['Manutenção de máquinas',1],['Transporte e logística',1],['Venda de manga',1],['Venda de uva',1],['Juros e despesas financeiras',0],['Financiamento (principal)',0],['Financiamento recebido',0],['Investimentos',0]];
+const OP=Object.fromEntries(CATS);const CCS=['Geral','Talhão M-01 Manga','Talhão M-02 Manga','Talhão U-01 Uva'];
+let S;const K='hexavale-fin-v1';
+function demo(){let n=1;const s={accs:[{id:1,nome:'Caixa da fazenda',ini:1500000,ativo:1},{id:2,nome:'Banco - Conta corrente',ini:18000000,ativo:1},{id:3,nome:'Banco - Poupança',ini:5000000,ativo:1}],tit:[],pay:[],tr:[],orc:{'Fertilizantes':3000000,'Defensivos agrícolas':2500000,'Mão de obra':4000000,'Energia elétrica':800000,'Combustível':600000,'Manutenção de máquinas':900000},seq:100};
+const T=(tp,desc,cat,cc,p,v,val,pg,conta)=>{const t={id:n++,tp,desc,cat,cc,pessoa:p,comp:addD(v-5),venc:addD(v),val};s.tit.push(t);if(pg)s.pay.push({id:s.seq++,t:t.id,data:t.venc<=TODAY?t.venc:TODAY,caixa:pg,baixa:pg,conta:conta||2})};
+T('P','Adubo NPK safra','Fertilizantes','Talhão M-01 Manga','AgroFert Ltda',-40,1850000,1850000);
+T('P','Defensivo - fungicida','Defensivos agrícolas','Talhão U-01 Uva','DefensAgro',-20,1200000,0);
+T('P','Folha de pagamento - quinzena','Mão de obra','Geral','Funcionários',-8,2100000,2100000);
+T('P','Energia irrigação','Energia elétrica','Geral','Cia Energética',-3,420000,0);
+T('P','Diesel tratores','Combustível','Geral','Posto Vale',4,310000,0);
+T('P','Manutenção pulverizador','Manutenção de máquinas','Talhão M-02 Manga','Oficina Central',12,540000,200000);
+T('P','Fertilizante cobertura','Fertilizantes','Talhão U-01 Uva','AgroFert Ltda',25,1600000,0);
+T('P','Parcela financiamento custeio','Financiamento (principal)','Geral','Banco (contrato demo)',18,2500000,0);
+T('P','Folha de pagamento - quinzena','Mão de obra','Geral','Funcionários',7,2100000,0);
+T('R','Venda de manga - lote 1','Venda de manga','Talhão M-01 Manga','Exportadora Frutas Sul',-30,6000000,6000000,2);
+T('R','Venda de uva - lote 1 (parcela 1)','Venda de uva','Talhão U-01 Uva','Atacado Nordeste',-10,2400000,1000000,2);
+T('R','Venda de uva - lote 1 (parcela 2)','Venda de uva','Talhão U-01 Uva','Atacado Nordeste',20,2400000,0);
+T('R','Venda de manga - lote 2','Venda de manga','Talhão M-02 Manga','Exportadora Frutas Sul',35,8000000,0);
+T('R','Venda de manga - lote 3','Venda de manga','Talhão M-02 Manga','Mercado Regional',-6,900000,0);
+s.tr.push({id:s.seq++,de:2,para:1,data:addD(-15),val:500000});return s}
+function load(){try{S=JSON.parse(localStorage.getItem(K))}catch(e){}if(!S||!S.tit){S=demo();save()}}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+// ---- cálculos (centavos inteiros) ----
+const pago=t=>S.pay.filter(p=>p.t===t.id).reduce((a,p)=>a+p.baixa,0);
+const pend=t=>t.cancel?0:t.val-pago(t);
+const st=t=>t.cancel?'Cancelada':pend(t)===0?(t.tp==='P'?'Paga':'Recebida'):t.venc<TODAY?'Vencida':pago(t)>0?'Parcial':'Em aberto';
+const saldoConta=(a,ate)=>{ate=ate||TODAY;let s=a.ini;S.pay.forEach(p=>{const t=S.tit.find(x=>x.id===p.t);if(p.conta===a.id&&p.data<=ate)s+=t.tp==='R'?p.caixa:-p.caixa});S.tr.forEach(x=>{if(x.data<=ate){if(x.de===a.id)s-=x.val;if(x.para===a.id)s+=x.val}});return s};
+const saldoTotal=()=>S.accs.filter(a=>a.ativo).reduce((s,a)=>s+saldoConta(a),0);
+const live=tp=>S.tit.filter(t=>t.tp===tp&&!t.cancel);
+const sum=(arr,f)=>arr.reduce((a,x)=>a+f(x),0);
+const real=(tp,mes)=>sum(S.pay.filter(p=>{const t=S.tit.find(x=>x.id===p.t);return t.tp===tp&&p.data<=TODAY&&(!mes||p.data.slice(0,7)===mes)}),p=>p.caixa);
+const realOp=(tp,mes)=>sum(S.pay.filter(p=>{const t=S.tit.find(x=>x.id===p.t);return t.tp===tp&&OP[t.cat]&&p.data<=TODAY&&(!mes||p.data.slice(0,7)===mes)}),p=>p.caixa);
+// ---- UI helpers ----
+function modal(t,fields,ok){const m=$('#m');m.innerHTML=`<form><h3>${t}</h3>${fields.map(f=>{const o=f.o;return `<label>${f.l}${o?`<select name="${f.k}">${o.map(x=>{x=Array.isArray(x)?x:[x,x];return `<option value="${x[0]}">${x[1]}</option>`}).join('')}</select>`:`<input name="${f.k}" type="${f.t||'text'}" step="0.01" value="${f.v??''}" required>`}</label>`}).join('')}<button class="b p" type="submit">Confirmar</button> <button class="b" type="button" onclick="$('#m').close()">Cancelar</button></form>`;const fo=m.querySelector('form');fo.onsubmit=e=>{e.preventDefault();if(fo.dataset.d)return;fo.dataset.d=1;try{const r=ok(Object.fromEntries(new FormData(fo)));if(r===false){delete fo.dataset.d;return}m.close();save();go(cur)}catch(x){alert(x.message);delete fo.dataset.d}};m.showModal()}
+const tdCls=x=>x[0]==='$'?'n':(/^Aç(õ|o)e?s?$/i.test(x)?'acts':'');
+const tbl=(h,rows)=>`<div class="w"><table><tr>${h.map(x=>`<th${tdCls(x)?` class=${tdCls(x)}`:''}>${x.replace('$','')}</th>`).join('')}</tr>${rows.length?rows.map(r=>`<tr>${r.map((c,i)=>`<td${tdCls(h[i])?` class=${tdCls(h[i])}`:''}>${c}</td>`).join('')}</tr>`).join(''):`<tr><td colspan=${h.length}>Nenhum registro. Use o botão de cadastro acima.</td></tr>`}</table></div>`;
+const accOpts=()=>S.accs.filter(a=>a.ativo).map(a=>[a.id,a.nome]);
+function csv(name,rows){const b=new Blob(['\ufeff'+rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(';')).join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;a.click()}
+// ---- ações ----
+function novoTit(tp){modal(tp==='P'?'Nova conta a pagar':'Nova conta a receber',[{k:'desc',l:'Descrição'},{k:'cat',l:'Categoria',o:CATS.filter(c=>tp==='P'?!/^Venda|recebido/.test(c[0]):/^Venda|recebido/.test(c[0])).map(c=>c[0])},{k:'cc',l:'Centro de custo / talhão',o:CCS},{k:'pessoa',l:tp==='P'?'Fornecedor':'Cliente'},{k:'comp',l:'Competência',t:'date',v:TODAY},{k:'venc',l:'Vencimento (1ª parcela)',t:'date',v:TODAY},{k:'val',l:'Valor total (R$)',t:'number'},{k:'np',l:'Parcelas',t:'number',v:1}],d=>{const v=cents(d.val),n=parseInt(d.np);if(!(v>0)||!(n>=1&&n<=60))throw new Error('Valor e parcelas devem ser válidos.');const base=Math.floor(v/n);let id=Math.max(0,...S.tit.map(t=>t.id))+1;for(let i=0;i<n;i++)S.tit.push({id:id++,tp,desc:d.desc+(n>1?` (${i+1}/${n})`:''),cat:d.cat,cc:d.cc,pessoa:d.pessoa,comp:d.comp,venc:addD(30*i,d.venc),val:i===n-1?v-base*(n-1):base})})}
+function baixa(id){const t=S.tit.find(x=>x.id===id),p=pend(t);modal((t.tp==='P'?'Pagar: ':'Receber: ')+t.desc+' — pendente '+fm(p),[{k:'conta',l:'Conta financeira',o:accOpts()},{k:'data',l:'Data',t:'date',v:TODAY},{k:'val',l:'Valor em caixa (R$)',t:'number',v:(p/100).toFixed(2)},{k:'desc',l:'Desconto concedido (R$)',t:'number',v:'0'}],d=>{const c=cents(d.val),ds=cents(d.desc||0);if(!(c>0)||ds<0)throw new Error('Valores inválidos.');if(c+ds>p)throw new Error('Valor excede o saldo pendente de '+fm(p)+'.');if(!confirm('Confirmar '+(t.tp==='P'?'pagamento':'recebimento')+' de '+fm(c)+'?'))return false;S.pay.push({id:S.seq++,t:id,data:d.data,caixa:c,baixa:c+ds,conta:parseInt(d.conta)})})}
+function cancelar(id){if(!confirm('Cancelar este lançamento? O histórico será preservado.'))return;S.tit.find(t=>t.id===id).cancel=1;save();go(cur)}
+function novaConta(){modal('Nova conta financeira',[{k:'nome',l:'Nome'},{k:'ini',l:'Saldo inicial (R$)',t:'number',v:'0'}],d=>{S.accs.push({id:Math.max(...S.accs.map(a=>a.id))+1,nome:d.nome,ini:cents(d.ini),ativo:1})})}
+function novaTransf(){modal('Nova transferência',[{k:'de',l:'Origem',o:accOpts()},{k:'para',l:'Destino',o:accOpts()},{k:'data',l:'Data',t:'date',v:TODAY},{k:'val',l:'Valor (R$)',t:'number'}],d=>{const v=cents(d.val);if(d.de===d.para)throw new Error('Origem e destino devem ser diferentes.');if(!(v>0))throw new Error('Valor inválido.');if(saldoConta(S.accs.find(a=>a.id==d.de))<v&&!confirm('Saldo da origem insuficiente. Continuar mesmo assim?'))return false;S.tr.push({id:S.seq++,de:+d.de,para:+d.para,data:d.data,val:v})})}
+function editOrc(c){modal('Orçamento: '+c,[{k:'v',l:'Valor orçado (R$)',t:'number',v:((S.orc[c]||0)/100).toFixed(2)}],d=>{S.orc[c]=cents(d.v)})}
+function extrato(id){const a=S.accs.find(x=>x.id===id);const L=[];S.pay.forEach(p=>{const t=S.tit.find(x=>x.id===p.t);if(p.conta===id)L.push([p.data,t.desc,t.tp==='R'?p.caixa:-p.caixa])});S.tr.forEach(x=>{if(x.de===id)L.push([x.data,'Transferência enviada',-x.val]);if(x.para===id)L.push([x.data,'Transferência recebida',x.val])});L.sort();const m=$('#m');m.innerHTML=`<h3>Extrato: ${a.nome}</h3><p>Saldo inicial: ${fm(a.ini)}</p>${tbl(['Data','Histórico','$Valor'],L.map(l=>[fd(l[0]),l[1],`<span class="${l[2]<0?'neg':''}">${fm(l[2])}</span>`]))}<button class="b" onclick="$('#m').close()">Fechar</button>`;m.showModal()}
+function exportJSON(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='backup-hexavale-'+TODAY+'.json';a.click()}
+function importJSON(f){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.accs||!d.tit||!d.pay||!d.tr||!d.orc)throw 0;if(!confirm('Substituir TODOS os dados atuais pelo backup?'))return;S=d;save();go(cur)}catch(e){alert('Arquivo de backup inválido.')}};r.readAsText(f)}
+function resetDemo(){if(confirm('Restaurar os dados de demonstração? Os dados atuais serão apagados.')){S=demo();save();go(cur)}}
+// ---- telas ----
+const filt={st:'todos'};
+function lista(tp){const arr=S.tit.filter(t=>t.tp===tp&&(filt.st==='todos'||st(t)===filt.st));const tot=sum(arr.filter(t=>!t.cancel),pend);
+return `<div class="toolbar"><button class="b p" onclick="novoTit('${tp}')">+ Nova</button> <select onchange="filt.st=this.value;go(cur)">${['todos','Em aberto','Vencida','Parcial',tp==='P'?'Paga':'Recebida','Cancelada'].map(s=>`<option ${s===filt.st?'selected':''}>${s}</option>`).join('')}</select> <button class="b" onclick="expTit('${tp}')">Exportar CSV</button> <button class="b" onclick="print()">Imprimir</button> <b>Pendente (filtro): ${fm(tot)}</b></div>`+
+tbl(['ID','Vencimento','Descrição','Pessoa','Categoria','Centro de custo','$Valor','$Liquidado','$Pendente','Status','Ações'],arr.sort((a,b)=>a.venc.localeCompare(b.venc)).map(t=>{const s=st(t);return [t.id,fd(t.venc),t.desc,t.pessoa,t.cat,t.cc,fm(t.val),fm(pago(t)),fm(pend(t)),`<span class="${s==='Vencida'?'neg':''}">${s}</span>`,(pend(t)>0?`<button class="b" onclick="baixa(${t.id})">${tp==='P'?'Pagar':'Receber'}</button>`:'')+(pago(t)===0&&!t.cancel?`<button class="b" onclick="cancelar(${t.id})">Cancelar</button>`:'')]}))}
+function expTit(tp){csv(`titulos-${tp}.csv`,[['ID','Vencimento','Descrição','Pessoa','Categoria','Valor','Liquidado','Pendente','Status'],...S.tit.filter(t=>t.tp===tp).map(t=>[t.id,fd(t.venc),t.desc,t.pessoa,t.cat,(t.val/100).toFixed(2),(pago(t)/100).toFixed(2),(pend(t)/100).toFixed(2),st(t)])])}
+function bars(items,fmt){const mx=Math.max(1,...items.map(i=>i[1]));return `<div>${items.map(i=>`<div style="display:flex;gap:8px;align-items:center;margin:4px 0" title="${i[0]}: ${fmt(i[1])}"><span style="width:150px;font-size:12px">${i[0]}</span><div class="bar" style="flex:1"><i style="width:${i[1]/mx*100}%"></i></div><span style="width:100px;text-align:right;font-size:12px">${fmt(i[1])}</span></div>`).join('')}</div>`}
+function fluxo(cen){const k={conservador:{d:15,c:1.05},provavel:{d:0,c:1},otimista:{d:-5,c:.97}}[cen];let sal=saldoTotal();const rows=[];for(let w=0;w<12;w++){const a=addD(7*w),b=addD(7*w+6);const inW=(t,d)=>w===0?d<=b:d>=a&&d<=b;let e=0,s=0;live('R').forEach(t=>{const d=addD(k.d,t.venc);if(pend(t)>0&&inW(t,d))e+=pend(t)});live('P').forEach(t=>{if(pend(t)>0&&inW(t,t.venc))s+=Math.round(pend(t)*k.c)});rows.push([fd(a)+' a '+fd(b),fm(sal),fm(e),fm(s),`<span class="${sal+e-s<0?'neg':''}">${fm(sal+e-s)}</span>`]);sal+=e-s}
+return `<p>Cenário: <select onchange="cenario=this.value;go(cur)">${['conservador','provavel','otimista'].map(c=>`<option ${c===cen?'selected':''}>${c}</option>`).join('')}</select> <small>Altera só a projeção (recebimentos ${k.d>0?'atrasados '+k.d+' dias':k.d<0?'antecipados 5 dias':'nas datas cadastradas'}; despesas ×${k.c}). Saldo realizado atual: <b>${fm(saldoTotal())}</b></small></p>`+tbl(['Semana','$Saldo inicial projetado','$Entradas previstas','$Saídas previstas','$Saldo final projetado'],rows)}
+let cenario='provavel',cur='painel';
+const V={
+painel(){const sal=saldoTotal(),R=live('R'),P=live('P'),venR=sum(R.filter(t=>t.venc<TODAY),pend),venP=sum(P.filter(t=>t.venc<TODAY),pend),totR=sum(R,pend),totP=sum(P,pend),mes=TODAY.slice(0,7),proj=sal+totR-totP;
+const al=[];if(proj<0)al.push(['r','Saldo projetado negativo: '+fm(proj),'fluxo']);if(venP)al.push(['r','Contas a pagar vencidas: '+fm(venP),'pagar']);if(venR)al.push(['','Recebimentos atrasados: '+fm(venR),'receber']);const p7=sum(P.filter(t=>t.venc>=TODAY&&t.venc<=addD(7)),pend);if(p7)al.push(['','A pagar nos próximos 7 dias: '+fm(p7),'pagar']);
+S.orc&&Object.keys(S.orc).forEach(c=>{const r=sum(P.filter(t=>t.cat===c),t=>t.val);if(S.orc[c]&&r>S.orc[c])al.push(['','Despesa acima do orçamento em '+c,'orcamento'])});
+const ms=[...Array(6)].map((_,i)=>{const d=new Date(TODAY+'T12:00:00');d.setMonth(d.getMonth()-5+i);return iso(d).slice(0,7)});
+const mx=Math.max(1,...ms.map(m=>Math.max(real('R',m),real('P',m))));
+const svg=`<svg viewBox="0 0 360 140" width="100%">${ms.map((m,i)=>`<g><rect x="${i*58+8}" y="${120-real('R',m)/mx*105}" width="20" height="${real('R',m)/mx*105}" fill="#16a34a"><title>Entradas ${m}: ${fm(real('R',m))}</title></rect><rect x="${i*58+30}" y="${120-real('P',m)/mx*105}" width="20" height="${real('P',m)/mx*105}" fill="#ef4444"><title>Saídas ${m}: ${fm(real('P',m))}</title></rect><text x="${i*58+8}" y="135" font-size="9" fill="currentColor">${m.slice(5)}/${m.slice(2,4)}</text></g>`).join('')}</svg>`;
+const cat={};P.forEach(t=>cat[t.cat]=(cat[t.cat]||0)+t.val);
+return `<div class="cards"><div class="card"><span>Saldo disponível</span><b class="${sal<0?'neg':''}">${fm(sal)}</b></div><div class="card"><span>A receber (vencido ${fm(venR)})</span><b>${fm(totR)}</b></div><div class="card"><span>A pagar (vencido ${fm(venP)})</span><b>${fm(totP)}</b></div><div class="card"><span>Saldo projetado (todos os títulos pendentes)</span><b class="${proj<0?'neg':''}">${fm(proj)}</b></div><div class="card"><span>Entradas realizadas no mês</span><b>${fm(real('R',mes))}</b></div><div class="card"><span>Saídas realizadas no mês</span><b>${fm(real('P',mes))}</b></div><div class="card"><span>Resultado operacional de caixa (mês)</span><b>${fm(realOp('R',mes)-realOp('P',mes))}</b></div><div class="card"><span>Dívidas em aberto</span><b>${fm(sum(P.filter(t=>t.cat==='Financiamento (principal)'),pend))}</b></div></div><p class="note">Projeção = saldo realizado + a receber pendente − a pagar pendente, sem horizonte de datas.</p><h3 class="sec">Alertas</h3>${al.map(a=>`<div class="al ${a[0]}">${a[1]} — <a href="#" onclick="go('${a[2]}');return false">abrir</a></div>`).join('')||'<p>Nenhum alerta.</p>'}<div class="box"><b>Entradas (verde) × saídas (vermelho) realizadas por mês</b>${svg}</div><div class="box" style="margin-top:10px"><b>Despesas por categoria (lançadas)</b>${bars(Object.entries(cat),fm)}</div>`},
+movimentos(){const L=[];S.pay.forEach(p=>{const t=S.tit.find(x=>x.id===p.t);L.push([p.data,t.tp==='R'?'Entrada':'Saída',t.desc,S.accs.find(a=>a.id===p.conta).nome,t.tp==='R'?p.caixa:-p.caixa,OP[t.cat]?'Operacional':'Não operacional'])});S.tr.forEach(x=>L.push([x.data,'Transferência',`${S.accs.find(a=>a.id===x.de).nome} → ${S.accs.find(a=>a.id===x.para).nome}`,'—',x.val,'Neutra']));L.sort().reverse();return `<p><button class="b" onclick="csv('movimentacoes.csv',[['Data','Tipo','Descrição','Conta','Valor'],...${JSON.stringify(L.map(l=>[fd(l[0]),l[1],l[2],l[3],(l[4]/100).toFixed(2)]))}])">Exportar CSV</button> Movimentações efetivamente liquidadas (os títulos previstos ficam em Contas a pagar/receber).</p>`+tbl(['Data','Tipo','Descrição','Conta','$Valor','Natureza'],L.map(l=>[fd(l[0]),l[1],l[2],l[3],fm(l[4]),l[5]]))},
+pagar:()=>lista('P'),receber:()=>lista('R'),fluxo:()=>fluxo(cenario),
+orcamento(){const P=live('P');return tbl(['Categoria','$Orçado','$Realizado/lançado','$Desvio','$Consumo','','Ação'],Object.keys(S.orc).map(c=>{const o=S.orc[c],r=sum(P.filter(t=>t.cat===c),t=>t.val),d=r-o,pc=o?r/o*100:0;return [c,fm(o),fm(r),`<span class="${d>0?'neg':''}">${fm(d)}${d>0?' (desfavorável)':''}</span>`,pc.toFixed(0)+'%',`<div class="bar"><i style="width:${Math.min(100,pc)}%;background:${pc>100?'#ef4444':''}"></i></div>`,`<button class="b" onclick="editOrc('${c}')">Editar</button>`]}))},
+custos(){const r={};live('P').forEach(t=>r[t.cc]=(r[t.cc]||0)+t.val);return '<div class="box"><b>Despesas por centro de custo / talhão</b>'+bars(Object.entries(r),fm)+'</div><small>Rateio entre talhões e hierarquia personalizável: não implementados nesta versão.</small>'},
+bancos(){return `<div class="toolbar"><button class="b p" onclick="novaConta()">+ Nova conta</button> <b>Consolidado: ${fm(saldoTotal())}</b></div>`+tbl(['Conta','$Saldo inicial','$Saldo atual','Status','Ação'],S.accs.map(a=>[a.nome,fm(a.ini),fm(saldoConta(a)),a.ativo?'Ativa':'Inativa',`<button class="b" onclick="extrato(${a.id})">Extrato</button>`]))},
+transf(){return `<div class="toolbar"><button class="b p" onclick="novaTransf()">+ Nova transferência</button></div>`+tbl(['Data','Origem','Destino','$Valor'],S.tr.map(x=>[fd(x.data),S.accs.find(a=>a.id===x.de).nome,S.accs.find(a=>a.id===x.para).nome,fm(x.val)]))+'<small>Transferências não entram em receitas/despesas e não alteram o saldo consolidado.</small>'},
+fin(){const F=S.tit.filter(t=>/^Financiamento|Juros/.test(t.cat)&&!t.cancel);return `<p>Parcelas de financiamento cadastradas em Contas a pagar (categoria "Financiamento (principal)" não é despesa operacional). Saldo devedor: <b>${fm(sum(F.filter(t=>t.cat==='Financiamento (principal)'),pend))}</b></p>`+tbl(['Vencimento','Descrição','$Valor','$Pendente','Status'],F.map(t=>[fd(t.venc),t.desc,fm(t.val),fm(pend(t)),st(t)]))+'<small>Cronograma automático, taxas e simulação: não implementados nesta versão. Sem taxas inventadas.</small>'},
+concil:()=>'<div class="box">Conciliação bancária e importação de CSV de extrato: <b>ainda não implementada</b> nesta versão. Os registros bancários são manuais; não há integração bancária real.</div>',
+relat(){return `<div class="box"><p>Relatórios gerados em ${fd(TODAY)} — Fazenda Modelo, safra 2026/2027.</p><button class="b" onclick="expTit('P')">Contas a pagar (CSV)</button> <button class="b" onclick="expTit('R')">Contas a receber (CSV)</button> <button class="b" onclick="go('movimentos')">Movimentações</button> <button class="b" onclick="print()">Imprimir tela</button></div>`},
+cad(){return '<div class="box"><b>Categorias financeiras</b>'+tbl(['Categoria','Natureza'],CATS.map(c=>[c[0],c[1]?'Operacional':'Não operacional']))+'<small>Cadastros editáveis (fazendas, safras, clientes, usuários, perfis): não implementados nesta versão. Perfis de acesso exigem backend para segurança real.</small></div>'},
+config(){return `<div class="box"><p>Os dados ficam no armazenamento local deste navegador. Não há sincronização entre usuários ou dispositivos.</p><button class="b p" onclick="exportJSON()">Exportar backup JSON</button> <label class="b" style="cursor:pointer">Restaurar backup<input type="file" accept=".json" hidden onchange="importJSON(this.files[0])"></label> <button class="b" onclick="resetDemo()">Restaurar dados de demonstração</button></div>`}};
+const MENU=[['painel','Painel financeiro'],['movimentos','Movimentações'],['pagar','Contas a pagar'],['receber','Contas a receber'],['fluxo','Fluxo de caixa projetado'],['orcamento','Orçamento da safra'],['custos','Centros de custo'],['bancos','Bancos e contas'],['transf','Transferências'],['fin','Financiamentos e dívidas'],['concil','Conciliação bancária'],['relat','Relatórios'],['cad','Cadastros'],['config','Configurações']];
+const embedded = window.self !== window.top;
+if (embedded) document.body.classList.add('embedded');
+function go(k){
+  if (!V[k]) k = 'painel';
+  cur = k;
+  if (!embedded) {
+    const brand = `<div class="brand"><div class="hex" aria-hidden="true"></div><div><strong>HexaVale</strong><small>Gestão Financeira Rural</small></div></div>`;
+    $('#nav').innerHTML = brand + MENU.map(m => `<button type="button" class="${m[0]===k?'on':''}" onclick="go('${m[0]}')">${m[1]}</button>`).join('');
+  } else {
+    $('#nav').innerHTML = '';
+  }
+  const label = (MENU.find(m => m[0]===k) || ['','Financeiro'])[1];
+  $('#ttl').textContent = label;
+  $('#meta').textContent = 'Fazenda Modelo · Safra 2026/2027 · ' + fd(TODAY);
+  $('#v').innerHTML = V[k]();
+  if (embedded) {
+    try { parent.postMessage({ type: 'hx-fin-view', view: k, label }, '*'); } catch (e) {}
+  }
+}
+window.addEventListener('message', (ev) => {
+  const d = ev.data;
+  if (d && d.type === 'hx-fin-go' && d.view) go(d.view);
+});
+load();
+const boot = (typeof window.__HX_FIN_VIEW__ === 'string' && window.__HX_FIN_VIEW__) || 'painel';
+go(boot);
+
+<\/script>
+</body>
+</html>
+</script>
     <div id="app" class="w-full h-full flex overflow-hidden">
         
         <!-- Sidebar -->
-        <aside :class="['bg-brand-950 text-gray-300 w-64 flex-shrink-0 absolute md:relative z-30 h-full transition-transform duration-300 flex flex-col shadow-xl md:shadow-none', sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0']">
+        <aside :class="['bg-brand-950 text-gray-300 w-64 fixed inset-y-0 left-0 z-30 h-full transition-transform duration-300 flex flex-col shadow-xl', sidebarOpen ? 'translate-x-0' : '-translate-x-full']" aria-label="Menu principal">
             <!-- Brand Logo -->
             <div class="h-16 flex items-center px-6 border-b border-brand-900 bg-brand-900/50">
                 <div class="w-8 h-8 bg-brand-500 hex-logo flex items-center justify-center mr-3 shadow-lg shadow-brand-500/30">
                     <i class="fa-solid fa-leaf text-white text-xs"></i>
                 </div>
                 <span class="text-xl font-bold tracking-wider text-white">HexaVale</span>
-                <button @click="sidebarOpen = false" class="md:hidden ml-auto text-gray-400 hover:text-white">
-                    <i class="fa-solid fa-xmark text-xl"></i>
+                <button type="button" @click="sidebarOpen = false" class="ml-auto text-gray-400 hover:text-white p-2 rounded-lg hover:bg-brand-900/50" aria-label="Fechar menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
             </div>
 
@@ -306,6 +637,18 @@ render();
                         </li>
                     </ul>
                 </div>
+
+                <!-- Group financeiro -->
+                <div>
+                    <p class="text-[10px] font-bold text-brand-500 uppercase tracking-widest mb-3 px-2">Financeiro</p>
+                    <ul class="space-y-1 text-sm font-medium">
+                        <li v-for="tab in nav.financeiro" :key="tab.id">
+                            <a href="#" @click.prevent="setTab(tab.id)" :class="['flex items-center px-3 py-2.5 rounded-lg transition', currentTab === tab.id ? 'bg-brand-600 text-white shadow-md shadow-brand-900/20' : 'hover:bg-brand-900/50 hover:text-white']">
+                                <i :class="[tab.icon, 'w-6 text-center mr-1', currentTab === tab.id ? 'text-white' : 'text-brand-500']"></i> {{ tab.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             
             <!-- User -->
@@ -320,19 +663,19 @@ render();
             </div>
         </aside>
 
-        <!-- Overlay -->
-        <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-brand-950/60 z-20 md:hidden backdrop-blur-sm"></div>
+        <!-- Overlay (mobile / drawer) -->
+        <div v-if="sidebarOpen" @click="sidebarOpen = false" class="fixed inset-0 bg-brand-950/60 z-20 md:hidden backdrop-blur-sm" aria-hidden="true"></div>
 
         <!-- Main Content -->
-        <div class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50">
+        <div :class="['flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 min-w-0 w-full transition-[margin] duration-300', sidebarOpen ? 'md:ml-64' : 'md:ml-0']">
             
             <!-- Header -->
-            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 z-10 shadow-sm flex-shrink-0">
-                <div class="flex items-center">
-                    <button @click="sidebarOpen = true" class="md:hidden text-gray-500 hover:text-brand-600 mr-4 transition focus:outline-none">
-                        <i class="fa-solid fa-bars text-xl"></i>
+            <header class="h-14 bg-white border-b border-gray-200 flex items-center justify-between px-3 lg:px-4 z-10 shadow-sm flex-shrink-0">
+                <div class="flex items-center gap-2 min-w-0">
+                    <button type="button" @click="sidebarOpen = !sidebarOpen" class="text-gray-600 hover:text-brand-600 hover:bg-gray-100 p-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-brand-500 shrink-0" :aria-expanded="sidebarOpen ? 'true' : 'false'" aria-controls="app" aria-label="Abrir ou fechar menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
-                    <h2 class="text-lg font-semibold text-gray-800">{{ currentTabTitle }}</h2>
+                    <h2 class="text-lg font-semibold text-gray-800 truncate">{{ currentTabTitle }}</h2>
                 </div>
                 <div class="flex items-center space-x-4">
                     <div class="relative hidden sm:block">
@@ -347,8 +690,8 @@ render();
             </header>
 
             <!-- Scrollable View Area -->
-            <main class="flex-1 overflow-y-auto p-4 lg:p-8">
-                <div class="max-w-7xl mx-auto">
+            <main class="flex-1 overflow-y-auto p-3 lg:p-4 w-full">
+                <div class="w-full max-w-none">
                     <transition name="fade" mode="out-in">
                         
                         <div v-if="S[currentTab]" :key="currentTab" class="space-y-4">
@@ -430,9 +773,12 @@ render();
                                     <h2 class="text-base font-semibold text-gray-800 mb-4">Movimentação Financeira (Insumos)</h2>
                                     <div class="relative h-72 w-full"><canvas id="barChart"></canvas></div>
                                 </div>
-                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-                                    <h2 class="text-base font-semibold text-gray-800 mb-4">Custo por Talhão</h2>
-                                    <div class="relative h-56 w-full flex justify-center items-center"><canvas id="doughnutChart"></canvas></div>
+                                <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex flex-col">
+                                    <h2 class="text-base font-semibold text-gray-800 mb-3">Custo por Talhão</h2>
+                                    <div class="relative w-full overflow-visible" style="min-height:18rem;height:18rem;">
+                                        <canvas id="doughnutChart" aria-label="Distribuição de custo por talhão"></canvas>
+                                    </div>
+                                    <p v-if="chartHint" class="text-xs text-gray-500 mt-2 leading-snug">{{ chartHint }}</p>
                                 </div>
                             </div>
                         </div>
@@ -603,14 +949,14 @@ render();
                             </div>
                         </div>
 
-                        <div v-else-if="currentTab === 'ordens_trabalho'"" key="ordens_trabalho">
-                            <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                                <div class="p-3 border-b border-gray-200 bg-gray-50/50 text-sm text-gray-600"><i class="fa-solid fa-print mr-2 text-brand-600"></i>Pulverização foliar e adubação de solo: abra a ordem, aba <b>Documento A</b>, e use <b>Imprimir / salvar PDF</b>.</div>
-                                <iframe :srcdoc="otSrc" title="Ordens de Trabalho" class="w-full border-0 bg-white" style="height:calc(100vh - 12rem)"></iframe>
+                        <div v-else-if="currentTab === 'ordens_trabalho'" key="ordens_trabalho" class="ot-shell -mx-3 lg:-mx-4 -mt-3 lg:-mt-4 -mb-3 lg:-mb-4" style="height:calc(100vh - 3.5rem); min-height:28rem;">
+                            <div class="h-full flex flex-col bg-white border-0 overflow-hidden">
+                                <div class="px-3 py-2 border-b border-gray-200 bg-gray-50/50 text-xs text-gray-600 shrink-0"><i class="fa-solid fa-print mr-2 text-brand-600"></i>Pulverização foliar e adubação de solo: abra a ordem, aba <b>Documento A</b>, e use <b>Imprimir / salvar PDF</b>.</div>
+                                <iframe :srcdoc="otSrc" title="Ordens de Trabalho" class="w-full flex-1 border-0 bg-white block" style="min-height:0;height:100%"></iframe>
                             </div>
                         </div>
 
-                        <div v-else-if="currentTab === 'ordens_servico'"" key="ordens_servico">
+                        <div v-else-if="currentTab === 'ordens_servico'" key="ordens_servico">
                              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div v-for="os in data.ordensServico" :key="os.id" class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex space-x-4">
                                     <div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 text-gray-500 text-xl"><i class="fa-solid fa-tractor"></i></div>
@@ -658,7 +1004,12 @@ render();
                             </div>
                         </div>
 
-                        <div v-else-if="currentTab === 'custos'" key="custos">
+                        
+                        <div v-else-if="isFinanceiro" :key="'fin-' + finView" class="fin-shell -mx-3 lg:-mx-4 -mt-3 lg:-mt-4 -mb-3 lg:-mb-4 bg-slate-50" style="height:calc(100vh - 3.5rem); min-height:28rem;">
+                            <iframe ref="finFrame" :srcdoc="finSrcDoc" title="Gestão Financeira" class="w-full h-full border-0 bg-slate-50 block" style="min-height:100%;"></iframe>
+                        </div>
+
+<div v-else-if="currentTab === 'custos'" key="custos">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                                 <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm text-center">
                                     <p class="text-sm text-gray-500 uppercase tracking-wider mb-1">Custo Total Safra</p>
@@ -723,8 +1074,10 @@ render();
 
         const app = createApp({
             setup() {
-                const sidebarOpen = ref(false);
-                const otSrc = document.getElementById('ot-src').textContent;
+                const sidebarOpen = ref(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
+                const loadPlainHtml = (id) => document.getElementById(id).textContent.replace(/<\\\/script>/gi, '</' + 'script>');
+                const otSrc = loadPlainHtml('ot-src');
+                const finSrc = loadPlainHtml('fin-src');
                 const currentTab = ref('dashboard');
                 let chartInstances = [];
 
@@ -757,6 +1110,22 @@ render();
                     ],
                     operacoes: [
                         { id: 'ordens_trabalho', label: 'Ordens de Trabalho (imprimir)', icon: 'fa-print' }
+                    ],
+                    financeiro: [
+                        { id: 'fin_painel', label: 'Painel financeiro', icon: 'fa-chart-line', view: 'painel' },
+                        { id: 'fin_movimentos', label: 'Movimentações', icon: 'fa-arrow-right-arrow-left', view: 'movimentos' },
+                        { id: 'fin_pagar', label: 'Contas a pagar', icon: 'fa-file-invoice-dollar', view: 'pagar' },
+                        { id: 'fin_receber', label: 'Contas a receber', icon: 'fa-hand-holding-dollar', view: 'receber' },
+                        { id: 'fin_fluxo', label: 'Fluxo de caixa', icon: 'fa-water', view: 'fluxo' },
+                        { id: 'fin_orcamento', label: 'Orçamento da safra', icon: 'fa-chart-pie', view: 'orcamento' },
+                        { id: 'fin_custos', label: 'Centros de custo', icon: 'fa-sitemap', view: 'custos' },
+                        { id: 'fin_bancos', label: 'Bancos e contas', icon: 'fa-building-columns', view: 'bancos' },
+                        { id: 'fin_transf', label: 'Transferências', icon: 'fa-right-left', view: 'transf' },
+                        { id: 'fin_fin', label: 'Financiamentos', icon: 'fa-landmark', view: 'fin' },
+                        { id: 'fin_concil', label: 'Conciliação', icon: 'fa-scale-balanced', view: 'concil' },
+                        { id: 'fin_relat', label: 'Relatórios', icon: 'fa-file-lines', view: 'relat' },
+                        { id: 'fin_cad', label: 'Cadastros fin.', icon: 'fa-folder-open', view: 'cad' },
+                        { id: 'fin_config', label: 'Config. financeira', icon: 'fa-gear', view: 'config' }
                     ]
                 };
 
@@ -766,6 +1135,21 @@ render();
                         if (found) return found.label;
                     }
                     return 'HexaVale ERP';
+                });
+
+                const finFrame = ref(null);
+                const isFinanceiro = computed(() => String(currentTab.value || '').startsWith('fin_'));
+                const finView = computed(() => {
+                    const t = nav.financeiro.find(x => x.id === currentTab.value);
+                    return (t && t.view) ? t.view : 'painel';
+                });
+                const finSrcDoc = computed(() => {
+                    const view = finView.value.replace(/[^a-z_]/gi, '') || 'painel';
+                    const needle = "const boot = (typeof window.__HX_FIN_VIEW__ === 'string' && window.__HX_FIN_VIEW__) || 'painel';";
+                    if (finSrc.includes(needle)) {
+                        return finSrc.replace(needle, "const boot = '" + view + "';");
+                    }
+                    return finSrc;
                 });
 
                 // --- MOCK DATA ---
@@ -837,13 +1221,73 @@ render();
                     talhoes: [{id:'TAL-0001',nome:'Manga Palmer 05',cultura:'Manga',variedade:'Palmer',area:8.3,plantas:2075,filas:30},{id:'TAL-0002',nome:'Uva Vitória 01',cultura:'Uva',variedade:'Vitória',area:6.2},{id:'TAL-0003',nome:'Manga Tommy 02',cultura:'Manga',variedade:'Tommy Atkins',area:7.5}],
                     maquinas: [{id:'MAQ-0001',nome:'Trator JD 5075E (01)',tipo:'Trator',horimetro:4502.5},{id:'MAQ-0002',nome:'Trator MF 4292 (04)',tipo:'Trator',horimetro:8210},{id:'MAQ-0003',nome:'Pulverizador Jacto Arbus 2000',tipo:'Pulverizador'},{id:'MAQ-0004',nome:'Adubadora de solo',tipo:'Adubadora'}],
                     funcionarios: [{id:'FUN-0001',nome:'José Almeida',funcao:'Tratorista'},{id:'FUN-0002',nome:'Carlos Silva',funcao:'Responsável técnico'},{id:'FUN-0003',nome:'João Ferreira Silva',funcao:'Aplicador'}],
-                    entradas: [], saidas: [], abastecimentos: [], manutencoes: [], audit: [],
+                    entradas: [
+                        {id:'ENT-0001',data:'2026-05-12',nf:'NF-5101',fornecedor:'FOR-0001',produto:'INS-0001',qtd:3000,vunit:4.1,total:12300},
+                        {id:'ENT-0002',data:'2026-06-08',nf:'NF-5202',fornecedor:'FOR-0002',produto:'INS-0002',qtd:40,vunit:175,total:7000},
+                        {id:'ENT-0003',data:'2026-06-20',nf:'NF-5208',fornecedor:'FOR-0001',produto:'INS-0001',qtd:2000,vunit:4.2,total:8400},
+                        {id:'ENT-0004',data:'2026-07-05',nf:'NF-5310',fornecedor:'FOR-0002',produto:'INS-0003',qtd:50,vunit:205,total:10250},
+                        {id:'ENT-0005',data:'2026-07-22',nf:'NF-5322',fornecedor:'FOR-0001',produto:'INS-0004',qtd:80,vunit:34,total:2720},
+                        {id:'ENT-0006',data:'2026-08-10',nf:'NF-5401',fornecedor:'FOR-0003',produto:'MAT-0001',qtd:2500,vunit:6.0,total:15000},
+                        {id:'ENT-0007',data:'2026-08-28',nf:'NF-5415',fornecedor:'FOR-0001',produto:'INS-0001',qtd:1500,vunit:4.25,total:6375},
+                        {id:'ENT-0008',data:'2026-09-09',nf:'NF-5502',fornecedor:'FOR-0002',produto:'INS-0002',qtd:30,vunit:180,total:5400},
+                        {id:'ENT-0009',data:'2026-09-18',nf:'NF-5510',fornecedor:'FOR-0001',produto:'INS-0001',qtd:1000,vunit:4.2,total:4200},
+                        {id:'ENT-0010',data:'2026-10-05',nf:'NF-5601',fornecedor:'FOR-0003',produto:'MAT-0001',qtd:1800,vunit:6.1,total:10980}
+                    ],
+                    saidas: [
+                        {id:'SAI-0001',data:'2026-05-20',produto:'INS-0001',qtd:180,talhao:'TAL-0001',resp:'FUN-0001'},
+                        {id:'SAI-0002',data:'2026-06-15',produto:'INS-0002',qtd:8,talhao:'TAL-0002',resp:'FUN-0002'},
+                        {id:'SAI-0003',data:'2026-06-28',produto:'INS-0001',qtd:220,talhao:'TAL-0003',resp:'FUN-0001'},
+                        {id:'SAI-0004',data:'2026-07-12',produto:'INS-0003',qtd:12,talhao:'TAL-0002',resp:'FUN-0003'},
+                        {id:'SAI-0005',data:'2026-07-25',produto:'INS-0001',qtd:160,talhao:'TAL-0001',resp:'FUN-0001'},
+                        {id:'SAI-0006',data:'2026-08-14',produto:'INS-0004',qtd:35,talhao:'TAL-0001',resp:'FUN-0003'},
+                        {id:'SAI-0007',data:'2026-08-22',produto:'INS-0001',qtd:200,talhao:'TAL-0003',resp:'FUN-0001'},
+                        {id:'SAI-0008',data:'2026-09-16',produto:'INS-0004',qtd:40,talhao:'TAL-0001',resp:'FUN-0003'},
+                        {id:'SAI-0009',data:'2026-09-17',produto:'INS-0001',qtd:150,talhao:'TAL-0003',resp:'FUN-0001'},
+                        {id:'SAI-0010',data:'2026-09-18',produto:'INS-0001',qtd:200,talhao:'TAL-0001',resp:'FUN-0001'},
+                        {id:'SAI-0011',data:'2026-09-18',produto:'INS-0002',qtd:5,talhao:'TAL-0002',resp:'FUN-0002'},
+                        {id:'SAI-0012',data:'2026-10-08',produto:'INS-0001',qtd:120,talhao:'TAL-0001',resp:'FUN-0001'}
+                    ],
+                    abastecimentos: [
+                        {id:'ABS-0001',data:'2026-05-18',maquina:'MAQ-0001',operador:'FUN-0001',litros:70,vlitro:5.9,total:413,talhao:'TAL-0001'},
+                        {id:'ABS-0002',data:'2026-06-10',maquina:'MAQ-0002',operador:'FUN-0002',litros:95,vlitro:6.0,total:570,talhao:'TAL-0002'},
+                        {id:'ABS-0003',data:'2026-07-08',maquina:'MAQ-0001',operador:'FUN-0001',litros:80,vlitro:6.0,total:480,talhao:'TAL-0003'},
+                        {id:'ABS-0004',data:'2026-08-12',maquina:'MAQ-0002',operador:'FUN-0002',litros:110,vlitro:6.05,total:665.5,talhao:'TAL-0002'},
+                        {id:'ABS-0005',data:'2026-09-17',maquina:'MAQ-0001',operador:'FUN-0001',litros:60,vlitro:6.1,total:366,talhao:'TAL-0001'},
+                        {id:'ABS-0006',data:'2026-09-18',maquina:'MAQ-0001',operador:'FUN-0001',litros:85,vlitro:6.1,total:518.5,talhao:'TAL-0003'},
+                        {id:'ABS-0007',data:'2026-09-18',maquina:'MAQ-0002',operador:'FUN-0002',litros:120,vlitro:6.1,total:732,talhao:'TAL-0002'},
+                        {id:'ABS-0008',data:'2026-10-06',maquina:'MAQ-0001',operador:'FUN-0001',litros:75,vlitro:6.1,total:457.5,talhao:'TAL-0001'}
+                    ],
+                    manutencoes: [], audit: [],
                     ordens: [{id:'OA-0001',data:'2026-10-20',tipo:'Pulverização foliar',talhao:'TAL-0001',produto:'INS-0004',dose:2,area:8.3,operador:'FUN-0003',maquina:'MAQ-0003',status:'Liberada'}],
                     pedcompra: [{id:'PC-0001',data:'2026-10-15',fornecedor:'FOR-0001',produto:'INS-0001',qtd:5000,vunit:4.2,total:21000,status:'Aguardando aprovação',solic:'FUN-0002'}]
                 });
-                const load = () => { try { const d = JSON.parse(localStorage.getItem('hxdb')); if (d) return { ...seed(), ...d }; } catch (e) {} return seed(); };
+                const DB_KEY = 'hxdb-v3';
+                const mergeSeedMov = (d) => {
+                    const s = seed();
+                    const out = { ...s, ...d };
+                    if (!out.entradas || !out.entradas.length) out.entradas = s.entradas.slice();
+                    const byId = (list, extra) => {
+                        const ids = new Set((list || []).map(x => x.id));
+                        const base = (list || []).slice();
+                        extra.forEach(x => { if (!ids.has(x.id)) base.push(x); });
+                        return base;
+                    };
+                    out.saidas = byId(out.saidas, s.saidas);
+                    out.abastecimentos = byId(out.abastecimentos, s.abastecimentos);
+                    out.entradas = byId(out.entradas, s.entradas);
+                    return out;
+                };
+                const load = () => {
+                    try {
+                        const cur = JSON.parse(localStorage.getItem(DB_KEY) || 'null');
+                        if (cur) return mergeSeedMov(cur);
+                        const old = JSON.parse(localStorage.getItem('hxdb-v2') || 'null');
+                        if (old) return mergeSeedMov(old);
+                    } catch (e) {}
+                    return seed();
+                };
                 const db = reactive(load());
-                watch(db, () => { try { localStorage.setItem('hxdb', JSON.stringify(db)); } catch (e) {} }, { deep: true });
+                watch(db, () => { try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch (e) {} }, { deep: true });
                 const resetDb = () => { if (confirm('Apagar todos os cadastros e lançamentos e voltar aos dados de exemplo?')) Object.assign(db, seed()); };
 
                 const n = x => +x || 0, sum = (a, k) => a.reduce((s, r) => s + n(r[k]), 0);
@@ -909,59 +1353,152 @@ render();
                 const print = () => window.print();
 
                 const setTab = (tabId) => {
+                    const prev = currentTab.value;
                     currentTab.value = tabId;
                     if (window.innerWidth < 768) sidebarOpen.value = false;
-                    
+
                     if (tabId === 'dashboard') {
                         nextTick(() => renderCharts());
                     }
+                    if (String(tabId).startsWith('fin_') && String(prev).startsWith('fin_') && finFrame.value) {
+                        const t = nav.financeiro.find(x => x.id === tabId);
+                        const view = (t && t.view) ? t.view : 'painel';
+                        try { finFrame.value.contentWindow.postMessage({ type: 'hx-fin-go', view }, '*'); } catch (e) {}
+                    }
+                };
+
+                const chartHint = ref('');
+                const MES_CURTO = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+                const CHART_COLORS = ['#f59e0b', '#fbbf24', '#7c3aed', '#a78bfa', '#22c55e', '#06b6d4', '#ef4444', '#ec4899', '#84cc16', '#6366f1', '#14b8a6', '#e11d48'];
+
+                const movMensal = () => {
+                    const keys = [], labels = [];
+                    const base = new Date();
+                    base.setDate(1);
+                    for (let i = 5; i >= 0; i--) {
+                        const d = new Date(base.getFullYear(), base.getMonth() - i, 1);
+                        const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+                        keys.push(k);
+                        labels.push(MES_CURTO[d.getMonth()]);
+                    }
+                    const ent = keys.map(k => +db.entradas.filter(e => String(e.data || '').slice(0, 7) === k).reduce((a, e) => a + n(e.total), 0).toFixed(2));
+                    const cons = keys.map(k => {
+                        const ins = db.saidas.filter(s => String(s.data || '').slice(0, 7) === k).reduce((a, s) => a + n(s.qtd) * custoMed(s.produto), 0);
+                        const com = db.abastecimentos.filter(a => String(a.data || '').slice(0, 7) === k).reduce((a, x) => a + n(x.total), 0);
+                        return +(ins + com).toFixed(2);
+                    });
+                    return { labels, ent, cons };
                 };
 
                 const renderCharts = () => {
-                    // Destroy old instances
                     chartInstances.forEach(c => c.destroy());
                     chartInstances = [];
-
                     Chart.defaults.font.family = "'Inter', sans-serif";
-                    
+
                     const ctxBar = document.getElementById('barChart');
                     if (ctxBar) {
+                        const m = movMensal();
                         chartInstances.push(new Chart(ctxBar, {
                             type: 'bar',
                             data: {
-                                labels: ['Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set'],
+                                labels: m.labels,
                                 datasets: [
-                                    { label: 'Entradas (R$)', data: [120, 190, 80, 220, 150, 60], backgroundColor: '#22c55e', borderRadius: 4 },
-                                    { label: 'Consumo (R$)', data: [90, 140, 110, 180, 210, 170], backgroundColor: '#94a3b8', borderRadius: 4 }
+                                    { label: 'Entradas (R$)', data: m.ent, backgroundColor: '#22c55e', borderRadius: 4 },
+                                    { label: 'Consumo (R$)', data: m.cons, backgroundColor: '#94a3b8', borderRadius: 4 }
                                 ]
                             },
-                            options: { responsive: true, maintainAspectRatio: false }
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    tooltip: {
+                                        callbacks: {
+                                            label: (ctx) => ` ${ctx.dataset.label}: R$ ${Number(ctx.parsed.y || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                                        }
+                                    }
+                                }
+                            }
                         }));
                     }
 
                     const ctxDoughnut = document.getElementById('doughnutChart');
                     if (ctxDoughnut) {
+                        const rows = S.custostalhao.src();
+                        const totals = rows.map(r => +Number(r.tot || 0).toFixed(2));
+                        const positive = totals.filter(v => v > 0);
+                        const hasCost = positive.length > 0;
+                        // Fatia mínima só para talhão novo/sem lançamento aparecer no desenho; tooltip usa o valor real.
+                        const floor = hasCost ? Math.max(Math.max(...positive) * 0.045, 1) : 0;
+                        const values = hasCost
+                            ? totals.map(t => (t > 0 ? t : floor))
+                            : rows.map(r => +Number(r.area || 0).toFixed(2));
+                        const semCusto = rows.filter(r => !(Number(r.tot) > 0)).map(r => r.nome);
+                        chartHint.value = hasCost && semCusto.length
+                            ? 'Incluídos sem custo lançado (ainda sem saída/abastecimento): ' + semCusto.join(', ') + '. Lance uma saída ou abastecimento no talhão para gerar fatia real.'
+                            : (!hasCost ? 'Sem custos lançados — distribuição por área (ha) dos talhões cadastrados.' : '');
+
                         chartInstances.push(new Chart(ctxDoughnut, {
                             type: 'doughnut',
                             data: {
-                                labels: S.custostalhao.src().map(r => r.nome),
+                                labels: rows.map(r => r.nome),
                                 datasets: [{
-                                    data: S.custostalhao.src().map(r => +r.tot.toFixed(2)),
-                                    backgroundColor: ['#f59e0b', '#fbbf24', '#7c3aed', '#a78bfa'],
-                                    borderWidth: 0
+                                    data: values.length ? values : [1],
+                                    backgroundColor: rows.length
+                                        ? rows.map((_, i) => CHART_COLORS[i % CHART_COLORS.length])
+                                        : ['#e5e7eb'],
+                                    borderWidth: 2,
+                                    borderColor: '#ffffff',
+                                    hoverOffset: 4
                                 }]
                             },
-                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '58%',
+                                layout: { padding: { top: 4, bottom: 4, left: 4, right: 4 } },
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                        align: 'center',
+                                        labels: {
+                                            boxWidth: 12,
+                                            boxHeight: 12,
+                                            padding: 14,
+                                            usePointStyle: true,
+                                            pointStyle: 'rectRounded',
+                                            color: '#4b5563',
+                                            font: { size: 11 }
+                                        }
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: (ctx) => {
+                                                const row = rows[ctx.dataIndex];
+                                                if (!row) return ` ${ctx.label}`;
+                                                if (hasCost) {
+                                                    const real = Number(row.tot || 0);
+                                                    const extra = real > 0 ? '' : ' (sem lançamentos)';
+                                                    return ` ${row.nome}: R$ ${real.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}${extra}`;
+                                                }
+                                                return ` ${row.nome}: ${Number(row.area || 0).toLocaleString('pt-BR')} ha`;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }));
                     }
                 };
 
                 onMounted(() => {
-                    renderCharts();
+                    nextTick(() => renderCharts());
                 });
+                watch(db, () => {
+                    if (currentTab.value === 'dashboard') nextTick(() => renderCharts());
+                }, { deep: true });
 
                 return {
-                    sidebarOpen, currentTab, currentTabTitle, nav, data, setTab, otSrc, db, S, sch, filtered, q, form, err, show, cls, openForm, save, del, ficha, csv, print, resetDb, kpi
+                    sidebarOpen, currentTab, currentTabTitle, nav, data, setTab, otSrc, finSrc, finSrcDoc, isFinanceiro, finView, finFrame, db, S, sch, filtered, q, form, err, show, cls, openForm, save, del, ficha, csv, print, resetDb, kpi, chartHint
                 };
             }
         }).mount('#app');

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Estoque;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lote;
+use HexaVale\Compartilhado\Dominio\UuidV7;
 use HexaVale\Estoque\Aplicacao\Portas\PortaLedgerEstoque;
 use HexaVale\Estoque\Aplicacao\RegistrarEntrada;
 use Illuminate\Http\RedirectResponse;
@@ -22,6 +23,7 @@ final class EntradaController extends Controller
         return view('estoque.entrada', [
             'lotes' => $lotes,
             'saldos' => $ledger->listarSaldos($fazendaId),
+            'idempotencyKey' => UuidV7::gerar()->valor,
         ]);
     }
 
@@ -30,7 +32,9 @@ final class EntradaController extends Controller
         $request->validate([
             'lote_id' => ['required', 'string'],
             'quantidade' => ['required', 'string'],
+            'unidade' => ['nullable', 'string', 'max:8'],
             'motivo' => ['nullable', 'string', 'max:255'],
+            '_idempotency_key' => ['required', 'string', 'max:64'],
         ]);
 
         $fazendaId = $this->fazendaId($request);
@@ -40,14 +44,18 @@ final class EntradaController extends Controller
             return back()->withErrors(['lote_id' => 'Lote inválido.']);
         }
 
+        $unidadeBase = (string) $lote->produto->unidade_base;
+        $unidade = $request->filled('unidade') ? $request->string('unidade')->toString() : $unidadeBase;
+
         $resultado = $entrar->executar(
             $fazendaId,
             $loteId,
             $request->string('quantidade')->toString(),
-            (string) $lote->produto->unidade_base,
+            $unidade,
+            $unidadeBase,
             $request->input('motivo') !== null ? $request->string('motivo')->toString() : null,
             $request->user() !== null ? (string) $request->user()->id : null,
-            $request->header('Idempotency-Key'),
+            $request->string('_idempotency_key')->toString(),
         );
 
         if (($resultado['ok'] ?? false) !== true) {

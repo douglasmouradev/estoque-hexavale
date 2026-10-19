@@ -13,7 +13,7 @@ interface PortaLedgerEstoque
     public function saldoDoLote(string $fazendaId, string $loteId): SaldoLote;
 
     /**
-     * @return list<array{lote_id: string, produto_id: string, produto: string, lote: string, unidade: string, minimo: string, fisico: string, reservado: string, disponivel: string, situacao: string, validade: ?string}>
+     * @return list<array{lote_id: string, produto_id: string, produto: string, lote: string, unidade: string, minimo: string, fisico: string, reservado: string, disponivel: string, situacao: string, validade: ?string, vencido: bool}>
      */
     public function listarSaldos(string $fazendaId): array;
 

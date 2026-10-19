@@ -9,6 +9,7 @@
 @section('acoes')
     <a href="{{ route('estoque.entrada') }}" class="hx-btn hx-btn--sm">Entrada</a>
     <a href="{{ route('estoque.saida') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Saída</a>
+    <a href="{{ route('estoque.ajuste') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Ajuste</a>
 @endsection
 
 @section('content')
@@ -36,7 +37,9 @@
                         <td class="num">{{ $s['disponivel'] }}</td>
                         <td class="num">{{ $s['minimo'] }}</td>
                         <td>
-                            @if ($s['situacao'] === 'ok')
+                            @if ($s['vencido'] ?? false)
+                                <span class="hx-chip hx-chip--er">Vencido</span>
+                            @elseif ($s['situacao'] === 'ok')
                                 <span class="hx-chip hx-chip--ok">OK</span>
                             @elseif ($s['situacao'] === 'abaixo')
                                 <span class="hx-chip hx-chip--wa">Abaixo do mínimo</span>

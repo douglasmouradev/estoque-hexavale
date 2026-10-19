@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UsuariosController;
 use App\Http\Controllers\Auth\EntrarController;
 use App\Http\Controllers\Auth\SairController;
 use App\Http\Controllers\ContaController;
+use App\Http\Controllers\Estoque\AjusteController;
 use App\Http\Controllers\Estoque\EntradaController;
 use App\Http\Controllers\Estoque\SaidaController;
 use App\Http\Controllers\Estoque\SaldoController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\PainelController;
 use App\Http\Controllers\StyleguideController;
 use App\Http\Middleware\EnsureFazendaContext;
 use App\Http\Middleware\EnsurePermission;
+use App\Http\Middleware\RequireIdempotencyKey;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,9 +43,17 @@ Route::middleware(['auth', EnsureFazendaContext::class])->group(function (): voi
 
     Route::middleware(EnsurePermission::class.':estoque.movimentar')->group(function (): void {
         Route::get('/estoque/entrada', [EntradaController::class, 'create'])->name('estoque.entrada');
-        Route::post('/estoque/entrada', [EntradaController::class, 'store'])->name('estoque.entrada.store');
+        Route::post('/estoque/entrada', [EntradaController::class, 'store'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('estoque.entrada.store');
         Route::get('/estoque/saida', [SaidaController::class, 'create'])->name('estoque.saida');
-        Route::post('/estoque/saida', [SaidaController::class, 'store'])->name('estoque.saida.store');
+        Route::post('/estoque/saida', [SaidaController::class, 'store'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('estoque.saida.store');
+        Route::get('/estoque/ajuste', [AjusteController::class, 'create'])->name('estoque.ajuste');
+        Route::post('/estoque/ajuste', [AjusteController::class, 'store'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('estoque.ajuste.store');
     });
 
     Route::middleware(EnsurePermission::class.':admin.usuarios')->group(function (): void {

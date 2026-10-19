@@ -16,11 +16,12 @@
 
         <nav class="hx-side__nav" aria-label="Principal">
             @auth
-                <a href="{{ route('painel') }}" @class(['on' => request()->routeIs('painel')])>Painel (protótipo)</a>
+                <a href="{{ route('painel') }}" @class(['on' => request()->routeIs('painel')])>Painel</a>
                 <p class="hx-side__grupo">Estoque</p>
                 <a href="{{ route('estoque.saldo') }}" @class(['on' => request()->routeIs('estoque.saldo')])>Saldo</a>
                 <a href="{{ route('estoque.entrada') }}" @class(['on' => request()->routeIs('estoque.entrada*')])>Entrada</a>
                 <a href="{{ route('estoque.saida') }}" @class(['on' => request()->routeIs('estoque.saida*')])>Saída</a>
+                <a href="{{ route('estoque.ajuste') }}" @class(['on' => request()->routeIs('estoque.ajuste*')])>Ajuste</a>
                 <p class="hx-side__grupo">Conta</p>
                 <a href="{{ route('conta') }}" @class(['on' => request()->routeIs('conta', 'conta.*')])>Conta</a>
                 <a href="{{ route('admin.usuarios') }}" @class(['on' => request()->routeIs('admin.usuarios*')])>Usuários</a>

@@ -10,9 +10,12 @@ use HexaVale\Auditoria\Infraestrutura\EloquentRegistrarAuditoria;
 use HexaVale\Cadastros\Aplicacao\ExcluirProduto;
 use HexaVale\Cadastros\Aplicacao\Portas\PortaProdutoEscrita;
 use HexaVale\Cadastros\Infraestrutura\EloquentProdutoEscrita;
+use HexaVale\Estoque\Aplicacao\LiberarReserva;
 use HexaVale\Estoque\Aplicacao\Portas\PortaLedgerEstoque;
+use HexaVale\Estoque\Aplicacao\RegistrarAjusteInventario;
 use HexaVale\Estoque\Aplicacao\RegistrarEntrada;
 use HexaVale\Estoque\Aplicacao\RegistrarSaida;
+use HexaVale\Estoque\Aplicacao\ReservarEstoque;
 use HexaVale\Estoque\Infraestrutura\EloquentLedgerEstoque;
 use HexaVale\Identidade\Aplicacao\Entrar;
 use HexaVale\Identidade\Aplicacao\Portas\PortaAutenticacao;
@@ -44,6 +47,9 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->singleton(PortaProdutoEscrita::class, EloquentProdutoEscrita::class);
         $this->app->singleton(RegistrarEntrada::class);
         $this->app->singleton(RegistrarSaida::class);
+        $this->app->singleton(RegistrarAjusteInventario::class);
+        $this->app->singleton(ReservarEstoque::class);
+        $this->app->singleton(LiberarReserva::class);
         $this->app->singleton(ExcluirProduto::class);
     }
 
