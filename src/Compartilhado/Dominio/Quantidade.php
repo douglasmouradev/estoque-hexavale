@@ -42,6 +42,17 @@ final readonly class Quantidade
         return new self($this->valor->minus($outra->valor)->toScale(self::ESCALA, RoundingMode::HalfUp));
     }
 
+    public function multiplicar(string $fator): self
+    {
+        try {
+            $f = BigDecimal::of($fator);
+        } catch (MathException $e) {
+            throw new InvalidArgumentException('Fator inválido: '.$fator, 0, $e);
+        }
+
+        return new self($this->valor->multipliedBy($f)->toScale(self::ESCALA, RoundingMode::HalfUp));
+    }
+
     public function maiorQue(self $outra): bool
     {
         return $this->valor->isGreaterThan($outra->valor);

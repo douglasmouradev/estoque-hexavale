@@ -10,6 +10,14 @@ use HexaVale\Auditoria\Infraestrutura\EloquentRegistrarAuditoria;
 use HexaVale\Cadastros\Aplicacao\ExcluirProduto;
 use HexaVale\Cadastros\Aplicacao\Portas\PortaProdutoEscrita;
 use HexaVale\Cadastros\Infraestrutura\EloquentProdutoEscrita;
+use HexaVale\Compras\Aplicacao\AprovarPedidoCompra;
+use HexaVale\Compras\Aplicacao\CriarPedidoCompra;
+use HexaVale\Compras\Aplicacao\Portas\PortaPedidoCompra;
+use HexaVale\Compras\Aplicacao\ReceberPedidoCompra;
+use HexaVale\Compras\Aplicacao\RejeitarPedidoCompra;
+use HexaVale\Compras\Aplicacao\SolicitarAprovacaoPedido;
+use HexaVale\Compras\Infraestrutura\EloquentPedidoCompra;
+use HexaVale\Estoque\Aplicacao\ConsumirReserva;
 use HexaVale\Estoque\Aplicacao\LiberarReserva;
 use HexaVale\Estoque\Aplicacao\Portas\PortaLedgerEstoque;
 use HexaVale\Estoque\Aplicacao\RegistrarAjusteInventario;
@@ -25,9 +33,16 @@ use HexaVale\Identidade\Aplicacao\VerificarTotp;
 use HexaVale\Identidade\Infraestrutura\EloquentUsuarioConsulta;
 use HexaVale\Identidade\Infraestrutura\LaravelAutenticacao;
 use HexaVale\Identidade\Infraestrutura\OtphpTotp;
+use HexaVale\OperacaoAgricola\Aplicacao\BaixarOrdemAgricola;
+use HexaVale\OperacaoAgricola\Aplicacao\CancelarOrdemAgricola;
+use HexaVale\OperacaoAgricola\Aplicacao\CriarOrdemAgricola;
+use HexaVale\OperacaoAgricola\Aplicacao\LiberarOrdemAgricola;
+use HexaVale\OperacaoAgricola\Aplicacao\Portas\PortaOrdemAgricola;
+use HexaVale\OperacaoAgricola\Infraestrutura\EloquentOrdemAgricola;
 use HexaVale\Privacidade\Dominio\CifradorCampo;
 use HexaVale\Privacidade\Dominio\MascaradorPii;
 use HexaVale\Privacidade\Infraestrutura\SodiumCifradorCampo;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
@@ -51,10 +66,25 @@ final class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ReservarEstoque::class);
         $this->app->singleton(LiberarReserva::class);
         $this->app->singleton(ExcluirProduto::class);
+        $this->app->singleton(PortaPedidoCompra::class, EloquentPedidoCompra::class);
+        $this->app->singleton(CriarPedidoCompra::class);
+        $this->app->singleton(SolicitarAprovacaoPedido::class);
+        $this->app->singleton(AprovarPedidoCompra::class);
+        $this->app->singleton(RejeitarPedidoCompra::class);
+        $this->app->singleton(ReceberPedidoCompra::class);
+        $this->app->singleton(ConsumirReserva::class);
+        $this->app->singleton(PortaOrdemAgricola::class, EloquentOrdemAgricola::class);
+        $this->app->singleton(CriarOrdemAgricola::class);
+        $this->app->singleton(LiberarOrdemAgricola::class);
+        $this->app->singleton(BaixarOrdemAgricola::class);
+        $this->app->singleton(CancelarOrdemAgricola::class);
     }
 
     public function boot(): void
     {
-        //
+        $appUrl = config('app.url');
+        if (is_string($appUrl) && str_starts_with($appUrl, 'https://')) {
+            URL::forceScheme('https');
+        }
     }
 }

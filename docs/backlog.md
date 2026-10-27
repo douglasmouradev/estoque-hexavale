@@ -9,4 +9,4 @@
 | BK-PASSKEY-01 | Cerimônia WebAuthn completa (1 dispositivo) | 1–2 | Porta + tabela + lib; UI/fluxo pendente |
 | BK-PII-01 | Job de rotação `FIELD_ENCRYPTION_KEY` / re-cifrar | 2+ | ADR-0008 |
 | BK-PROTO-01 | ~~Importador seed sintético~~ | 2 | **Fechado** — `Fase2Seeder` (produtos/lotes/talhões + entradas) |
-| BK-UI-APP-01 | Substituir `/app` CDN pelo shell Blade + Lit | 2–3 | Reaberto — produto pediu protótipo HTML em `/app`; Blade em `painel/show` fica referência |
+| BK-UI-APP-01 | ~~Substituir CDN do `/app`~~ | 2–3 | **Fechado (parcial)** — protótipo HTML em `/app` sem CDN (`public/vendor/erp/`); unificação Lit/Blade fica BK-LIT-01 |

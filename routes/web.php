@@ -5,12 +5,15 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\UsuariosController;
 use App\Http\Controllers\Auth\EntrarController;
 use App\Http\Controllers\Auth\SairController;
+use App\Http\Controllers\Compras\PedidoController;
 use App\Http\Controllers\ContaController;
 use App\Http\Controllers\Estoque\AjusteController;
 use App\Http\Controllers\Estoque\EntradaController;
+use App\Http\Controllers\Estoque\ReservaController;
 use App\Http\Controllers\Estoque\SaidaController;
 use App\Http\Controllers\Estoque\SaldoController;
 use App\Http\Controllers\HealthController;
+use App\Http\Controllers\Operacao\OrdemController;
 use App\Http\Controllers\PainelController;
 use App\Http\Controllers\StyleguideController;
 use App\Http\Middleware\EnsureFazendaContext;
@@ -54,6 +57,61 @@ Route::middleware(['auth', EnsureFazendaContext::class])->group(function (): voi
         Route::post('/estoque/ajuste', [AjusteController::class, 'store'])
             ->middleware(RequireIdempotencyKey::class)
             ->name('estoque.ajuste.store');
+        Route::get('/estoque/reserva', [ReservaController::class, 'create'])->name('estoque.reserva');
+        Route::post('/estoque/reserva', [ReservaController::class, 'store'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('estoque.reserva.store');
+        Route::get('/estoque/reserva/liberar', [ReservaController::class, 'createLiberar'])->name('estoque.reserva.liberar');
+        Route::post('/estoque/reserva/liberar', [ReservaController::class, 'storeLiberar'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('estoque.reserva.liberar.store');
+    });
+
+    Route::middleware(EnsurePermission::class.':compras.solicitar')->group(function (): void {
+        Route::get('/compras/novo', [PedidoController::class, 'create'])->name('compras.create');
+        Route::post('/compras', [PedidoController::class, 'store'])->name('compras.store');
+        Route::post('/compras/{pedido}/solicitar', [PedidoController::class, 'solicitar'])->name('compras.solicitar');
+    });
+
+    Route::middleware(EnsurePermission::class.':compras.ler')->group(function (): void {
+        Route::get('/compras', [PedidoController::class, 'index'])->name('compras.index');
+        Route::get('/compras/{pedido}', [PedidoController::class, 'show'])->name('compras.show');
+    });
+
+    Route::middleware(EnsurePermission::class.':compras.aprovar')->group(function (): void {
+        Route::post('/compras/{pedido}/aprovar', [PedidoController::class, 'aprovar'])->name('compras.aprovar');
+        Route::post('/compras/{pedido}/rejeitar', [PedidoController::class, 'rejeitar'])->name('compras.rejeitar');
+    });
+
+    Route::middleware(EnsurePermission::class.':compras.receber')->group(function (): void {
+        Route::post('/compras/{pedido}/receber', [PedidoController::class, 'receber'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('compras.receber');
+    });
+
+    Route::middleware(EnsurePermission::class.':operacao.criar')->group(function (): void {
+        Route::get('/operacao/novo', [OrdemController::class, 'create'])->name('operacao.create');
+        Route::post('/operacao', [OrdemController::class, 'store'])->name('operacao.store');
+    });
+
+    Route::middleware(EnsurePermission::class.':operacao.ler')->group(function (): void {
+        Route::get('/operacao', [OrdemController::class, 'index'])->name('operacao.index');
+        Route::get('/operacao/{ordem}', [OrdemController::class, 'show'])->name('operacao.show');
+    });
+
+    Route::middleware(EnsurePermission::class.':operacao.liberar')->group(function (): void {
+        Route::post('/operacao/{ordem}/liberar', [OrdemController::class, 'liberar'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('operacao.liberar');
+        Route::post('/operacao/{ordem}/cancelar', [OrdemController::class, 'cancelar'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('operacao.cancelar');
+    });
+
+    Route::middleware(EnsurePermission::class.':operacao.baixar')->group(function (): void {
+        Route::post('/operacao/{ordem}/baixar', [OrdemController::class, 'baixar'])
+            ->middleware(RequireIdempotencyKey::class)
+            ->name('operacao.baixar');
     });
 
     Route::middleware(EnsurePermission::class.':admin.usuarios')->group(function (): void {

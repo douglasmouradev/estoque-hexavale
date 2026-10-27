@@ -22,6 +22,12 @@
                 <a href="{{ route('estoque.entrada') }}" @class(['on' => request()->routeIs('estoque.entrada*')])>Entrada</a>
                 <a href="{{ route('estoque.saida') }}" @class(['on' => request()->routeIs('estoque.saida*')])>Saída</a>
                 <a href="{{ route('estoque.ajuste') }}" @class(['on' => request()->routeIs('estoque.ajuste*')])>Ajuste</a>
+                <a href="{{ route('estoque.reserva') }}" @class(['on' => request()->routeIs('estoque.reserva')])>Reserva</a>
+                <a href="{{ route('estoque.reserva.liberar') }}" @class(['on' => request()->routeIs('estoque.reserva.liberar*')])>Liberar reserva</a>
+                <p class="hx-side__grupo">Compras</p>
+                <a href="{{ route('compras.index') }}" @class(['on' => request()->routeIs('compras.*')])>Pedidos</a>
+                <p class="hx-side__grupo">Operação</p>
+                <a href="{{ route('operacao.index') }}" @class(['on' => request()->routeIs('operacao.*')])>Ordens</a>
                 <p class="hx-side__grupo">Conta</p>
                 <a href="{{ route('conta') }}" @class(['on' => request()->routeIs('conta', 'conta.*')])>Conta</a>
                 <a href="{{ route('admin.usuarios') }}" @class(['on' => request()->routeIs('admin.usuarios*')])>Usuários</a>

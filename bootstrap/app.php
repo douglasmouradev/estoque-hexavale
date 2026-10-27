@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Cloudflare Tunnel / reverse proxy
+        $middleware->trustProxies(at: '*');
         $middleware->alias([
             'fazenda' => EnsureFazendaContext::class,
             'perm' => EnsurePermission::class,

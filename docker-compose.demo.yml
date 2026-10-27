@@ -1,0 +1,49 @@
+# Demo pública (Cloudflare Quick Tunnel).
+# Uso no CT:
+#   docker compose -f docker-compose.yml -f docker-compose.demo.yml up -d --build
+#
+# MySQL/Mailpit não ficam expostos. O tunnel publica só o Caddy.
+
+services:
+  php:
+    environment:
+      APP_ENV: staging
+      APP_DEBUG: "false"
+      APP_URL: ${APP_URL:-http://localhost:8080}
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: hexavale
+      DB_USERNAME: hexavale_app
+      DB_PASSWORD: hexavale_app_secret
+
+  worker:
+    environment:
+      APP_ENV: staging
+      APP_DEBUG: "false"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: hexavale
+      DB_USERNAME: hexavale_app
+      DB_PASSWORD: hexavale_app_secret
+
+  caddy:
+    ports: !override
+      - "127.0.0.1:8080:80"
+
+  mysql:
+    ports: !override []
+
+  mailpit:
+    ports: !override []
+    profiles: ["mail"]
+
+  cloudflared:
+    image: cloudflare/cloudflared:2025.2.1
+    restart: unless-stopped
+    command: tunnel --no-autoupdate --url http://caddy:80
+    depends_on:
+      - caddy
+    networks:
+      - hexavale

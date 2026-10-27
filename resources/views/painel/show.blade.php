@@ -9,6 +9,7 @@
 @section('acoes')
     <a href="{{ route('estoque.entrada') }}" class="hx-btn hx-btn--sm">Entrada</a>
     <a href="{{ route('estoque.ajuste') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Ajuste</a>
+    <a href="{{ route('estoque.reserva') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Reserva</a>
 @endsection
 
 @section('content')

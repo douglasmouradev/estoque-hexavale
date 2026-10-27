@@ -63,6 +63,43 @@ final class Fase1Seeder extends Seeder
                 PermissaoDominio::EstoqueLer->value,
                 PermissaoDominio::EstoqueMovimentar->value,
                 PermissaoDominio::CadastrosGerir->value,
+                PermissaoDominio::ComprasLer->value,
+                PermissaoDominio::ComprasSolicitar->value,
+                PermissaoDominio::ComprasAprovar->value,
+                PermissaoDominio::ComprasReceber->value,
+                PermissaoDominio::OperacaoLer->value,
+                PermissaoDominio::OperacaoCriar->value,
+                PermissaoDominio::OperacaoLiberar->value,
+                PermissaoDominio::OperacaoBaixar->value,
+            ],
+            PapelCodigo::ResponsavelTecnico->value => [
+                PermissaoDominio::ContaPropria->value,
+                PermissaoDominio::EstoqueLer->value,
+                PermissaoDominio::OperacaoLer->value,
+                PermissaoDominio::OperacaoCriar->value,
+                PermissaoDominio::OperacaoLiberar->value,
+            ],
+            PapelCodigo::Comprador->value => [
+                PermissaoDominio::ContaPropria->value,
+                PermissaoDominio::EstoqueLer->value,
+                PermissaoDominio::ComprasLer->value,
+                PermissaoDominio::ComprasSolicitar->value,
+            ],
+            PapelCodigo::Aprovador->value => [
+                PermissaoDominio::ContaPropria->value,
+                PermissaoDominio::EstoqueLer->value,
+                PermissaoDominio::ComprasLer->value,
+                PermissaoDominio::ComprasAprovar->value,
+            ],
+            PapelCodigo::Almoxarife->value => [
+                PermissaoDominio::ContaPropria->value,
+                PermissaoDominio::EstoqueLer->value,
+                PermissaoDominio::EstoqueMovimentar->value,
+                PermissaoDominio::CadastrosGerir->value,
+                PermissaoDominio::ComprasLer->value,
+                PermissaoDominio::ComprasReceber->value,
+                PermissaoDominio::OperacaoLer->value,
+                PermissaoDominio::OperacaoBaixar->value,
             ],
             PapelCodigo::Dpo->value => [
                 PermissaoDominio::RopaGerir->value,
@@ -75,15 +112,12 @@ final class Fase1Seeder extends Seeder
                 PermissaoDominio::ContaPropria->value,
                 PermissaoDominio::EstoqueLer->value,
             ],
-            PapelCodigo::Almoxarife->value => [
-                PermissaoDominio::ContaPropria->value,
-                PermissaoDominio::EstoqueLer->value,
-                PermissaoDominio::EstoqueMovimentar->value,
-                PermissaoDominio::CadastrosGerir->value,
-            ],
             PapelCodigo::OperadorCampo->value => [
                 PermissaoDominio::ContaPropria->value,
                 PermissaoDominio::EstoqueLer->value,
+                PermissaoDominio::OperacaoLer->value,
+                PermissaoDominio::OperacaoCriar->value,
+                PermissaoDominio::OperacaoBaixar->value,
             ],
         ];
 
@@ -130,6 +164,38 @@ final class Fase1Seeder extends Seeder
             'user_id' => $operador->id,
             'fazenda_id' => $fazendaId,
             'papel_id' => $mapaPapel[PapelCodigo::OperadorCampo->value],
+        ]);
+
+        $comprador = User::query()->create([
+            'uuid' => UuidV7::gerar()->valor,
+            'name' => 'Comprador Demo',
+            'email' => 'comprador@hexavale.local',
+            'password' => Hash::make('HexaVale!Comp1'),
+            'cpf_cifrado' => $cifrador->cifrar('15350946056'),
+            'cpf_blind' => $cifrador->indiceCego('15350946056'),
+            'mfa_enabled' => false,
+        ]);
+        UsuarioPapelFazenda::query()->create([
+            'id' => UuidV7::gerar()->valor,
+            'user_id' => $comprador->id,
+            'fazenda_id' => $fazendaId,
+            'papel_id' => $mapaPapel[PapelCodigo::Comprador->value],
+        ]);
+
+        $aprovador = User::query()->create([
+            'uuid' => UuidV7::gerar()->valor,
+            'name' => 'Aprovador Demo',
+            'email' => 'aprovador@hexavale.local',
+            'password' => Hash::make('HexaVale!Apr1'),
+            'cpf_cifrado' => $cifrador->cifrar('23100299900'),
+            'cpf_blind' => $cifrador->indiceCego('23100299900'),
+            'mfa_enabled' => false,
+        ]);
+        UsuarioPapelFazenda::query()->create([
+            'id' => UuidV7::gerar()->valor,
+            'user_id' => $aprovador->id,
+            'fazenda_id' => $fazendaId,
+            'papel_id' => $mapaPapel[PapelCodigo::Aprovador->value],
         ]);
 
         DB::table('ropa_tratamentos')->insert([

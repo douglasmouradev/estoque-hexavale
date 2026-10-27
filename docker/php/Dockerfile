@@ -1,8 +1,10 @@
 FROM php:8.5-fpm-bookworm
 
+COPY --from=mlocati/php-extension-installer:2.9 /usr/bin/install-php-extensions /usr/local/bin/
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git unzip curl libzip-dev libicu-dev libpng-dev libonig-dev \
-    && docker-php-ext-install -j$(nproc) pdo_mysql intl zip bcmath opcache \
+        git unzip curl \
+    && install-php-extensions pdo_mysql intl zip bcmath opcache \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2.10 /usr/bin/composer /usr/bin/composer

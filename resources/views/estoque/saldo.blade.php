@@ -10,6 +10,8 @@
     <a href="{{ route('estoque.entrada') }}" class="hx-btn hx-btn--sm">Entrada</a>
     <a href="{{ route('estoque.saida') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Saída</a>
     <a href="{{ route('estoque.ajuste') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Ajuste</a>
+    <a href="{{ route('estoque.reserva') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Reserva</a>
+    <a href="{{ route('estoque.reserva.liberar') }}" class="hx-btn hx-btn--sm hx-btn--ghost">Liberar</a>
 @endsection
 
 @section('content')

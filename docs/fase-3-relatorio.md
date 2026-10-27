@@ -1,8 +1,8 @@
 # Relatório — Fase 3 (Estoque avançado + shell sem CDN)
 
-**Data:** 2026-10-19  
+**Data:** 2026-10-27  
 **Repositório:** https://github.com/douglasmouradev/estoque-hexavale  
-**Portão:** aguardando aprovação humana para iniciar a Fase 4.
+**Portão:** aprovado (2026-10-27) — Fase 4 iniciada.
 
 ## O que foi feito
 
@@ -10,13 +10,13 @@
 - **RN-03** — `PoliticaLote` bloqueia saída/reserva de lote vencido
 - **RN-04** — `ConversorUnidade` (kg/g, L/mL) na entrada/saída/ajuste
 - **RN-09** — `RegistrarAjusteInventario` (motivo + contagem ≥ reservado) + UI `/estoque/ajuste`
-- **Reservas** — `ReservarEstoque` / `LiberarReserva` no ledger (`reserva` / `baixa_reserva`)
+- **Reservas** — domínio + HTTP `/estoque/reserva` e `/estoque/reserva/liberar` (Idempotency-Key)
 - **RN-18** — middleware `RequireIdempotencyKey` nos POSTs de estoque + `_idempotency_key` nos forms
-- **BK-UI-APP-01** — tentativa de painel Blade; **revertido a pedido**: `/app` volta a servir o HTML do protótipo (`resources/prototipo/…`) exatamente como deixado
+- **BK-UI-APP-01** — `/app` mantém o protótipo HTML; CDNs removidos (`public/vendor/erp/` + Tailwind build + Source Sans local)
 
 ## Suíte (`make quality`)
 
-- lint / types / arch / **31 testes** / composer audit — OK
+- lint / types / arch / testes / composer audit — ver execução local
 
 ## Fora / próxima fase (4)
 
@@ -27,13 +27,15 @@
 ## Como ver
 
 ```bash
+npm run build:erp   # se alterar classes Tailwind do protótipo
 php artisan migrate:fresh --seed
 php artisan serve
 # login admin@hexavale.local / HexaVale!Admin1
 # http://127.0.0.1:8000/app
+# http://127.0.0.1:8000/estoque/reserva
 # http://127.0.0.1:8000/estoque/ajuste
 ```
 
 ---
 
-**Pare aqui.** Aprovar explicitamente a Fase 3 para liberar a Fase 4 (compras).
+**Aprovado.** Seguir para `docs/fase-4-relatorio.md`.

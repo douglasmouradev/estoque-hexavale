@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposta Comercial — HexaVale ERP Estoque · TDesk Solutions</title>
+<style>
+  :root{
+    --teal:#0094b5; --teal-dark:#007d99; --pale:#e9f5f8; --pale2:#f2f9fb;
+    --ink:#2f3437; --muted:#6b757a; --line:#c9d8dc;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:#dde7ea;
+    font-size:10.5pt; line-height:1.5; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .page{
+    width:210mm; min-height:297mm; margin:10mm auto; background:#fff; position:relative;
+    padding:14mm 17mm 16mm; overflow:hidden; box-shadow:0 2px 14px rgba(0,0,0,.18);
+  }
+  .watermark{
+    position:absolute; top:46%; left:50%; transform:translate(-50%,-50%);
+    font-size:40pt; font-weight:800; letter-spacing:.04em; color:var(--teal);
+    opacity:.055; white-space:nowrap; pointer-events:none; text-align:center; line-height:1.05;
+  }
+  /* ---------- capa / faixa ---------- */
+  .band{
+    background:var(--teal); color:#fff; margin:-14mm -17mm 8mm; padding:8mm 17mm 7mm;
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10mm;
+  }
+  .band .brand{display:flex; gap:5mm; align-items:flex-start}
+  .band .slogan{font-size:8.5pt; opacity:.92; margin-top:3mm}
+  .band .doc{text-align:right; font-size:9.5pt; line-height:1.6; padding-top:2mm}
+  .band .doc b{font-size:11.5pt; letter-spacing:.05em}
+  .logo-name{font-size:19pt; font-weight:800; line-height:.95; letter-spacing:.02em}
+  .logo-name span{display:block}
+  /* mini topo páginas 2–4 */
+  .mini{
+    display:flex; justify-content:space-between; align-items:center;
+    margin:-4mm 0 7mm; color:var(--teal); font-size:9pt;
+  }
+  .mini .l{display:flex; align-items:center; gap:3mm; font-weight:700}
+  .footer{
+    position:absolute; bottom:8mm; left:0; right:0; text-align:center;
+    font-size:7.5pt; color:#8a9599;
+  }
+  /* ---------- tabelas ---------- */
+  table{width:100%; border-collapse:collapse; margin:0 0 6mm; font-size:10pt}
+  th,td{border:1px solid var(--line); padding:2.6mm 3.2mm; text-align:left; vertical-align:top}
+  .info th{background:var(--pale); color:var(--ink); font-size:9pt; letter-spacing:.04em; width:50%}
+  .info td{font-size:9.5pt; line-height:1.55}
+  .meta th{background:var(--pale); width:42%; font-size:9.5pt}
+  .meta td{font-size:9.5pt}
+  .data thead th{background:var(--teal); color:#fff; font-size:10pt}
+  .data tbody tr:nth-child(odd){background:var(--pale)}
+  .data tbody tr:nth-child(even){background:#fff}
+  .data td{padding:2.8mm 3.2mm}
+  /* ---------- texto ---------- */
+  h1{font-size:15pt; color:var(--teal); margin:0 0 3mm; line-height:1.25}
+  h2{font-size:12pt; color:var(--teal); margin:5mm 0 2mm}
+  h2:first-of-type{margin-top:0}
+  p{margin:0 0 3.2mm}
+  .prod{font-weight:700; margin-bottom:1mm}
+  ul{margin:0 0 3mm; padding:0; list-style:none}
+  li{margin:0 0 1.1mm; padding-left:4mm; position:relative}
+  li::before{content:"·"; position:absolute; left:1mm; font-weight:700}
+  .destaque{
+    border:1.4px solid var(--teal); background:var(--pale2); color:var(--teal-dark);
+    text-align:center; font-weight:800; font-size:11.5pt; padding:3.5mm; margin:0 0 5mm;
+  }
+  .assin{
+    display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); margin-top:6mm;
+  }
+  .assin>div{padding:5mm 5mm 7mm; min-height:52mm}
+  .assin>div+div{border-left:1px solid var(--line)}
+  .assin b{font-size:10.5pt}
+  .linha{border-bottom:1px solid #555; margin:16mm 0 2mm}
+  .small{font-size:8.5pt; color:var(--muted)}
+  /* páginas densas (escopo e investimento) */
+  .page.compact{font-size:9.6pt; line-height:1.42}
+  .page.compact h1{font-size:14pt; margin-bottom:2mm}
+  .page.compact h2{font-size:11pt; margin:3.5mm 0 1.5mm}
+  .page.compact li{margin-bottom:.55mm}
+  .page.compact p{margin-bottom:2.2mm}
+  .page.compact .data td{padding:1.9mm 2.6mm}
+  .page.compact table{margin-bottom:4mm}
+  .page.compact .destaque{padding:2.8mm; margin-bottom:3.5mm}
+  .page.escopo{padding-top:10mm; padding-bottom:12mm; font-size:9.2pt; line-height:1.30}
+  .page.escopo h2{margin:3mm 0 1.2mm}
+  .page.escopo .mini{margin:-2mm 0 4mm}
+  .page.escopo .data td{padding:1.5mm 2.4mm; font-size:9.2pt}
+  @page{size:A4; margin:0}
+  @media print{
+    body{background:#fff}
+    .page{margin:0; box-shadow:none; page-break-after:always}
+    .page:last-child{page-break-after:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PÁGINA 1 ================= -->
+<section class="page">
+  <div class="watermark">TDESK<br>SOLUTIONS</div>
+
+  <header class="band">
+    <div>
+      <div class="brand">
+        <img src="proposta-assets/icone-tdesk-branco.png" alt="TDesk Solutions" style="display:block;height:14.5mm;width:auto">
+        <div class="logo-name"><span>TDESK</span><span>SOLUTIONS</span></div>
+      </div>
+      <div class="slogan">Help desk e sistemas web para TI e operações</div>
+    </div>
+    <div class="doc">
+      <b>PROPOSTA COMERCIAL</b><br>
+      Nº PROP-20261021-003<br>
+      Data: 21/10/2026
+    </div>
+  </header>
+
+  <table class="info">
+    <tr><th>CLIENTE</th><th>FORNECEDOR</th></tr>
+    <tr>
+      <td>
+        HexaVale<br>
+        Contato: Edson Pinto · Gerente<br>
+        E-mail: edsonpinto281@gmail.com<br>
+        Tel.: (74) 99940-4875
+      </td>
+      <td>
+        <div>
+          <img src="proposta-assets/icone-tdesk-turquesa.png" alt="" style="display:block;height:11mm;width:auto;vertical-align:middle">
+          <span style="font-weight:800;font-size:13pt;line-height:.95;color:var(--teal);display:inline-block;vertical-align:middle;margin-left:2mm">TDESK<br>SOLUTIONS</span>
+        </div>
+        <div style="margin-top:3mm">
+          Empresa de serviços em tecnologia<br>
+          Help desk e sistemas web<br>
+          E-mail: comercial@tdesksolutions.com.br<br>
+          Site: tdesksolutions.com.br<br>
+          Salvador/BA · Atendimento em todo o Brasil
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <table class="meta">
+    <tr><th>Validade da proposta</th><td>20/11/2026</td></tr>
+    <tr><th>Prazo de implantação estimado</th><td>15 dias úteis</td></tr>
+    <tr><th>Projeto proposto</th><td>HexaVale · ERP de estoque, operações e financeiro</td></tr>
+  </table>
+
+  <h1>1. Resumo Executivo</h1>
+  <p>A TDesk Solutions apresenta esta proposta comercial para desenvolvimento e entrega do <b>HexaVale · ERP agrícola de estoque</b> para produtores de manga e uva: sistema web com acesso autenticado, controle de insumos por lote, operações de campo e módulo financeiro no mesmo painel.</p>
+  <p>O HexaVale reúne, em um único ambiente, dashboard com indicadores e gráficos, pedidos de compra, saldo e movimentações de estoque, cadastros da fazenda, ordens agrícolas, abastecimentos, manutenções, custo por talhão, auditoria, ordens de trabalho para impressão e a gestão financeira (contas a pagar e receber, fluxo de caixa, orçamento e bancos).</p>
+  <p>O escopo, entregáveis e condições comerciais descritos neste documento foram elaborados com base nas necessidades apresentadas pelo cliente e podem ser ajustados mediante alinhamento prévio entre as partes, formalizado em aditivo contratual quando necessário.</p>
+
+  <h1>2. Sobre a TDesk Solutions</h1>
+  <p>A TDesk Solutions é uma empresa brasileira especializada em serviços de tecnologia, com foco em help desk e desenvolvimento de sistemas web. Atuamos com a solução proprietária TDesk e com projetos sob medida · sites institucionais, landings e sistemas com escopo fechado em proposta comercial.</p>
+  <p><b>Diferenciais da nossa operação:</b></p>
+  <ul>
+    <li>Primeira resposta comercial em até 1 dia útil (horário Brasil, Salvador/BA).</li>
+  </ul>
+
+  <div class="footer">tdesksolutions.com.br | comercial@tdesksolutions.com.br | Salvador/BA · Brasil</div>
+</section>
+
+<!-- ================= PÁGINA 2 ================= -->
+<section class="page compact escopo">
+  <div class="watermark">TDESK<br>SOLUTIONS</div>
+  <header class="mini">
+    <div class="l">
+      <img src="proposta-assets/icone-tdesk-turquesa.png" alt="TDesk Solutions" style="display:block;height:6.5mm;width:auto">
+      <span>TDESK SOLUTIONS &nbsp; Proposta Comercial</span>
+    </div>
+    <div>Página 2</div>
+  </header>
+
+  <ul>
+    <li>Escopo formalizado por escrito antes de qualquer cobrança de implantação.</li>
+    <li>Interface web responsiva, com menu lateral e uso em desktop ou celular.</li>
+    <li>Regras de estoque registradas em ledger, com auditoria das gravações.</li>
+    <li>Atendimento a operações em todo o território nacional.</li>
+  </ul>
+
+  <h1>3. Escopo da Solução Proposta</h1>
+  <p class="prod">Produto: HexaVale · ERP de estoque, operações e financeiro para manga e uva (escopo fechado)</p>
+
+  <h2>3.1 Funcionalidades incluídas</h2>
+  <ul>
+    <li>Acesso web autenticado ao painel (<b>/app</b>), responsivo, com menu por grupos e busca.</li>
+    <li><b>Dashboard:</b> valor do estoque, pedidos aguardando aprovação, ordens agrícolas abertas e alertas de estoque mínimo.</li>
+    <li><b>Gráficos ao vivo:</b> movimentação de insumos (entradas × consumo) e custo por talhão, recalculados a cada lançamento — talhão novo entra no gráfico, com custo real ou aviso de “sem lançamentos”.</li>
+    <li><b>Estoque:</b> saldo por produto/lote, entrada por NF, saída e situação Zerado / Abaixo do mínimo / OK.</li>
+    <li><b>Ledger (servidor):</b> disponível = físico − reservado; lote vencido bloqueia o uso; conversão só na mesma grandeza (kg↔g, L↔mL); ajuste com motivo e contagem ≥ reservado; reservas e movimentações idempotentes (sem duplicar por reenvio).</li>
+    <li><b>Cadastros:</b> fornecedores, produtos/insumos, talhões, máquinas e funcionários, com bloqueio de exclusão quando em uso.</li>
+    <li><b>Lançamentos:</b> ordens agrícolas, abastecimentos e manutenções (OS); ordem concluída gera baixa de estoque uma única vez.</li>
+    <li><b>Relatórios:</b> custo por talhão (insumos + combustível) e R$/ha, auditoria, CSV e ordens de trabalho imprimíveis (A4/PDF).</li>
+    <li><b>Financeiro (mesmo ERP):</b> painel, movimentações, contas a pagar/receber com baixa, fluxo projetado, orçamento, centros de custo, bancos, transferências, financiamentos, relatórios e backup/restauração em JSON.</li>
+  </ul>
+
+  <h2>3.2 Implantação</h2>
+  <p>A implantação estimada em 15 dias úteis compreende:</p>
+  <ul>
+    <li>Reunião de kick-off e alinhamento da operação (estoque, talhões e financeiro).</li>
+    <li>Configuração do ambiente (Laravel/MySQL), dados iniciais e conferência dos módulos.</li>
+    <li>Aplicação da marca HexaVale e testes no desktop e no celular.</li>
+    <li>Treinamento remoto da equipe (sessão de até 2 horas).</li>
+    <li>Homologação assistida e entrega em produção.</li>
+  </ul>
+
+  <h2>3.3 Não incluído nesta proposta</h2>
+  <ul>
+    <li>Hospedagem em nuvem, domínio e certificado HTTPS (sob consulta).</li>
+    <li>Compras com NF-e/entrada fiscal (Fase 4) e ordens agrícolas completas no servidor (Fase 5) — mediante aditivo.</li>
+    <li>Conciliação bancária automática, integração com bancos, contabilidade ou irrigação (mediante aditivo).</li>
+    <li>Publicação nas lojas Apple App Store e Google Play (app nativo).</li>
+    <li>Login por SMS/passkeys completo ou migração de planilhas e sistemas legados (sob consulta separada).</li>
+    <li>Laudo agronômico ou receituário certificado; os cálculos do sistema são operacionais.</li>
+  </ul>
+
+  <h1>4. Entregáveis</h1>
+  <table class="data">
+    <thead><tr><th style="width:38%">Entregável</th><th>Descrição</th></tr></thead>
+    <tbody>
+      <tr><td>Sistema HexaVale ERP</td><td>Painel web completo (dashboard a relatórios)</td></tr>
+      <tr><td>Módulo financeiro</td><td>Contas, fluxo, orçamento, bancos e backup</td></tr>
+      <tr><td>Ledger de estoque</td><td>Entradas, saídas, reservas e ajustes por lote</td></tr>
+      <tr><td>Identidade visual</td><td>Marca no painel, gráficos e impressão</td></tr>
+      <tr><td>Documentação</td><td>Requisitos, relatórios e ADRs do projeto</td></tr>
+      <tr><td>Treinamento e suporte</td><td>Sessão remota (até 2h) + 30 dias pós-entrega</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">tdesksolutions.com.br | comercial@tdesksolutions.com.br | Salvador/BA · Brasil</div>
+</section>
+
+<!-- ================= PÁGINA 3 ================= -->
+<section class="page compact">
+  <div class="watermark">TDESK<br>SOLUTIONS</div>
+  <header class="mini">
+    <div class="l">
+      <img src="proposta-assets/icone-tdesk-turquesa.png" alt="TDesk Solutions" style="display:block;height:6.5mm;width:auto">
+      <span>TDESK SOLUTIONS &nbsp; Proposta Comercial</span>
+    </div>
+    <div>Página 3</div>
+  </header>
+
+  <h1>5. Investimento</h1>
+  <p>Os valores abaixo são expressos em reais (BRL) e referem-se à atividade de desenvolvimento e entrega do HexaVale ERP, em escopo fechado. Condições de pagamento serão formalizadas em contrato.</p>
+
+  <table class="data">
+    <thead><tr><th>Item</th><th style="width:26%">Valor</th><th style="width:24%">Periodicidade</th></tr></thead>
+    <tbody>
+      <tr><td>HexaVale ERP · desenvolvimento e entrega</td><td>R$ ____________</td><td>Única</td></tr>
+      <tr><td>Implantação, marca e homologação</td><td>Incluso</td><td>Única</td></tr>
+      <tr><td>Treinamento remoto (até 2h)</td><td>Incluso</td><td>Única</td></tr>
+      <tr><td>Suporte por 30 dias após a entrega</td><td>Incluso</td><td>Única</td></tr>
+      <tr><td>Hospedagem e evoluções posteriores</td><td>Sob consulta</td><td>·</td></tr>
+    </tbody>
+  </table>
+
+  <div class="destaque">Investimento da atividade: R$ ____________</div>
+
+  <p><b>Condições de pagamento sugeridas:</b></p>
+  <ul>
+    <li>Atividade de escopo fechado, valor único de R$ ____________, sem mensalidade nesta proposta.</li>
+    <li>Pagamento via PIX ou boleto: 50% na assinatura e 50% na homologação, ou 100% na assinatura.</li>
+    <li>Vencimento em até 10 dias após a emissão do faturamento.</li>
+    <li>Itens fora do escopo somente com aditivo.</li>
+  </ul>
+
+  <h1>6. Cronograma de Implantação</h1>
+  <p>O cronograma abaixo é estimativo e depende da disponibilidade do cliente para validações e aprovações em cada etapa. Atrasos por parte do cliente podem impactar os prazos acordados.</p>
+
+  <table class="data">
+    <thead><tr><th style="width:14%">Fase</th><th>Atividade</th><th style="width:24%">Prazo</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Assinatura do contrato e kick-off</td><td>D+0</td></tr>
+      <tr><td>2</td><td>Ambiente, marca e cadastros-base da fazenda</td><td>D+1 a D+5</td></tr>
+      <tr><td>3</td><td>Conferência de estoque, financeiro, gráficos e relatórios</td><td>D+6 a D+10</td></tr>
+      <tr><td>4</td><td>Treinamento e homologação</td><td>D+11 a D+13</td></tr>
+      <tr><td>5</td><td>Entrega e acompanhamento inicial</td><td>D+14 a D+15</td></tr>
+    </tbody>
+  </table>
+
+  <h1>7. Termos e Condições</h1>
+  <p><b>7.1 Validade.</b> Esta proposta é válida por 30 dias a contar da data de emissão. Após esse período, valores e condições poderão ser revistos pela TDesk Solutions.</p>
+
+  <div class="footer">tdesksolutions.com.br | comercial@tdesksolutions.com.br | Salvador/BA · Brasil</div>
+</section>
+
+<!-- ================= PÁGINA 4 ================= -->
+<section class="page">
+  <div class="watermark">TDESK<br>SOLUTIONS</div>
+  <header class="mini">
+    <div class="l">
+      <img src="proposta-assets/icone-tdesk-turquesa.png" alt="TDesk Solutions" style="display:block;height:6.5mm;width:auto">
+      <span>TDESK SOLUTIONS &nbsp; Proposta Comercial</span>
+    </div>
+    <div>Página 4</div>
+  </header>
+
+  <p><b>7.2 Confidencialidade.</b> As informações trocadas entre as partes no âmbito desta proposta e da eventual contratação serão tratadas como confidenciais, em conformidade com a legislação aplicável, incluindo a LGPD (Lei nº 13.709/2018). Os dados operacionais lançados no sistema seguem a política de privacidade acordada na implantação.</p>
+  <p><b>7.3 Propriedade intelectual.</b> O sistema HexaVale, na versão entregue ao cliente neste escopo, destina-se ao uso da operação contratante. Componentes, métodos e bibliotecas reutilizáveis da TDesk Solutions permanecem de sua titularidade. A marca HexaVale fornecida pelo cliente é de titularidade do cliente.</p>
+  <p><b>7.4 Disponibilidade.</b> O HexaVale opera como sistema web no ambiente contratado na entrega. A disponibilidade depende da infraestrutura combinada entre as partes. Manutenções programadas serão comunicadas com antecedência mínima de 48 horas.</p>
+  <p><b>7.5 Rescisão.</b> Qualquer das partes poderá rescindir o contrato mediante aviso prévio de 15 dias, respeitadas as obrigações financeiras do período já faturado e o pagamento da atividade eventualmente já executada.</p>
+  <p><b>7.6 Foro.</b> Fica eleito o foro da comarca de Salvador/BA para dirimir quaisquer controvérsias decorrentes desta proposta e do contrato dela decorrente.</p>
+
+  <h1>8. Aceite da Proposta</h1>
+  <p>A assinatura deste documento pelas partes representa concordância com os termos, escopo e valores aqui descritos, servindo como base para formalização do contrato de prestação de serviços para o projeto HexaVale ERP, no valor de R$ ____________ pela atividade.</p>
+
+  <div class="assin">
+    <div>
+      <b>TDesk Solutions</b>
+      <div class="linha"></div>
+      <div class="small">Assinatura do representante legal<br>Nome e cargo</div>
+      <p class="small" style="margin-top:4mm">Data: ____ / ____ / ________</p>
+    </div>
+    <div>
+      <b>HexaVale</b>
+      <div class="linha"></div>
+      <div class="small">Assinatura do representante legal<br>Nome e cargo</div>
+      <p class="small" style="margin-top:4mm">Data: ____ / ____ / ________</p>
+    </div>
+  </div>
+
+  <p style="margin-top:6mm">Dúvidas? Entre em contato: comercial@tdesksolutions.com.br | tdesksolutions.com.br · Resposta em até 1 dia útil.</p>
+
+  <div class="footer">tdesksolutions.com.br | comercial@tdesksolutions.com.br | Salvador/BA · Brasil</div>
+</section>
+
+</body>
+</html>

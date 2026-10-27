@@ -131,17 +131,50 @@ final class EstoqueLedgerTest extends TestCase
         ])->assertStatus(400);
     }
 
-    public function test_painel_serve_prototipo_html(): void
+    public function test_painel_serve_prototipo_html_sem_cdn(): void
     {
         $admin = User::query()->where('email', 'admin@hexavale.local')->firstOrFail();
         $lote = Lote::query()->firstOrFail();
         $this->actingAs($admin);
         session(['fazenda_id' => (string) $lote->fazenda_id]);
 
-        $this->get('/app')
+        $html = $this->get('/app')
             ->assertOk()
             ->assertSee('HexaVale ERP Agrícola', false)
-            ->assertSee('hx-btn-sair', false);
+            ->assertSee('hx-btn-sair', false)
+            ->assertSee('/vendor/erp/erp.css', false)
+            ->assertSee('/vendor/erp/vue.global.prod.js', false)
+            ->assertDontSee('cdn.tailwindcss.com', false)
+            ->assertDontSee('unpkg.com', false)
+            ->assertDontSee('jsdelivr.net', false)
+            ->assertDontSee('fonts.googleapis.com', false)
+            ->assertDontSee('cdnjs.cloudflare.com', false)
+            ->getContent();
+
+        $this->assertStringNotContainsString('https://cdn.', $html);
+    }
+
+    public function test_http_reserva_e_liberacao(): void
+    {
+        $admin = User::query()->where('email', 'admin@hexavale.local')->firstOrFail();
+        $lote = Lote::query()->where('codigo', 'NC-DEMO-05')->firstOrFail();
+        $this->actingAs($admin);
+        session(['fazenda_id' => (string) $lote->fazenda_id]);
+
+        $this->get('/estoque/reserva')->assertOk()->assertSee('Reservar estoque', false);
+        $this->post('/estoque/reserva', [
+            'lote_id' => $lote->id,
+            'quantidade' => '25',
+            'referencia_id' => 'ord-http-1',
+            '_idempotency_key' => 'res-http-1',
+        ])->assertRedirect(route('estoque.saldo'));
+
+        $this->get('/estoque/reserva/liberar')->assertOk()->assertSee('Liberar reserva', false);
+        $this->post('/estoque/reserva/liberar', [
+            'lote_id' => $lote->id,
+            'quantidade' => '10',
+            'referencia_id' => 'ord-http-1',
+            '_idempotency_key' => 'lib-http-1',
+        ])->assertRedirect(route('estoque.saldo'));
     }
 }
-

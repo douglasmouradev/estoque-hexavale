@@ -12,7 +12,7 @@
 - **Casos de uso:** `RegistrarEntrada`, `RegistrarSaida` (RN-07), `ExcluirProduto` (RN-13), idempotency key
 - **Seed BK-PROTO-01:** Amistar, Curygen, Fungicida X, Nitrato + talhões N 03 / N 04
 - **UI Blade:** `/estoque/saldo`, `/estoque/entrada`, `/estoque/saida` (RBAC `estoque.ler` / `estoque.movimentar`)
-- `/app` protótipo CDN permanece como painel legado (BK-UI-APP-01)
+- `/app` protótipo HTML permanece como painel legado (sem CDN desde Fase 3 / BK-UI-APP-01)
 
 ## Suíte (`make quality`)
 
